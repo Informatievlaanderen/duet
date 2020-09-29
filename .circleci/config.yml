@@ -265,7 +265,7 @@ jobs:
           at: /tmp/workspace
       - add_ssh_keys:
           fingerprints:
-            - "84:ef:18:e6:4c:b3:fa:38:4e:d2:47:09:e9:be:0f:e6"
+            - "65:40:d2:b4:17:2a:00:2d:dd:29:2c:de:1c:e7:8d:4e"
       - run:
           name: Checkout target repo
           workdir: /tmp
@@ -277,7 +277,7 @@ jobs:
           workdir: /tmp/duet-generated
           command: |
             git fetch origin
-            git checkout -b "${CIRCLE_BRANCH}" --track "origin/${CIRCLE_BRANCH}"
+            #git checkout -b "${CIRCLE_BRANCH}" --track "origin/${CIRCLE_BRANCH}"
             if [ "`cat /tmp/workspace/haschangedpublications.json`" == "false" ] ; then git rm -r --force * ; fi
       - run:
           name: Copy static assets
