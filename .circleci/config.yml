@@ -95,6 +95,10 @@ jobs:
       - checkout
       - attach_workspace:
           at: /tmp/workspace
+      - run:
+          name: Render HTML version of merged json file (a)
+          command: |
+          $PWD/project/scripts/render-details.sh /tmp/workspace multilingual
   render-html-details:
     docker:
       - image: informatievlaanderen/oslo-specification-generator:j1.4-circleci
