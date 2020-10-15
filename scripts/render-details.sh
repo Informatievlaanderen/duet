@@ -147,6 +147,7 @@ render_translationfiles() {
             echo "RENDER-DETAILS: failed"
             exit -1
         fi
+    fi
 }        
 
 echo "render-details: starting with $1 $2 $3"
