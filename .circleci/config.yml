@@ -97,8 +97,6 @@ jobs:
           at: /tmp/workspace
       - persist_to_workspace:
           root: /tmp/workspace
-          paths:
-            - target/
   render-html-details:
     docker:
       - image: informatievlaanderen/oslo-specification-generator:j1.4-circleci
