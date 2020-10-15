@@ -95,8 +95,6 @@ jobs:
       - checkout
       - attach_workspace:
           at: /tmp/workspace
-      - persist_to_workspace:
-          root: /tmp/workspace
   render-html-details:
     docker:
       - image: informatievlaanderen/oslo-specification-generator:j1.4-circleci
