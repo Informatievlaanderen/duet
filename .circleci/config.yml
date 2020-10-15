@@ -91,18 +91,6 @@ jobs:
   render-translation-json:
       docker: 
       - image: informatievlaanderen/oslo-specification-generator:multilingual
-    steps:
-      - checkout
-      - attach_workspace:
-          at: /tmp/workspace
-          paths:
-            - json/
-      - persist_to_workspace:
-          root: /tmp/workspace
-          paths:
-            - report/
-            - json/
-            - src/
   render-html-details:
     docker:
       - image: informatievlaanderen/oslo-specification-generator:j1.4-circleci
