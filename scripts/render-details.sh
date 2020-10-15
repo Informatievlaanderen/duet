@@ -2,6 +2,8 @@
 
 TARGETDIR=$1
 DETAILS=$2
+PRIMELANGUAGE=${3-'nl'}
+GOALLANGUAGE=${4-'en'}
 CHECKOUTFILE=${TARGETDIR}/checkouts.txt
 export NODE_PATH=/app/node_modules
 
@@ -126,7 +128,9 @@ render_translationfiles() {
     local JSONI=$3
     local DIRECTORY=$4
 
-    BASENAME=$(basename ${JSONI} .jsonld)
+    filename=$(basename -- "${JSONI}")
+    extension="${filename##*.}"
+    BASENAME="${filename%.*}"
 
     FILE=${DIRECTORY}/${BASENAME}${GOALLANGUAGE}.json
 
@@ -138,6 +142,8 @@ render_translationfiles() {
         then
             echo "RENDER-DETAILS: failed"
             exit -1
+        else
+            echo "RENDER-DETAILS: File succesfully updated"
         fi
     else
         echo "${FILE} does not exist"
@@ -146,6 +152,8 @@ render_translationfiles() {
         then
             echo "RENDER-DETAILS: failed"
             exit -1
+        else
+            echo "RENDER-DETAILS: File succesfully created"
         fi
     fi
 }        
@@ -164,15 +172,15 @@ do
 	do
 	    echo "RENDER-DETAILS: convert $i to ${DETAILS} ($PWD)"
 	    case ${DETAILS} in
-		html) RLINE=${TARGETDIR}/reporthtml/${line}
+		    html) RLINE=${TARGETDIR}/reporthtml/${line}
 		      mkdir -p ${RLINE}
                       render_html $SLINE $TLINE $i $RLINE ${line}
 		      ;;
-               shacl) render_shacl $SLINE $TLINE $i $RLINE
+            shacl) render_shacl $SLINE $TLINE $i $RLINE
 		      ;;
-	     context) render_context $SLINE $TLINE $i $RLINE
+	        context) render_context $SLINE $TLINE $i $RLINE
 		      ;;
-              multilingual) render_render_translationfiles 'en' 'nl' $i ${SLINE}
+            multilingual) render_translationfiles ${PRIMELANGUAGE} ${GOALLANGUAGE} $i ${SLINE}
               ;;
 		   *)  echo "RENDER-DETAILS: ${DETAILS} not handled yet"
 	    esac
