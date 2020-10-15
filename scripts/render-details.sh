@@ -173,6 +173,7 @@ do
 	     context) render_context $SLINE $TLINE $i $RLINE
 		      ;;
               multilingual) render_render_translationfiles 'en' 'nl' $i ${SLINE}
+              ;;
 		   *)  echo "RENDER-DETAILS: ${DETAILS} not handled yet"
 	    esac
 	done
