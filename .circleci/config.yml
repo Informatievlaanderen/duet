@@ -96,7 +96,7 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - run:
-          name: Render HTML version of merged json file (a)
+          name: Render translation JSON from jsonld
           command: |
             $PWD/scripts/render-details.sh /tmp/workspace multilingual
   render-html-details:
