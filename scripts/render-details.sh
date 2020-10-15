@@ -118,7 +118,37 @@ render_shacl() {
       popd
     fi
 }
-		 
+
+render_translationfiles() {
+    echo "checking if translationfile exists for primelanguage $1, goallanguage $2 and file $3 in the directory $4"
+    local PRIMELANGUAGE=$1
+    local GOALLANGUAGE=$2
+    local JSONI=$3
+    local DIRECTORY=$4
+
+    BASENAME=$(basename ${JSONI} .jsonld)
+
+    FILE=${DIRECTORY}/${BASENAME}${GOALLANGUAGE}.json
+
+    if [ -f "${FILE}" ] 
+    then
+        echo "${FILE} exists."
+        echo "UPDATE-TRANSLATIONFILE: node /app/translation-json-update.js -f ${FILE} -i ${JSONI} -m ${PRIMELANGUAGE} -g ${GOALLANGUAGE}"
+        if ! node /app/translation-json-update.js -f ${FILE} -i ${JSONI} -m ${PRIMELANGUAGE} -g ${GOALLANGUAGE}
+        then
+            echo "RENDER-DETAILS: failed"
+            exit -1
+        fi
+    else
+        echo "${FILE} does not exist"
+        echo "CREATE-TRANSLATIONFILE: node /app/translation-json-generator.js -i ${JSONI} -m ${PRIMELANGUAGE} -g ${GOALLANGUAGE}"
+        if ! node /app/translation-json-generator.js -i ${JSONI} -m ${PRIMELANGUAGE} -g ${GOALLANGUAGE}
+        then
+            echo "RENDER-DETAILS: failed"
+            exit -1
+        fi
+}        
+
 echo "render-details: starting with $1 $2 $3"
 
 cat ${CHECKOUTFILE} | while read line
@@ -141,6 +171,7 @@ do
 		      ;;
 	     context) render_context $SLINE $TLINE $i $RLINE
 		      ;;
+              multilingual) render_render_translationfiles 'en' 'nl' $i ${SLINE}
 		   *)  echo "RENDER-DETAILS: ${DETAILS} not handled yet"
 	    esac
 	done

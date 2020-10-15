@@ -88,6 +88,15 @@ jobs:
             - report/
             - json/
             - src/
+  get-translation-json:
+      docker: 
+      - image: informatievlaanderen/oslo-specification-generator:multilingual
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+          paths:
+            - json/
   render-html-details:
     docker:
       - image: informatievlaanderen/oslo-specification-generator:j1.4-circleci
