@@ -91,6 +91,8 @@ jobs:
   render-translation-json:
       docker: 
       - image: informatievlaanderen/oslo-specification-generator:multilingual
+      steps:
+      - checkout   
   render-html-details:
     docker:
       - image: informatievlaanderen/oslo-specification-generator:j1.4-circleci
