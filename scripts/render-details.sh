@@ -40,15 +40,16 @@ render_html() { # SLINE TLINE JSON
         else
             echo "RENDER-DETAILS(html): File was created in ${TLINE}/index.html"
         fi
-        filename=$(basename -- "${JSONI}")
-        extension="${filename##.}"
-        BASENAME="${filename%.}"
-        DIR=${JSONI%/*}
-        TRANSLATIONFILE=${DIR}/translation/${BASENAME}${GOALLANGUAGE}.json
-        OUTPUT=${TLINE}/index${GOALLANGUAGE}.html
-        echo "RENDER-DETAILS(language html): node /app/html-generator2.js -s ${TYPE} -i ${JSONI} -x ${RLINE}/html-nj.json -r ${DROOT} -t ${TEMPLATE} -d ${SLINE}/templates -o ${OUTPUT} -m ${GOALLANGUAGE}"
 
-        if ! node /app/html-generator2.js -s ${TYPE} -i ${JSONI} -x ${RLINE}/html-nj.json -r ${DROOT} -t ${TEMPLATE} -d ${SLINE}/templates -o ${OUTPUT} -m ${GOALLANGUAGE}
+        filename=$(basename -- "${JSONI}")
+        extension="${filename##*.}"
+        NAME="${filename%.*}"
+        DIR=${JSONI%/*}
+        TRANSLATIONFILE=${DIR}/translation/${NAME}_${GOALLANGUAGE}.json
+        OUTPUT=${TLINE}/index_${GOALLANGUAGE}.html
+        echo "RENDER-DETAILS(language html): node /app/html-generator2.js -s ${TYPE} -i ${JSONI} -x ${RLINE}/html-nj.json -r ${DROOT} -t ${TEMPLATE} -d ${SLINE}/templates -o ${OUTPUT} -m ${GOALLANGUAGE} -l ${TRANSLATIONJSON}"
+
+        if ! node /app/html-generator2.js -s ${TYPE} -i ${JSONI} -x ${RLINE}/html-nj.json -r ${DROOT} -t ${TEMPLATE} -d ${SLINE}/templates -o ${OUTPUT} -m ${GOALLANGUAGE} -l ${TRANSLATIONJSON}
         then   
             echo "RENDER-DETAILS(language html): rendering failed"
             exit -1
