@@ -37,7 +37,7 @@ render_html() { # SLINE TLINE JSON
       mkdir -p ${TLINE}/html
       if ! node /app/html-generator.js -s ${TYPE} -i ${JSONI} -t ${TEMPLATE} -x ${RLINE}/html-nj.json -d ${SLINE}/templates -r /${DROOT} -o ${TLINE}/index.html
       then
-      echo ('The html for the prime language was created under: ${TLINE}/index.html')
+      echo "RENDER-DETAILS(html): The html for the prime language was created under: ${TLINE}/index.html"
 	  exit -1
       else
         if
@@ -50,10 +50,10 @@ render_html() { # SLINE TLINE JSON
             echo "RENDER-DETAILS(html): node /app/html-generator.js -s ${TYPE} -i ${JSONI} -x ${RLINE}/html-nj.json -r ${DROOT} -t ${TEMPLATE} -d ${SLINE}/templates -o ${OUTPUT} -m ${GOALLANGUAGE}"
             if ! node /app/html-generator2.js -s ${TYPE} -i ${JSONI} -x ${RLINE}/html-nj.json -r ${DROOT} -t ${TEMPLATE} -d ${SLINE}/templates -o ${OUTPUT} -m ${GOALLANGUAGE}
             then            
-                echo "RENDER-DETAILS: failed"
+                echo "RENDER-DETAILS(language-html): failed"
                 exit -1
             else
-                echo "RENDER-DETAILS: File succesfully updated"
+                echo "RENDER-DETAILS(language-html): File succesfully updated"
             fi
         fi
       fi
