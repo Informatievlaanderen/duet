@@ -41,6 +41,7 @@ render_html() { # SLINE TLINE JSON
             exit -1
         else
             if
+            then
                 filename=$(basename -- "${JSONI}")
                 extension="${filename##*.}"
                 BASENAME="${filename%.*}"
