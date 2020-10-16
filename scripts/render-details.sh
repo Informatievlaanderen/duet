@@ -48,9 +48,9 @@ render_html() { # SLINE TLINE JSON
                 DIR=${JSONI%/*}
                 TRANSLATIONFILE=${DIR}/translation/${BASENAME}_${GOALLANGUAGE}.json
                 OUTPUT=${TLINE}/index_${GOALLANGUAGE}.html
-                echo "RENDER-DETAILS(html): node /app/html-generator.js -s ${TYPE} -i ${JSONI} -x ${RLINE}/html-nj.json -r ${DROOT} -t ${TEMPLATE} -d ${SLINE}/templates -o ${OUTPUT} -m ${GOALLANGUAGE}"
-                if ! node /app/html-generator2.js -s ${TYPE} -i ${JSONI} -x ${RLINE}/html-nj.json -r ${DROOT} -t ${TEMPLATE} -d ${SLINE}/templates -o ${OUTPUT} -m ${GOALLANGUAGE}
-                then            
+                echo "RENDER-DETAILS(html): node /app/html-generator2.js -s ${TYPE} -i ${JSONI} -x ${RLINE}/html-nj.json -r ${DROOT} -t ${TEMPLATE} -d ${SLINE}/templates -o ${OUTPUT} -m ${GOALLANGUAGE}"
+        if ! node /app/html-generator2.js -s ${TYPE} -i ${JSONI} -x ${RLINE}/html-nj.json -r ${DROOT} -t ${TEMPLATE} -d ${SLINE}/templates -o ${OUTPUT} -m ${GOALLANGUAGE}
+        then           
                     echo "RENDER-DETAILS(language-html): failed"
                     exit -1
                 else
