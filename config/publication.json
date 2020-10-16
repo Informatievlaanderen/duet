@@ -10,14 +10,14 @@
   {
     "urlref": "/doc/vocabularium/translation",
     "repository": "https://github.com/AnnemarieWittig/duetworkspace",
-    "branchtag": "master",
+    "branchtag": "main",
     "name": "mijn-vocabularium-voc",
     "navigation": {}
   },
   {
-    "urlref": "/doc/applicatieprofie/translation",
+    "urlref": "/doc/applicatieprofiel/translation",
     "repository": "https://github.com/AnnemarieWittig/duetworkspace",
-    "branchtag": "master",
+    "branchtag": "main",
     "name": "mijn-applicatieprofiel-ap",
     "navigation": {}
   }
