@@ -8,13 +8,12 @@ CHECKOUTFILE=${TARGETDIR}/checkouts.txt
 export NODE_PATH=/app/node_modules
 
 render_html() { # SLINE TLINE JSON
-    echo "render_html: $1 $2 $3 $4 $5 $6"     
+    echo "render_html: $1 $2 $3 $4 $5"     
     local SLINE=$1
     local TLINE=$2
     local JSONI=$3
     local RLINE=$4
     local DROOT=$5
-    local GOALLANGUAGE = $6
     
     BASENAME=$(basename ${JSONI} .jsonld)
 #    OUTFILE=${BASENAME}.html
@@ -35,29 +34,10 @@ render_html() { # SLINE TLINE JSON
     echo "RENDER-DETAILS(html): node /app/html-generator.js -s ${TYPE} -i ${JSONI} -x ${RLINE}/html-nj.json -r ${DROOT} -t ${TEMPLATE} -d ${SLINE}/templates -o ${TLINE}/index.html"
     pushd /app
       mkdir -p ${TLINE}/html
-        if ! node /app/html-generator.js -s ${TYPE} -i ${JSONI} -t ${TEMPLATE} -x ${RLINE}/html-nj.json -d ${SLINE}/templates -r /${DROOT} -o ${TLINE}/index.html
-        then
-            echo "RENDER-DETAILS(html): The html for the prime language was created under: ${TLINE}/index.html"
-            exit -1
-        else
-            if
-            then
-                filename=$(basename -- "${JSONI}")
-                extension="${filename##*.}"
-                BASENAME="${filename%.*}"
-                DIR=${JSONI%/*}
-                TRANSLATIONFILE=${DIR}/translation/${BASENAME}_${GOALLANGUAGE}.json
-                OUTPUT=${TLINE}/index_${GOALLANGUAGE}.html
-                echo "RENDER-DETAILS(html): node /app/html-generator2.js -s ${TYPE} -i ${JSONI} -x ${RLINE}/html-nj.json -r ${DROOT} -t ${TEMPLATE} -d ${SLINE}/templates -o ${OUTPUT} -m ${GOALLANGUAGE}"
-        if ! node /app/html-generator2.js -s ${TYPE} -i ${JSONI} -x ${RLINE}/html-nj.json -r ${DROOT} -t ${TEMPLATE} -d ${SLINE}/templates -o ${OUTPUT} -m ${GOALLANGUAGE}
-        then           
-                    echo "RENDER-DETAILS(language-html): failed"
-                    exit -1
-                else
-                    echo "RENDER-DETAILS(language-html): File succesfully updated"
-                fi
-            fi
-        fi
+      if ! node /app/html-generator.js -s ${TYPE} -i ${JSONI} -t ${TEMPLATE} -x ${RLINE}/html-nj.json -d ${SLINE}/templates -r /${DROOT} -o ${TLINE}/index.html
+      then
+	  exit -1
+      fi
       # make the report better readable
       jq . ${RLINE}/html-nj.json > ${RLINE}/html-nj.json2
       mv ${RLINE}/html-nj.json2 ${RLINE}/html-nj.json
