@@ -133,10 +133,10 @@ render_translationfiles() {
     extension="${filename##*.}"
     BASENAME="${filename%.*}"
 
-    FILE=${DIRECTORY}/${BASENAME}${GOALLANGUAGE}.json
+    FILE=${DIRECTORY}/translation/${BASENAME}_${GOALLANGUAGE}.json
 
     mkdir -p ${TLINE}/translation
-    OUTPUTFILE=${TLINE}/translation/${BASENAME}${GOALLANGUAGE}.json
+    OUTPUTFILE=${TLINE}/translation/${BASENAME}_${GOALLANGUAGE}.json
 
     if [ -f "${FILE}" ] 
     then
