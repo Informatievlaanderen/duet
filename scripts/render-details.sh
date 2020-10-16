@@ -44,12 +44,11 @@ render_html() { # SLINE TLINE JSON
         filename=$(basename -- "${JSONI}")
         extension="${filename##*.}"
         NAME="${filename%.*}"
-        DIR=${JSONI%/*}
-        TRANSLATIONFILE=${DIR}/translation/${NAME}_${GOALLANGUAGE}.json
+        TRANSLATIONFILE=${TLINE}/translation/${NAME}_${GOALLANGUAGE}.json
         OUTPUT=${TLINE}/index_${GOALLANGUAGE}.html
         echo "RENDER-DETAILS(language html): node /app/html-generator2.js -s ${TYPE} -i ${JSONI} -x ${RLINE}/html-nj.json -r ${DROOT} -t ${TEMPLATE} -d ${SLINE}/templates -o ${OUTPUT} -m ${GOALLANGUAGE} -l ${TRANSLATIONFILE}"
 
-        if ! node /app/html-generator2.js -s ${TYPE} -i ${JSONI} -x ${RLINE}/html-nj.json -r ${DROOT} -t ${TEMPLATE} -d ${SLINE}/templates -o ${OUTPUT} -m ${GOALLANGUAGE} -l ${TRANSLATIONFILE}
+        if ! sudo node /app/html-generator2.js -s ${TYPE} -i ${JSONI} -x ${RLINE}/html-nj.json -r ${DROOT} -t ${TEMPLATE} -d ${SLINE}/templates -o ${OUTPUT} -m ${GOALLANGUAGE} -l ${TRANSLATIONFILE}
         then   
             echo "RENDER-DETAILS(language html): rendering failed"
             exit -1
