@@ -99,6 +99,12 @@ jobs:
           name: Render translation JSON from jsonld
           command: |
             $PWD/scripts/render-details.sh /tmp/workspace multilingual
+      - persist_to_workspace:
+          root: /tmp/workspace
+          paths:
+            - report/
+            - json/
+            - src/
   render-html-details:
     docker:
       - image: informatievlaanderen/oslo-specification-generator:j1.4-circleci
@@ -343,7 +349,7 @@ workflows:
             - extract-jsonld-details
       - render-html-details:
           requires:
-            - normalise-jsonld
+            - render-translation-json
       - render-voc-rdf:
           requires:
             - normalise-jsonld
