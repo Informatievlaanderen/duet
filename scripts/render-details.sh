@@ -127,6 +127,7 @@ render_translationfiles() {
     local GOALLANGUAGE=$2
     local JSONI=$3
     local DIRECTORY=$4
+    local TLINE=$5
 
     filename=$(basename -- "${JSONI}")
     extension="${filename##*.}"
@@ -134,11 +135,14 @@ render_translationfiles() {
 
     FILE=${DIRECTORY}/${BASENAME}${GOALLANGUAGE}.json
 
+    mkdir -p ${TLINE}/translation
+    OUTPUTFILE=${TLINE}/translation/${BASENAME}${GOALLANGUAGE}.json
+
     if [ -f "${FILE}" ] 
     then
         echo "${FILE} exists."
-        echo "UPDATE-TRANSLATIONFILE: node /app/translation-json-update.js -f ${FILE} -i ${JSONI} -m ${PRIMELANGUAGE} -g ${GOALLANGUAGE} -o ${FILE}"
-        if ! node /app/translation-json-update.js -f ${FILE} -i ${JSONI} -m ${PRIMELANGUAGE} -g ${GOALLANGUAGE} -o ${FILE}
+        echo "UPDATE-TRANSLATIONFILE: node /app/translation-json-update.js -f ${FILE} -i ${JSONI} -m ${PRIMELANGUAGE} -g ${GOALLANGUAGE} -o ${OUTPUTFILE}"
+        if ! node /app/translation-json-update.js -f ${FILE} -i ${JSONI} -m ${PRIMELANGUAGE} -g ${GOALLANGUAGE} -o ${OUTPUTFILE}
         then
             echo "RENDER-DETAILS: failed"
             exit -1
@@ -147,8 +151,8 @@ render_translationfiles() {
         fi
     else
         echo "${FILE} does not exist"
-        echo "CREATE-TRANSLATIONFILE: node /app/translation-json-generator.js -i ${JSONI} -m ${PRIMELANGUAGE} -g ${GOALLANGUAGE} -o ${FILE}"
-        if ! node /app/translation-json-generator.js -i ${JSONI} -m ${PRIMELANGUAGE} -g ${GOALLANGUAGE} -o ${FILE}
+        echo "CREATE-TRANSLATIONFILE: node /app/translation-json-generator.js -i ${JSONI} -m ${PRIMELANGUAGE} -g ${GOALLANGUAGE} -o ${OUTPUTFILE}"
+        if ! node /app/translation-json-generator.js -i ${JSONI} -m ${PRIMELANGUAGE} -g ${GOALLANGUAGE} -o ${OUTPUTFILE}
         then
             echo "RENDER-DETAILS: failed"
             exit -1
@@ -174,14 +178,14 @@ do
 	    case ${DETAILS} in
 		    html) RLINE=${TARGETDIR}/reporthtml/${line}
 		      mkdir -p ${RLINE}
-                      render_html $SLINE $TLINE $i $RLINE ${line}
-		      ;;
-            shacl) render_shacl $SLINE $TLINE $i $RLINE
-		      ;;
-	        context) render_context $SLINE $TLINE $i $RLINE
-		      ;;
-            multilingual) render_translationfiles ${PRIMELANGUAGE} ${GOALLANGUAGE} $i ${SLINE}
-              ;;
+                    render_html $SLINE $TLINE $i $RLINE ${line}
+		    ;;
+                    shacl) render_shacl $SLINE $TLINE $i $RLINE
+		    ;;
+	            context) render_context $SLINE $TLINE $i $RLINE
+		    ;;
+                    multilingual) render_translationfiles ${PRIMELANGUAGE} ${GOALLANGUAGE} $i ${SLINE} ${TLINE}
+                    ;;
 		   *)  echo "RENDER-DETAILS: ${DETAILS} not handled yet"
 	    esac
 	done
