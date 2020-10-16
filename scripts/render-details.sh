@@ -137,8 +137,8 @@ render_translationfiles() {
     if [ -f "${FILE}" ] 
     then
         echo "${FILE} exists."
-        echo "UPDATE-TRANSLATIONFILE: node /app/translation-json-update.js -f ${FILE} -i ${JSONI} -m ${PRIMELANGUAGE} -g ${GOALLANGUAGE} -o ${FILENAME}"
-        if ! node /app/translation-json-update.js -f ${FILE} -i ${JSONI} -m ${PRIMELANGUAGE} -g ${GOALLANGUAGE} -o ${FILENAME}
+        echo "UPDATE-TRANSLATIONFILE: node /app/translation-json-update.js -f ${FILE} -i ${JSONI} -m ${PRIMELANGUAGE} -g ${GOALLANGUAGE} -o ${FILE}"
+        if ! node /app/translation-json-update.js -f ${FILE} -i ${JSONI} -m ${PRIMELANGUAGE} -g ${GOALLANGUAGE} -o ${FILE}
         then
             echo "RENDER-DETAILS: failed"
             exit -1
@@ -147,8 +147,8 @@ render_translationfiles() {
         fi
     else
         echo "${FILE} does not exist"
-        echo "CREATE-TRANSLATIONFILE: node /app/translation-json-generator.js -i ${JSONI} -m ${PRIMELANGUAGE} -g ${GOALLANGUAGE} -o ${FILENAME}"
-        if ! node /app/translation-json-generator.js -i ${JSONI} -m ${PRIMELANGUAGE} -g ${GOALLANGUAGE} -o ${FILENAME}
+        echo "CREATE-TRANSLATIONFILE: node /app/translation-json-generator.js -i ${JSONI} -m ${PRIMELANGUAGE} -g ${GOALLANGUAGE} -o ${FILE}"
+        if ! node /app/translation-json-generator.js -i ${JSONI} -m ${PRIMELANGUAGE} -g ${GOALLANGUAGE} -o ${FILE}
         then
             echo "RENDER-DETAILS: failed"
             exit -1
