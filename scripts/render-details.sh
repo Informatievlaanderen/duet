@@ -33,14 +33,32 @@ render_html() { # SLINE TLINE JSON
     
     echo "RENDER-DETAILS(html): node /app/html-generator.js -s ${TYPE} -i ${JSONI} -x ${RLINE}/html-nj.json -r ${DROOT} -t ${TEMPLATE} -d ${SLINE}/templates -o ${TLINE}/index.html"
     pushd /app
-      mkdir -p ${TLINE}/html
-      if ! node /app/html-generator.js -s ${TYPE} -i ${JSONI} -t ${TEMPLATE} -x ${RLINE}/html-nj.json -d ${SLINE}/templates -r /${DROOT} -o ${TLINE}/index.html
-      then
-	  exit -1
-      fi
-      # make the report better readable
-      jq . ${RLINE}/html-nj.json > ${RLINE}/html-nj.json2
-      mv ${RLINE}/html-nj.json2 ${RLINE}/html-nj.json
+        mkdir -p ${TLINE}/html
+        if ! node /app/html-generator.js -s ${TYPE} -i ${JSONI} -t ${TEMPLATE} -x ${RLINE}/html-nj.json -d ${SLINE}/templates -r /${DROOT} -o ${TLINE}/index.html
+        then
+            exit -1
+        else
+            echo "RENDER-DETAILS(html): File was created in ${TLINE}/index.html"
+        fi
+        filename=$(basename -- "${JSONI}")
+        extension="${filename##.}"
+        BASENAME="${filename%.}"
+        DIR=${JSONI%/*}
+        TRANSLATIONFILE=${DIR}/translation/${BASENAME}${GOALLANGUAGE}.json
+        OUTPUT=${TLINE}/index${GOALLANGUAGE}.html
+        echo "RENDER-DETAILS(language html): node /app/html-generator2.js -s ${TYPE} -i ${JSONI} -x ${RLINE}/html-nj.json -r ${DROOT} -t ${TEMPLATE} -d ${SLINE}/templates -o ${OUTPUT} -m ${GOALLANGUAGE}"
+
+        if ! node /app/html-generator2.js -s ${TYPE} -i ${JSONI} -x ${RLINE}/html-nj.json -r ${DROOT} -t ${TEMPLATE} -d ${SLINE}/templates -o ${OUTPUT} -m ${GOALLANGUAGE}
+        then   
+            echo "RENDER-DETAILS(language html): rendering failed"
+            exit -1
+        else
+            echo "RENDER-DETAILS(language html): File was rendered in ${OUTPUT}"
+        fi
+
+        # make the report better readable
+        jq . ${RLINE}/html-nj.json > ${RLINE}/html-nj.json2
+        mv ${RLINE}/html-nj.json2 ${RLINE}/html-nj.json
     popd
 }
 
