@@ -48,7 +48,7 @@ render_html() { # SLINE TLINE JSON
         OUTPUT=${TLINE}/index_${GOALLANGUAGE}.html
         templatename=$(basename -- "${TEMPLATE}")
         TEMPLATENAME="${templatename%.*}_en.j2"
-        #TEMPCOMMAND=$(echo '.[]|select(.name | contains("'${BASENAME}'"))|.template')
+        #TEMPCOMMAND=$(echo '.[]|select(.name | contains("'${BASENAME}'"))|.translation.template')
         #TEMPLATENAME=$(jq -r "${COMMAND}" ${SLINE}/.names.json)
         echo "RENDER-DETAILS(language html): node /app/html-generator2.js -s ${TYPE} -i ${JSONI} -x ${RLINE}/html-nj.json -r ${DROOT} -t ${TEMPLATENAME} -d ${SLINE}/templates -o ${OUTPUT} -m ${GOALLANGUAGE} -l ${TRANSLATIONFILE}"
 
