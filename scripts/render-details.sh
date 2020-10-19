@@ -47,18 +47,21 @@ render_html() { # SLINE TLINE JSON
         TRANSLATIONFILE=${TLINE}/translation/${NAME}_${GOALLANGUAGE}.json
         OUTPUT=${TLINE}/index_${GOALLANGUAGE}.html
         templatename=$(basename -- "${TEMPLATE}")
-        templateextension="${templatename##*.}"
         TEMPLATENAME="${templatename%.*}_en.j2"
+        #TEMPCOMMAND=$(echo '.[]|select(.name | contains("'${BASENAME}'"))|.template')
+        #TEMPLATENAME=$(jq -r "${COMMAND}" ${SLINE}/.names.json)
         echo "RENDER-DETAILS(language html): node /app/html-generator2.js -s ${TYPE} -i ${JSONI} -x ${RLINE}/html-nj.json -r ${DROOT} -t ${TEMPLATENAME} -d ${SLINE}/templates -o ${OUTPUT} -m ${GOALLANGUAGE} -l ${TRANSLATIONFILE}"
 
-        if ! sudo node /app/html-generator2.js -s ${TYPE} -i ${JSONI} -x ${RLINE}/html-nj.json -r ${DROOT} -t ${TEMPLATENAME} -d ${SLINE}/templates -o ${OUTPUT} -m ${GOALLANGUAGE} -l ${TRANSLATIONFILE}
-        then   
-            echo "RENDER-DETAILS(language html): rendering failed"
-            exit -1
-        else
-            echo "RENDER-DETAILS(language html): File was rendered in ${OUTPUT}"
+        if [ -f "${SLINE}/templates/${TEMPLATENAME}" ]
+            if ! sudo node /app/html-generator2.js -s ${TYPE} -i ${JSONI} -x ${RLINE}/html-nj.json -r ${DROOT} -t ${TEMPLATENAME} -d ${SLINE}/templates -o ${OUTPUT} -m ${GOALLANGUAGE} -l ${TRANSLATIONFILE}
+            then   
+                echo "RENDER-DETAILS(language html): rendering failed"
+                exit -1
+            else
+                echo "RENDER-DETAILS(language html): File was rendered in ${OUTPUT}"
+            fi
         fi
-
+        
         # make the report better readable
         jq . ${RLINE}/html-nj.json > ${RLINE}/html-nj.json2
         mv ${RLINE}/html-nj.json2 ${RLINE}/html-nj.json
