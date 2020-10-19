@@ -53,6 +53,7 @@ render_html() { # SLINE TLINE JSON
         echo "RENDER-DETAILS(language html): node /app/html-generator2.js -s ${TYPE} -i ${JSONI} -x ${RLINE}/html-nj.json -r ${DROOT} -t ${TEMPLATENAME} -d ${SLINE}/templates -o ${OUTPUT} -m ${GOALLANGUAGE} -l ${TRANSLATIONFILE}"
 
         if [ -f "${SLINE}/templates/${TEMPLATENAME}" ]
+        then
             if ! sudo node /app/html-generator2.js -s ${TYPE} -i ${JSONI} -x ${RLINE}/html-nj.json -r ${DROOT} -t ${TEMPLATENAME} -d ${SLINE}/templates -o ${OUTPUT} -m ${GOALLANGUAGE} -l ${TRANSLATIONFILE}
             then   
                 echo "RENDER-DETAILS(language html): rendering failed"
