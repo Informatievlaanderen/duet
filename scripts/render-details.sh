@@ -46,10 +46,12 @@ render_html() { # SLINE TLINE JSON
         NAME="${filename%.*}"
         TRANSLATIONFILE=${TLINE}/translation/${NAME}_${GOALLANGUAGE}.json
         OUTPUT=${TLINE}/index_${GOALLANGUAGE}.html
-        #templatename=$(basename -- "${TEMPLATE}")
-        #TEMPLATENAME="${templatename%.*}_en.j2"
-        COMMAND=$(echo 'jq '.[].translation | .[] | select(.language | contains("en"))'')
-        TEMPLATENAME=$(jq -r "${COMMAND}" ${SLINE}/.names.json)
+        
+        COMMANDTEMPLATELANG=$(echo '.[].translation | .[] | select(.language | contains("'${GOALLANGUAGE}'")) | .template')
+        echo ${COMMANDTEMPLATELANG}
+        TEMPLATELANG=$(jq -r "${COMMANDTEMPLATELANG}" ${SLINE}/.names.json)
+        echo ${TEMPLATELANG}
+
         echo "RENDER-DETAILS(language html): node /app/html-generator2.js -s ${TYPE} -i ${JSONI} -x ${RLINE}/html-nj.json -r ${DROOT} -t ${TEMPLATENAME} -d ${SLINE}/templates -o ${OUTPUT} -m ${GOALLANGUAGE} -l ${TRANSLATIONFILE} -e ${RLINE}"
 
 	if ! node /app/html-generator2.js -s ${TYPE} -i ${JSONI} -x ${RLINE}/html-nj_${GOALLANGUAGE}.json -r ${DROOT} -t ${TEMPLATENAME} -d ${SLINE}/templates -o ${OUTPUT} -m ${GOALLANGUAGE} -l ${TRANSLATIONFILE} -e ${RLINE} 
