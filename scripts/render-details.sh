@@ -49,7 +49,7 @@ render_html() { # SLINE TLINE JSON
         
         OUTPUT=${TLINE}/index_${GOALLANGUAGE}.html
         COMMANDLANGJSON=$(echo '.[].translation | .[] | select(.language | contains("'${GOALLANGUAGE}'")) | .template')
-        TRANSLATIONFILE=$(jq -r "${COMMANDLANGJSON}" ${SLINE}/.names.json)
+        TRANSLATIONFILE=${TLINE}/translation/$(jq -r "${COMMANDLANGJSON}" ${SLINE}/.names.json)
         COMMANDTEMPLATELANG=$(echo '.[].translation | .[] | select(.language | contains("'${GOALLANGUAGE}'")) | .template')
         TEMPLATELANG=$(jq -r "${COMMANDTEMPLATELANG}" ${SLINE}/.names.json)
 
