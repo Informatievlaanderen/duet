@@ -41,14 +41,8 @@ render_html() { # SLINE TLINE JSON
             echo "RENDER-DETAILS(html): File was created in ${TLINE}/index.html"
         fi
 
-        #filename=$(basename -- "${JSONI}")
-        #extension="${filename##*.}"
-        #NAME="${filename%.*}"
-        #TRANSLATIONFILE=${TLINE}/translation/${NAME}_${GOALLANGUAGE}.json
-        
-        
         OUTPUT=${TLINE}/index_${GOALLANGUAGE}.html
-        COMMANDLANGJSON=$(echo '.[].translation | .[] | select(.language | contains("'${GOALLANGUAGE}'")) | .template')
+        COMMANDLANGJSON=$(echo '.[].translation | .[] | select(.language | contains("'${GOALLANGUAGE}'")) | .translationjson')
         TRANSLATIONFILE=${TLINE}/translation/$(jq -r "${COMMANDLANGJSON}" ${SLINE}/.names.json)
         COMMANDTEMPLATELANG=$(echo '.[].translation | .[] | select(.language | contains("'${GOALLANGUAGE}'")) | .template')
         TEMPLATELANG=$(jq -r "${COMMANDTEMPLATELANG}" ${SLINE}/.names.json)
@@ -154,11 +148,8 @@ render_translationfiles() {
     local DIRECTORY=$4
     local TLINE=$5
 
-    filename=$(basename -- "${JSONI}")
-    extension="${filename##*.}"
-    BASENAME="${filename%.*}"
-
-    FILE=${DIRECTORY}/translation/${BASENAME}_${GOALLANGUAGE}.json
+    COMMANDLANGJSON=$(echo '.[].translation | .[] | select(.language | contains("'${GOALLANGUAGE}'")) | .translationjson')
+    FILE=${TLINE}/translation/$(jq -r "${COMMANDLANGJSON}" ${SLINE}/.names.json)
 
     mkdir -p ${TLINE}/translation
     OUTPUTFILE=${TLINE}/translation/${BASENAME}_${GOALLANGUAGE}.json
