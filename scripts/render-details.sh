@@ -149,10 +149,11 @@ render_translationfiles() {
     local TLINE=$5
 
     COMMANDLANGJSON=$(echo '.[].translation | .[] | select(.language | contains("'${GOALLANGUAGE}'")) | .translationjson')
-    FILE=${TLINE}/translation/$(jq -r "${COMMANDLANGJSON}" ${SLINE}/.names.json)
+    JSON=$(jq -r "${COMMANDLANGJSON}" ${SLINE}/.names.json)
+    FILE=${DIRECTORY}/translation/${JSON}
 
     mkdir -p ${TLINE}/translation
-    OUTPUTFILE=${TLINE}/translation/${BASENAME}_${GOALLANGUAGE}.json
+    OUTPUTFILE=${TLINE}/translation/${JSON}
 
     if [ -f "${FILE}" ] 
     then
