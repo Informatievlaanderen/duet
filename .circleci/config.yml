@@ -103,7 +103,7 @@ jobs:
           root: /tmp/workspace
           paths:
             - target/
-  render-merged-json:
+  render-merged-jsonld:
       docker: 
       - image: informatievlaanderen/oslo-specification-generator:multilingual
       steps:
@@ -360,18 +360,18 @@ workflows:
       - validate-report:
           requires:
             - extract-jsonld-details
-      - render-merged-json:
+      - render-merged-jsonld:
           requires:
             - render-translation-json
       - render-html-details:
           requires:
-            - render-translation-json
+            - render-merged-jsonld
       - render-voc-rdf:
           requires:
             - normalise-jsonld
       - render-shacl-details:
           requires:
-            - render-merged-json
+            - render-merged-jsonld
       - convert-json-to-ttl:
           requires:
             - render-shacl-details
