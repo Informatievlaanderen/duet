@@ -383,7 +383,6 @@ workflows:
             - normalise-jsonld
       - expand-links:
           requires:
-            - copy-raw
             - convert-json-to-ttl
             - render-html-details
       - copy-raw:
