@@ -103,6 +103,21 @@ jobs:
           root: /tmp/workspace
           paths:
             - target/
+  render-merged-json:
+      docker: 
+      - image: informatievlaanderen/oslo-specification-generator:multilingual
+      steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: Render merged JSONLD from jsonld and translationjson
+          command: |
+            $PWD/scripts/render-details.sh /tmp/workspace multilingual
+      - persist_to_workspace:
+          root: /tmp/workspace
+          paths:
+            - target/
   render-html-details:
     docker:
       - image: informatievlaanderen/oslo-specification-generator:multilingual
@@ -345,6 +360,9 @@ workflows:
       - validate-report:
           requires:
             - extract-jsonld-details
+      - render-merged-json:
+          requires:
+            - render-translation-json
       - render-html-details:
           requires:
             - render-translation-json

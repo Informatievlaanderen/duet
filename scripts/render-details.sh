@@ -7,6 +7,76 @@ GOALLANGUAGE=${4-'en'}
 CHECKOUTFILE=${TARGETDIR}/checkouts.txt
 export NODE_PATH=/app/node_modules
 
+render_merged_files() {
+    echo "Rendering the merged version of $1 with the json in $2 from $3 and to $4"
+    local JSONI=$1
+    local GOALLANGUAGE=$2
+    local DIRECTORY=$3
+    local TLINE=$4
+
+    COMMANDLANGJSON=$(echo '.[].translation | .[] | select(.language | contains("'${GOALLANGUAGE}'")) | .translationjson')
+    JSON=$(jq -r "${COMMANDLANGJSON}" ${SLINE}/.names.json)
+    MERGEFILE=${DIRECTORY}/translation/${JSON}
+
+    COMMANDJSON=$(echo '.[].translation | .[] | select(.language | contains("'${GOALLANGUAGE}'")) | .mergefile')
+    MERGEDJSONLD=$(jq -r "${COMMANDJSON}" ${SLINE}/.names.json)
+
+    mkdir -p ${TLINE}/translation
+    OUTPUTFILE=${TLINE}/translation/${MERGEDJSONLD}
+
+    if [ -f "${MERGEFILE}" ] 
+    then
+        echo "${FILE} exists, the files will now be merged."
+        echo "RENDER-DETAILS(mergefile): node /app/jsonld-merger.js -i ${JSONI} -m ${MERGEFILE} -l ${GOALLANGUAGE} -o ${OUTPUTFILE}"
+        if ! node /app/jsonld-merger.js -i ${JSONI} -m ${MERGEFILE} -l ${GOALLANGUAGE} -o ${OUTPUTFILE}
+        then
+            echo "RENDER-DETAILS: failed"
+            exit -1
+        else
+            echo "RENDER-DETAILS: Files succesfully merged and saved to: ${OUTPUTFILE}"
+        fi
+    fi
+}    
+
+render_translationfiles() {
+    echo "checking if translationfile exists for primelanguage $1, goallanguage $2 and file $3 in the directory $4"
+    local PRIMELANGUAGE=$1
+    local GOALLANGUAGE=$2
+    local JSONI=$3
+    local DIRECTORY=$4
+    local TLINE=$5
+
+    COMMANDLANGJSON=$(echo '.[].translation | .[] | select(.language | contains("'${GOALLANGUAGE}'")) | .translationjson')
+    JSON=$(jq -r "${COMMANDLANGJSON}" ${SLINE}/.names.json)
+    FILE=${DIRECTORY}/translation/${JSON}
+
+    mkdir -p ${TLINE}/translation
+    OUTPUTFILE=${TLINE}/translation/${JSON}
+
+    if [ -f "${FILE}" ] 
+    then
+        echo "${FILE} exists."
+        echo "UPDATE-TRANSLATIONFILE: node /app/translation-json-update.js -f ${FILE} -i ${JSONI} -m ${PRIMELANGUAGE} -g ${GOALLANGUAGE} -o ${OUTPUTFILE}"
+        if ! node /app/translation-json-update.js -f ${FILE} -i ${JSONI} -m ${PRIMELANGUAGE} -g ${GOALLANGUAGE} -o ${OUTPUTFILE}
+        then
+            echo "RENDER-DETAILS: failed"
+            exit -1
+        else
+            echo "RENDER-DETAILS: File succesfully updated"
+        fi
+    else
+        echo "${FILE} does not exist"
+        echo "CREATE-TRANSLATIONFILE: node /app/translation-json-generator.js -i ${JSONI} -m ${PRIMELANGUAGE} -g ${GOALLANGUAGE} -o ${OUTPUTFILE}"
+        if ! node /app/translation-json-generator.js -i ${JSONI} -m ${PRIMELANGUAGE} -g ${GOALLANGUAGE} -o ${OUTPUTFILE}
+        then
+            echo "RENDER-DETAILS: failed"
+            exit -1
+        else
+            echo "RENDER-DETAILS: File succesfully created"
+        fi
+    fi
+}    
+
 render_html() { # SLINE TLINE JSON
     echo "render_html: $1 $2 $3 $4 $5"     
     local SLINE=$1
@@ -138,46 +208,7 @@ render_shacl() {
         prettyprint_jsonld ${OUTFILE}
       popd
     fi
-}
-
-render_translationfiles() {
-    echo "checking if translationfile exists for primelanguage $1, goallanguage $2 and file $3 in the directory $4"
-    local PRIMELANGUAGE=$1
-    local GOALLANGUAGE=$2
-    local JSONI=$3
-    local DIRECTORY=$4
-    local TLINE=$5
-
-    COMMANDLANGJSON=$(echo '.[].translation | .[] | select(.language | contains("'${GOALLANGUAGE}'")) | .translationjson')
-    JSON=$(jq -r "${COMMANDLANGJSON}" ${SLINE}/.names.json)
-    FILE=${DIRECTORY}/translation/${JSON}
-
-    mkdir -p ${TLINE}/translation
-    OUTPUTFILE=${TLINE}/translation/${JSON}
-
-    if [ -f "${FILE}" ] 
-    then
-        echo "${FILE} exists."
-        echo "UPDATE-TRANSLATIONFILE: node /app/translation-json-update.js -f ${FILE} -i ${JSONI} -m ${PRIMELANGUAGE} -g ${GOALLANGUAGE} -o ${OUTPUTFILE}"
-        if ! node /app/translation-json-update.js -f ${FILE} -i ${JSONI} -m ${PRIMELANGUAGE} -g ${GOALLANGUAGE} -o ${OUTPUTFILE}
-        then
-            echo "RENDER-DETAILS: failed"
-            exit -1
-        else
-            echo "RENDER-DETAILS: File succesfully updated"
-        fi
-    else
-        echo "${FILE} does not exist"
-        echo "CREATE-TRANSLATIONFILE: node /app/translation-json-generator.js -i ${JSONI} -m ${PRIMELANGUAGE} -g ${GOALLANGUAGE} -o ${OUTPUTFILE}"
-        if ! node /app/translation-json-generator.js -i ${JSONI} -m ${PRIMELANGUAGE} -g ${GOALLANGUAGE} -o ${OUTPUTFILE}
-        then
-            echo "RENDER-DETAILS: failed"
-            exit -1
-        else
-            echo "RENDER-DETAILS: File succesfully created"
-        fi
-    fi
-}        
+}    
 
 echo "render-details: starting with $1 $2 $3"
 
@@ -202,7 +233,9 @@ do
 	            context) render_context $SLINE $TLINE $i $RLINE
 		    ;;
                     multilingual) render_translationfiles ${PRIMELANGUAGE} ${GOALLANGUAGE} $i ${SLINE} ${TLINE}
-                    ;;
+            ;;
+                merge) render_merged_files $i ${GOALLANGUAGE} ${SLINE} ${TLINE}
+            ;;
 		   *)  echo "RENDER-DETAILS: ${DETAILS} not handled yet"
 	    esac
 	done
