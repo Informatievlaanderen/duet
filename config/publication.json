@@ -19,7 +19,7 @@
     "urlref": "/doc/persoon-basis/translation",
     "repository": "https://github.com/AnnemarieWittig/duetworkspace",
     "branchtag": "main",
-    "name": "OSLO-Persoon-Basis-AP",
+    "name": "persoon-basis",
     "filename": "config/persoon-basis.json",
     "navigation": {}
   },
