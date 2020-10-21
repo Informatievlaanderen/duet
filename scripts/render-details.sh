@@ -15,8 +15,7 @@ render_merged_files() {
     local TLINE=$4
 
     COMMANDLANGJSON=$(echo '.[].translation | .[] | select(.language | contains("'${GOALLANGUAGE}'")) | .translationjson')
-    JSON=$(jq -r "${COMMANDLANGJSON}" ${SLINE}/.names.json)
-    MERGEFILE=${DIRECTORY}/translation/${JSON}
+    TRANSLATIONFILE=${TLINE}/translation/$(jq -r "${COMMANDLANGJSON}" ${SLINE}/.names.json)
 
     COMMANDJSON=$(echo '.[].translation | .[] | select(.language | contains("'${GOALLANGUAGE}'")) | .mergefile')
     MERGEDJSONLD=$(jq -r "${COMMANDJSON}" ${SLINE}/.names.json)
@@ -26,15 +25,17 @@ render_merged_files() {
 
     if [ -f "${MERGEFILE}" ] 
     then
-        echo "${FILE} exists, the files will now be merged."
-        echo "RENDER-DETAILS(mergefile): node /app/jsonld-merger.js -i ${JSONI} -m ${MERGEFILE} -l ${GOALLANGUAGE} -o ${OUTPUTFILE}"
-        if ! node /app/jsonld-merger.js -i ${JSONI} -m ${MERGEFILE} -l ${GOALLANGUAGE} -o ${OUTPUTFILE}
+        echo "${MERGEFILE} exists, the files will now be merged."
+        echo "RENDER-DETAILS(mergefile): node /app/jsonld-merger.js -i ${JSONI} -m ${TRANSLATIONFILE} -l ${GOALLANGUAGE} -o ${OUTPUTFILE}"
+        if ! node /app/jsonld-merger.js -i ${JSONI} -m ${TRANSLATIONFILE} -l ${GOALLANGUAGE} -o ${OUTPUTFILE}
         then
             echo "RENDER-DETAILS: failed"
             exit -1
         else
             echo "RENDER-DETAILS: Files succesfully merged and saved to: ${OUTPUTFILE}"
         fi
+    else
+        echo"${MERGEFILE} does not exist, nothing to merge."
     fi
 }    
 
@@ -207,6 +208,49 @@ render_shacl() {
         fi
         prettyprint_jsonld ${OUTFILE}
       popd
+    fi
+}    
+
+render_shacl_languageaware() {
+    echo "render_shacl: $1 $2 $3 $4 $5"
+    local SLINE=$1
+    local TLINE=$2
+    local JSONI=$3
+    local RLINE=$4
+    local GOALLANGUAGE=$5
+
+    FILENAME=$(jq -r ".name" ${JSONI})
+    OUTFILE=${TLINE}/shacl/${FILENAME}-SHACL_${GOALLANGUAGE}.jsonld
+    OUTREPORT=${RLINE}/shacl/${FILENAME}-SHACL_${GOALLANGUAGE}.report
+
+    COMMANDJSON=$(echo '.[].translation | .[] | select(.language | contains("'${GOALLANGUAGE}'")) | .mergefile')
+    MERGEDJSONLD=$(jq -r "${COMMANDJSON}" ${SLINE}/.names.json)
+
+    mkdir -p ${TLINE}/translation
+    OUTPUTFILE=${TLINE}/translation/${MERGEDJSONLD}
+
+    BASENAME=$(basename ${JSONI} .jsonld)
+#    OUTFILE=${TLINE}/shacl/${BASENAME}-SHACL.jsonld
+#    OUTREPORT=${RLINE}/shacl/${BASENAME}-SHACL.report
+
+    COMMAND=$(echo '.[]|select(.name | contains("'${BASENAME}'"))|.type')
+    TYPE=$(jq -r "${COMMAND}" ${SLINE}/.names.json)
+
+    if [ ${TYPE} == "ap" ] || [ ${TYPE} == "oj" ]; 
+    then
+        echo "RENDER-DETAILS(shacl): node /app/shacl-generator.js -i ${JSONI} -o ${OUTFILE}"
+    #      DOMAIN="https://duet.dev-vlaanderen.be/shacl/${BASENAME}"
+        DOMAIN="https://duet.dev-vlaanderen.be/shacl/${FILENAME}"
+        pushd /app
+        mkdir -p ${TLINE}/shacl
+	    mkdir -p ${RLINE}/shacl      
+        if ! node /app/shacl-generator.js -i ${JSONI} -d ${DOMAIN} -o ${OUTFILE} 2>&1 | tee ${OUTREPORT}
+	    then
+            echo "RENDER-DETAILS: See ${OUTREPORT} for the details"
+            exit -1
+        fi
+        prettyprint_jsonld ${OUTFILE}
+        popd
     fi
 }    
 
