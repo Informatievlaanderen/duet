@@ -17,25 +17,22 @@ render_merged_files() {
     COMMANDLANGJSON=$(echo '.[].translation | .[] | select(.language | contains("'${GOALLANGUAGE}'")) | .translationjson')
     TRANSLATIONFILE=${TLINE}/translation/$(jq -r "${COMMANDLANGJSON}" ${SLINE}/.names.json)
 
-    COMMANDJSON=$(echo '.[].translation | .[] | select(.language | contains("'${GOALLANGUAGE}'")) | .mergefile')
-    MERGEDJSONLD=$(jq -r "${COMMANDJSON}" ${SLINE}/.names.json)
+    COMMANDJSONLD=$(echo '.[].translation | .[] | select(.language | contains("'${GOALLANGUAGE}'")) | .mergefile')
+    MERGEDJSONLD=$(jq -r "${COMMANDJSONLD}" ${SLINE}/.names.json)
 
-    mkdir -p ${TLINE}/translation
-    OUTPUTFILE=${TLINE}/translation/${MERGEDJSONLD}
-
-    if [ -f "${MERGEFILE}" ] 
+    if [ -f "${TRANSLATIONFILE}" ] 
     then
-        echo "${MERGEFILE} exists, the files will now be merged."
-        echo "RENDER-DETAILS(mergefile): node /app/jsonld-merger.js -i ${JSONI} -m ${TRANSLATIONFILE} -l ${GOALLANGUAGE} -o ${OUTPUTFILE}"
-        if ! node /app/jsonld-merger.js -i ${JSONI} -m ${TRANSLATIONFILE} -l ${GOALLANGUAGE} -o ${OUTPUTFILE}
+        echo "${TRANSLATIONFILE} exists, the files will now be merged."
+        echo "RENDER-DETAILS(mergefile): node /app/jsonld-merger.js -i ${JSONI} -m ${TRANSLATIONFILE} -l ${GOALLANGUAGE} -o ${MERGEDJSONLD}"
+        if ! node /app/jsonld-merger.js -i ${JSONI} -m ${TRANSLATIONFILE} -l ${GOALLANGUAGE} -o ${MERGEDJSONLD}
         then
             echo "RENDER-DETAILS: failed"
             exit -1
         else
-            echo "RENDER-DETAILS: Files succesfully merged and saved to: ${OUTPUTFILE}"
+            echo "RENDER-DETAILS: Files succesfully merged and saved to: ${MERGEDJSONLD}"
         fi
     else
-        echo"${MERGEFILE} does not exist, nothing to merge."
+        echo "${TRANSLATIONFILE} does not exist, nothing to merge."
     fi
 }    
 
@@ -219,32 +216,30 @@ render_shacl_languageaware() {
     local RLINE=$4
     local GOALLANGUAGE=$5
 
-    FILENAME=$(jq -r ".name" ${JSONI})
+    FILENAME=$(jq -r ".name" ${JSONI})_${GOALLANGUAGE}
+    COMMANDJSONLD=$(echo '.[].translation | .[] | select(.language | contains("'${GOALLANGUAGE}'")) | .mergefile')
+    MERGEDJSONLD=$(jq -r "${COMMANDJSONLD}" ${TLINE}/.names.json)
+
     OUTFILE=${TLINE}/shacl/${FILENAME}-SHACL_${GOALLANGUAGE}.jsonld
     OUTREPORT=${RLINE}/shacl/${FILENAME}-SHACL_${GOALLANGUAGE}.report
-
-    COMMANDJSON=$(echo '.[].translation | .[] | select(.language | contains("'${GOALLANGUAGE}'")) | .mergefile')
-    MERGEDJSONLD=$(jq -r "${COMMANDJSON}" ${SLINE}/.names.json)
 
     mkdir -p ${TLINE}/translation
     OUTPUTFILE=${TLINE}/translation/${MERGEDJSONLD}
 
     BASENAME=$(basename ${JSONI} .jsonld)
-#    OUTFILE=${TLINE}/shacl/${BASENAME}-SHACL.jsonld
-#    OUTREPORT=${RLINE}/shacl/${BASENAME}-SHACL.report
 
     COMMAND=$(echo '.[]|select(.name | contains("'${BASENAME}'"))|.type')
     TYPE=$(jq -r "${COMMAND}" ${SLINE}/.names.json)
 
     if [ ${TYPE} == "ap" ] || [ ${TYPE} == "oj" ]; 
     then
-        echo "RENDER-DETAILS(shacl): node /app/shacl-generator.js -i ${JSONI} -o ${OUTFILE}"
+        echo "RENDER-DETAILS(shacl-languageaware): node /app/shacl-generator.js -i ${MERGEDJSONLD} -o ${OUTFILE}"
     #      DOMAIN="https://duet.dev-vlaanderen.be/shacl/${BASENAME}"
         DOMAIN="https://duet.dev-vlaanderen.be/shacl/${FILENAME}"
         pushd /app
         mkdir -p ${TLINE}/shacl
 	    mkdir -p ${RLINE}/shacl      
-        if ! node /app/shacl-generator.js -i ${JSONI} -d ${DOMAIN} -o ${OUTFILE} 2>&1 | tee ${OUTREPORT}
+        if ! node /app/shacl-generator2.js -i ${MERGEDJSONLD} -d ${DOMAIN} -o ${OUTFILE} - l ${GOALLANGUAGE} 2>&1 | tee ${OUTREPORT}
 	    then
             echo "RENDER-DETAILS: See ${OUTREPORT} for the details"
             exit -1
@@ -273,6 +268,7 @@ do
                     render_html $SLINE $TLINE $i $RLINE ${line}
 		    ;;
                     shacl) render_shacl $SLINE $TLINE $i $RLINE
+                    render_shacl $SLINE $TLINE $i $RLINE ${GOALLANGUAGE}
 		    ;;
 	            context) render_context $SLINE $TLINE $i $RLINE
 		    ;;

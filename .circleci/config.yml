@@ -371,7 +371,7 @@ workflows:
             - normalise-jsonld
       - render-shacl-details:
           requires:
-            - normalise-jsonld
+            - render-merged-json
       - convert-json-to-ttl:
           requires:
             - render-shacl-details
