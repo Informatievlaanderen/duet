@@ -384,9 +384,7 @@ workflows:
       - expand-links:
           requires:
             - copy-raw
-            - render-context-details
             - convert-json-to-ttl
-            - render-voc-rdf
             - render-html-details
       - copy-raw:
           requires:
