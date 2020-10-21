@@ -357,27 +357,18 @@ workflows:
       - normalise-jsonld:
           requires:
             - extract-jsonld-details          
-      - validate-report:
-          requires:
-            - extract-jsonld-details
       - render-merged-jsonld:
           requires:
             - render-translation-json
       - render-html-details:
           requires:
             - render-merged-jsonld
-      - render-voc-rdf:
-          requires:
-            - normalise-jsonld
       - render-shacl-details:
           requires:
             - render-merged-jsonld
       - convert-json-to-ttl:
           requires:
             - render-shacl-details
-      - render-context-details:
-          requires:
-            - normalise-jsonld
       - render-translation-json:
           requires:
             - normalise-jsonld
