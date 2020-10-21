@@ -83,6 +83,7 @@ render_html() { # SLINE TLINE JSON
     local JSONI=$3
     local RLINE=$4
     local DROOT=$5
+    local RRLINE=$6
     
     BASENAME=$(basename ${JSONI} .jsonld)
 #    OUTFILE=${BASENAME}.html
@@ -266,10 +267,10 @@ do
 	    case ${DETAILS} in
 		    html) RLINE=${TARGETDIR}/reporthtml/${line}
 		      mkdir -p ${RLINE}
-                    render_html $SLINE $TLINE $i $RLINE ${line}
+                    render_html $SLINE $TLINE $i $RLINE ${line} ${TARGETDIR}/report/${line}
 		    ;;
                     shacl) render_shacl $SLINE $TLINE $i $RLINE
-                    render_shacl_languageaware $SLINE $TLINE $i $RLINE ${GOALLANGUAGE}
+                           render_shacl_languageaware $SLINE $TLINE $i $RLINE ${GOALLANGUAGE}
 		    ;;
 	            context) render_context $SLINE $TLINE $i $RLINE
 		    ;;
