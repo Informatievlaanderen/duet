@@ -8,7 +8,7 @@
     "navigation": {}
   },
   {
-    "urlref": "/doc/vocabularium/translation",
+    "urlref": "/doc/vocabularium/example-voc",
     "repository": "https://github.com/AnnemarieWittig/duetworkspace",
     "branchtag": "main",
     "name": "mijn-vocabularium-voc",
@@ -16,7 +16,7 @@
     "navigation": {}
   },
   {
-    "urlref": "/doc/persoon-basis/translation",
+    "urlref": "/doc/applicatieprofiel/persoon-basis/",
     "repository": "https://github.com/AnnemarieWittig/duetworkspace",
     "branchtag": "main",
     "name": "persoon-basis",
@@ -24,7 +24,7 @@
     "navigation": {}
   },
   {
-    "urlref": "/doc/applicatieprofiel/translation",
+    "urlref": "/doc/applicatieprofiel/example-ap",
     "repository": "https://github.com/AnnemarieWittig/duetworkspace",
     "branchtag": "main",
     "name": "mijn-applicatieprofiel-ap",
