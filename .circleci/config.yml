@@ -113,7 +113,7 @@ jobs:
       - run:
           name: Render merged JSONLD from jsonld and translationjson
           command: |
-            $PWD/scripts/render-details.sh /tmp/workspace multilingual
+            $PWD/scripts/render-details.sh /tmp/workspace merge
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
