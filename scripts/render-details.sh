@@ -272,7 +272,7 @@ do
                     render_html $SLINE $TLINE $i $RLINE ${line} ${TARGETDIR}/report/${line}
 		    ;;
                     shacl) render_shacl $SLINE $TLINE $i $RLINE
-                           render_shacl_languageaware $SLINE $TLINE $i $RLINE ${GOALLANGUAGE}
+                           #render_shacl_languageaware $SLINE $TLINE $i $RLINE ${GOALLANGUAGE}
 		    ;;
 	            context) render_context $SLINE $TLINE $i $RLINE
 		    ;;
