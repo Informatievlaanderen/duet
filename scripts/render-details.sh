@@ -18,7 +18,7 @@ render_merged_files() {
     TRANSLATIONFILE=${TLINE}/translation/$(jq -r "${COMMANDLANGJSON}" ${SLINE}/.names.json)
 
     COMMANDJSONLD=$(echo '.[].translation | .[] | select(.language | contains("'${GOALLANGUAGE}'")) | .mergefile')
-    MERGEDJSONLD=$(jq -r "${COMMANDJSONLD}" ${SLINE}/.names.json)
+    MERGEDJSONLD=${TLINE}/translation/$(jq -r "${COMMANDJSONLD}" ${SLINE}/.names.json)
 
     if [ -f "${TRANSLATIONFILE}" ] 
     then
@@ -218,13 +218,10 @@ render_shacl_languageaware() {
 
     FILENAME=$(jq -r ".name" ${JSONI})_${GOALLANGUAGE}
     COMMANDJSONLD=$(echo '.[].translation | .[] | select(.language | contains("'${GOALLANGUAGE}'")) | .mergefile')
-    MERGEDJSONLD=$(jq -r "${COMMANDJSONLD}" ${TLINE}/.names.json)
+    MERGEDJSONLD=${TLINE}/translation/$(jq -r "${COMMANDJSONLD}" ${SLINE}/.names.json)
 
     OUTFILE=${TLINE}/shacl/${FILENAME}-SHACL_${GOALLANGUAGE}.jsonld
     OUTREPORT=${RLINE}/shacl/${FILENAME}-SHACL_${GOALLANGUAGE}.report
-
-    mkdir -p ${TLINE}/translation
-    OUTPUTFILE=${TLINE}/translation/${MERGEDJSONLD}
 
     BASENAME=$(basename ${JSONI} .jsonld)
 
