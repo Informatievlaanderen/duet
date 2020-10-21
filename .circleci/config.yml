@@ -102,7 +102,7 @@ jobs:
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
-            - target/
+            - translation/
   render-merged-jsonld:
       docker: 
       - image: informatievlaanderen/oslo-specification-generator:multilingual

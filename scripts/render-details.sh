@@ -11,12 +11,12 @@ render_merged_files() {
     echo "Rendering the merged version of $1 with the json in $2 from $3 and to $4"
     local JSONI=$1
     local GOALLANGUAGE=$2
-    local DIRECTORY=$3
-    local TLINE=$4
+    local SLINE=$3
+    local TRLINE=$4
     local RLINE=$5
 
     COMMANDLANGJSON=$(echo '.[].translation | .[] | select(.language | contains("'${GOALLANGUAGE}'")) | .translationjson')
-    TRANSLATIONFILE=${TLINE}/translation/$(jq -r "${COMMANDLANGJSON}" ${SLINE}/.names.json)
+    TRANSLATIONFILE=${TRLINE}/translation/$(jq -r "${COMMANDLANGJSON}" ${SLINE}/.names.json)
 
     COMMANDJSONLD=$(echo '.[].translation | .[] | select(.language | contains("'${GOALLANGUAGE}'")) | .mergefile')
     MERGEDJSONLD=${RLINE}/translation/$(jq -r "${COMMANDJSONLD}" ${SLINE}/.names.json)
@@ -260,6 +260,7 @@ do
     SLINE=${TARGETDIR}/src/${line}
     TLINE=${TARGETDIR}/target/${line}
     RLINE=${TARGETDIR}/report/${line}
+    TRLINE=${TARGETDIR}/translation/${line}
     echo "RENDER-DETAILS: Processing line ${SLINE} => ${TLINE},${RLINE}"
     if [ -d "${SLINE}" ]
     then
@@ -276,9 +277,9 @@ do
 		    ;;
 	            context) render_context $SLINE $TLINE $i $RLINE
 		    ;;
-                    multilingual) render_translationfiles ${PRIMELANGUAGE} ${GOALLANGUAGE} $i ${SLINE} ${TLINE}
+                    multilingual) render_translationfiles ${PRIMELANGUAGE} ${GOALLANGUAGE} $i ${SLINE} ${TRLINE}
             ;;
-                merge) render_merged_files $i ${GOALLANGUAGE} ${SLINE} ${TLINE} ${RLINE}
+                merge) render_merged_files $i ${GOALLANGUAGE} ${SLINE} ${TRLINE} ${RLINE}
             ;;
 		   *)  echo "RENDER-DETAILS: ${DETAILS} not handled yet"
 	    esac
