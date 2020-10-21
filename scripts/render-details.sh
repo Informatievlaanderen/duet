@@ -20,6 +20,8 @@ render_merged_files() {
 
     COMMANDJSONLD=$(echo '.[].translation | .[] | select(.language | contains("'${GOALLANGUAGE}'")) | .mergefile')
     MERGEDJSONLD=${RLINE}/translation/$(jq -r "${COMMANDJSONLD}" ${SLINE}/.names.json)
+    MERGEDJSONLDDIR=$(dirname ${MERGEDJSONLD})
+    mkdir -p ${MERGEDJSONLDDIR}
 
     if [ -f "${TRANSLATIONFILE}" ] 
     then
