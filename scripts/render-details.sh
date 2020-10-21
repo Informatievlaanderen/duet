@@ -241,8 +241,10 @@ render_shacl_languageaware() {
 	    mkdir -p ${RLINE}/shacl      
         if ! node /app/shacl-generator2.js -i ${MERGEDJSONLD} -d ${DOMAIN} -o ${OUTFILE} - l ${GOALLANGUAGE} 2>&1 | tee ${OUTREPORT}
 	    then
-            echo "RENDER-DETAILS: See ${OUTREPORT} for the details"
+            echo "RENDER-DETAILS(shacle-languageaware): See ${OUTREPORT} for the details"
             exit -1
+        else         
+            echo "RENDER-DETAILS(shacle-languageaware): saved to ${OUTFILE}"
         fi
         prettyprint_jsonld ${OUTFILE}
         popd
@@ -268,7 +270,7 @@ do
                     render_html $SLINE $TLINE $i $RLINE ${line}
 		    ;;
                     shacl) render_shacl $SLINE $TLINE $i $RLINE
-                    render_shacl $SLINE $TLINE $i $RLINE ${GOALLANGUAGE}
+                    render_shacl_languageaware $SLINE $TLINE $i $RLINE ${GOALLANGUAGE}
 		    ;;
 	            context) render_context $SLINE $TLINE $i $RLINE
 		    ;;
