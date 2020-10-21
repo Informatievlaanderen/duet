@@ -220,8 +220,8 @@ render_shacl_languageaware() {
     COMMANDJSONLD=$(echo '.[].translation | .[] | select(.language | contains("'${GOALLANGUAGE}'")) | .mergefile')
     MERGEDJSONLD=${TLINE}/translation/$(jq -r "${COMMANDJSONLD}" ${SLINE}/.names.json)
 
-    OUTFILE=${TLINE}/shacl/${FILENAME}-SHACL_${GOALLANGUAGE}.jsonld
-    OUTREPORT=${RLINE}/shacl/${FILENAME}-SHACL_${GOALLANGUAGE}.report
+    OUTFILE=${TLINE}/shacl/${FILENAME}-SHACL.jsonld
+    OUTREPORT=${RLINE}/shacl/${FILENAME}-SHACL.report
 
     BASENAME=$(basename ${JSONI} .jsonld)
 
