@@ -13,12 +13,13 @@ render_merged_files() {
     local GOALLANGUAGE=$2
     local DIRECTORY=$3
     local TLINE=$4
+    local RLINE=$5
 
     COMMANDLANGJSON=$(echo '.[].translation | .[] | select(.language | contains("'${GOALLANGUAGE}'")) | .translationjson')
     TRANSLATIONFILE=${TLINE}/translation/$(jq -r "${COMMANDLANGJSON}" ${SLINE}/.names.json)
 
     COMMANDJSONLD=$(echo '.[].translation | .[] | select(.language | contains("'${GOALLANGUAGE}'")) | .mergefile')
-    MERGEDJSONLD=${TLINE}/translation/$(jq -r "${COMMANDJSONLD}" ${SLINE}/.names.json)
+    MERGEDJSONLD=${RLINE}/translation/$(jq -r "${COMMANDJSONLD}" ${SLINE}/.names.json)
 
     if [ -f "${TRANSLATIONFILE}" ] 
     then
@@ -114,7 +115,7 @@ render_html() { # SLINE TLINE JSON
         TEMPLATELANG=$(jq -r "${COMMANDTEMPLATELANG}" ${SLINE}/.names.json)
         MERGEFILENAME=$(jq -r ".name" ${JSONI})_${GOALLANGUAGE}
         COMMANDJSONLD=$(echo '.[].translation | .[] | select(.language | contains("'${GOALLANGUAGE}'")) | .mergefile')
-        MERGEDJSONLD=${TLINE}/translation/$(jq -r "${COMMANDJSONLD}" ${SLINE}/.names.json)
+        MERGEDJSONLD=${RLINE}/translation/$(jq -r "${COMMANDJSONLD}" ${SLINE}/.names.json)
 
         echo "RENDER-DETAILS(language html): node /app/html-generator2.js -s ${TYPE} -i ${MERGEDJSONLD} -x ${RLINE}/html-nj.json -r ${DROOT} -t ${TEMPLATELANG} -d ${SLINE}/templates -o ${OUTPUT} -m ${GOALLANGUAGE} -e ${RLINE}"
 
@@ -219,7 +220,7 @@ render_shacl_languageaware() {
 
     FILENAME=$(jq -r ".name" ${JSONI})_${GOALLANGUAGE}
     COMMANDJSONLD=$(echo '.[].translation | .[] | select(.language | contains("'${GOALLANGUAGE}'")) | .mergefile')
-    MERGEDJSONLD=${TLINE}/translation/$(jq -r "${COMMANDJSONLD}" ${SLINE}/.names.json)
+    MERGEDJSONLD=${RLINE}/translation/$(jq -r "${COMMANDJSONLD}" ${SLINE}/.names.json)
 
     OUTFILE=${TLINE}/shacl/${FILENAME}-SHACL.jsonld
     OUTREPORT=${RLINE}/shacl/${FILENAME}-SHACL.report
@@ -274,7 +275,7 @@ do
 		    ;;
                     multilingual) render_translationfiles ${PRIMELANGUAGE} ${GOALLANGUAGE} $i ${SLINE} ${TLINE}
             ;;
-                merge) render_merged_files $i ${GOALLANGUAGE} ${SLINE} ${TLINE}
+                merge) render_merged_files $i ${GOALLANGUAGE} ${SLINE} ${TLINE} ${RLINE}
             ;;
 		   *)  echo "RENDER-DETAILS: ${DETAILS} not handled yet"
 	    esac
