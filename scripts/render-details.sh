@@ -293,7 +293,7 @@ do
                     shacl) render_shacl $SLINE $TLINE $i $RLINE
                            render_shacl_languageaware $SLINE $TLINE $i $RLINE ${GOALLANGUAGE}
 		    ;;
-	            context) render_context $SLINE $TLINE $i $RLINE
+	            context) render_context $SLINE $TLINE $i $RLINE $GOALLANGUAGE
 		    ;;
                     multilingual) render_translationfiles ${PRIMELANGUAGE} ${GOALLANGUAGE} $i ${SLINE} ${TRLINE}
             ;;
