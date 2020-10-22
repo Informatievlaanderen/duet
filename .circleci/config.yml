@@ -378,7 +378,7 @@ workflows:
             - render-shacl-details
       - render-context-details:
           requires:
-            - normalise-jsonld
+            - render-merged-jsonld
       - render-translation-json:
           requires:
             - normalise-jsonld

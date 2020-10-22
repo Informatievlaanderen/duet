@@ -149,11 +149,12 @@ prettyprint_jsonld() {
 }
 
 render_context() { # SLINE TLINE JSON
-    echo "render_context: $1 $2 $3" 
+    echo "render_context: $1 $2 $3 $4 $5" 
     local SLINE=$1
     local TLINE=$2
     local JSONI=$3
-    local RLINE=$4    
+    local RLINE=$4   
+    local GOALLANGUAGE=$5 
 
     FILENAME=$(jq -r ".name" ${JSONI})
     OUTFILE=${FILENAME}.jsonld
@@ -169,11 +170,28 @@ render_context() { # SLINE TLINE JSON
       pushd /app
         mkdir -p ${TLINE}/context
         if ! node /app/json-ld-generator.js -d -l label -i ${JSONI} -o ${TLINE}/context/${OUTFILE}
-	then
-	    echo "RENDER-DETAILS: See XXX for more details"
-	    exit -1
-	fi
+        then
+            echo "RENDER-DETAILS(context): See XXX for more details, Rendering failed"
+            exit -1
+        else 
+            echo "RENDER-DETAILS(context): Rendering successfull, File saved to  ${TLINE}/context/${OUTFILE}"
+	    fi
+
+        OUTFILELANGUAGE=$FILENAME_${GOALLANGUAGE}.jsonld
+        COMMANDJSONLD=$(echo '.[].translation | .[] | select(.language | contains("'${GOALLANGUAGE}'")) | .mergefile')
+        MERGEDJSONLD=${RLINE}/translation/$(jq -r "${COMMANDJSONLD}" ${SLINE}/.names.json) 
+
+        echo "RENDER-DETAILS(context-language-aware): node /app/json-ld-generator2.js -d -l label -i ${MERGEDJSONLD} -o ${TLINE}/context/${OUTFILELANGUAGE}"        
+        if ! node /app/json-ld-generator2.js -d -l label -i ${MERGEDJSONLD} -o ${TLINE}/context/${OUTFILELANGUAGE}
+        then
+            echo "RENDER-DETAILS(context-language-aware): See XXX for more details, Rendering failed"
+            exit -1
+        else 
+            echo "RENDER-DETAILS(context-language-aware): Rendering successfull, File saved to  ${TLINE}/context/${OUTFILELANGUAGE}"
+	    fi
+
         prettyprint_jsonld ${TLINE}/context/${OUTFILE}
+        prettyprint_jsonld ${TLINE}/context/${OUTFILELANGUAGE}
       popd
     fi
 }
