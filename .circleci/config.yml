@@ -144,7 +144,7 @@ jobs:
             - reporthtml/
   render-context-details:
     docker:
-      - image: informatievlaanderen/oslo-specification-generator:j1.4-circleci
+      - image: informatievlaanderen/oslo-specification-generator:multilingual
     steps:
       - checkout
       - attach_workspace:
