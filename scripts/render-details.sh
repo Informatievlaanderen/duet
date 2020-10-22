@@ -235,13 +235,13 @@ render_shacl_languageaware() {
 
     if [ ${TYPE} == "ap" ] || [ ${TYPE} == "oj" ]; 
     then
-        echo "RENDER-DETAILS(shacl-languageaware): node /app/shacl-generator.js -i ${MERGEDJSONLD} -o ${OUTFILE}"
+        echo "RENDER-DETAILS(shacl-languageaware): node /app/shacl-generator.js -i ${MERGEDJSONLD} -d ${DOMAIN} -o ${OUTFILE} -l ${GOALLANGUAGE}"
     #      DOMAIN="https://duet.dev-vlaanderen.be/shacl/${BASENAME}"
         DOMAIN="https://duet.dev-vlaanderen.be/shacl/${FILENAME}"
         pushd /app
         mkdir -p ${TLINE}/shacl
 	    mkdir -p ${RLINE}/shacl      
-        if ! node /app/shacl-generator2.js -i ${MERGEDJSONLD} -d ${DOMAIN} -o ${OUTFILE} - l ${GOALLANGUAGE} 2>&1 | tee ${OUTREPORT}
+        if ! node /app/shacl-generator2.js -i ${MERGEDJSONLD} -d ${DOMAIN} -o ${OUTFILE} -l ${GOALLANGUAGE} 2>&1 | tee ${OUTREPORT}
 	    then
             echo "RENDER-DETAILS(shacle-languageaware): See ${OUTREPORT} for the details"
             exit -1
