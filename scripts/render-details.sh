@@ -177,7 +177,7 @@ render_context() { # SLINE TLINE JSON
             echo "RENDER-DETAILS(context): Rendering successfull, File saved to  ${TLINE}/context/${OUTFILE}"
 	    fi
 
-        OUTFILELANGUAGE=$FILENAME_${GOALLANGUAGE}.jsonld
+        OUTFILELANGUAGE=${FILENAME}_${GOALLANGUAGE}.jsonld
         COMMANDJSONLD=$(echo '.[].translation | .[] | select(.language | contains("'${GOALLANGUAGE}'")) | .mergefile')
         MERGEDJSONLD=${RLINE}/translation/$(jq -r "${COMMANDJSONLD}" ${SLINE}/.names.json) 
 
