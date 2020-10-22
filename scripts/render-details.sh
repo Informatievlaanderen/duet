@@ -290,7 +290,8 @@ do
 		      mkdir -p ${RLINE}
                     render_html $SLINE $TLINE $i $RLINE ${line} ${TARGETDIR}/report/${line}
 		    ;;
-                    shacl) render_shacl $SLINE $TLINE $i $RLINE
+                    shacl) # render_shacl $SLINE $TLINE $i $RLINE
+                            render_shacl_languageaware $SLINE $TLINE $i $RLINE ${PRIMELANGUAGE}
                            render_shacl_languageaware $SLINE $TLINE $i $RLINE ${GOALLANGUAGE}
 		    ;;
 	            context) render_context $SLINE $TLINE $i $RLINE $GOALLANGUAGE
