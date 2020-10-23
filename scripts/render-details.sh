@@ -266,7 +266,7 @@ cat ${CHECKOUTFILE} | while read line; do
                 RLINE=${TARGETDIR}/reporthtml/${line}
                 mkdir -p ${RLINE}
                 render_html $SLINE $TLINE $i $RLINE ${line} ${TARGETDIR}/report/${line} ${PRIMELANGUAGE}
-                render_html $SLINE $TLINE $i $RLINE ${line} ${TARGETDIR}/report/${line} ${GOALLANGUAGELANGUAGE}
+                render_html $SLINE $TLINE $i $RLINE ${line} ${TARGETDIR}/report/${line} ${GOALLANGUAGE}
                 ;;
             shacl) # render_shacl $SLINE $TLINE $i $RLINE
                 render_shacl_languageaware $SLINE $TLINE $i $RLINE ${PRIMELANGUAGE}
@@ -274,7 +274,7 @@ cat ${CHECKOUTFILE} | while read line; do
                 ;;
             context)
                 render_context $SLINE $TLINE $i $RLINE ${PRIMELANGUAGE}
-                render_context $SLINE $TLINE $i $RLINE ${GOALLANGUAGELANGUAGE}
+                render_context $SLINE $TLINE $i $RLINE ${GOALLANGUAGE}
                 ;;
             multilingual)
                 render_translationfiles ${PRIMELANGUAGE} ${GOALLANGUAGE} $i ${SLINE} ${TRLINE}
