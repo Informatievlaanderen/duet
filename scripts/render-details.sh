@@ -88,6 +88,7 @@ render_html() { # SLINE TLINE JSON
     cp -n /app/views/* ${SLINE}/templates
     mkdir -p ${RLINE}
 
+    BASENAME=$(basename ${JSONI} .jsonld)
     COMMAND=$(echo '.[]|select(.name | contains("'${BASENAME}'"))|.type')
     TYPE=$(jq -r "${COMMAND}" ${SLINE}/.names.json)
     OUTPUT=${TLINE}/index_${LANGUAGE}.html
@@ -95,11 +96,11 @@ render_html() { # SLINE TLINE JSON
     TEMPLATELANG=$(jq -r "${COMMANDTEMPLATELANG}" ${SLINE}/.names.json)
     MERGEFILENAME=$(jq -r ".name" ${JSONI})_${LANGUAGE}
     COMMANDJSONLD=$(echo '.[].translation | .[] | select(.language | contains("'${LANGUAGE}'")) | .mergefile')
-    MERGEDJSONLD=${RRLINE}/translation/$(jq -r "${COMMANDJSONLD}" ${SLINE}/.names.json)
+    MERGEDJSONLD=${RLINE}/translation/$(jq -r "${COMMANDJSONLD}" ${SLINE}/.names.json)
 
-    echo "RENDER-DETAILS(language html): node /app/html-generator2.js -s ${TYPE} -i ${MERGEDJSONLD} -x ${RLINE}/html-nj.json -r ${DROOT} -t ${TEMPLATELANG} -d ${SLINE}/templates -o ${OUTPUT} -m ${GOALLANGUAGE} -e ${RLINE}"
+    echo "RENDER-DETAILS(language html): node /app/html-generator2.js -s ${TYPE} -i ${MERGEDJSONLD} -x ${RLINE}/html-nj_${LANGUAGE}.json -r ${DROOT} -t ${TEMPLATELANG} -d ${SLINE}/templates -o ${OUTPUT} -m ${LANGUAGE} -e ${RLINE}"
 
-    if ! node /app/html-generator2.js -s ${TYPE} -i ${MERGEDJSONLD} -x ${RLINE}/html-nj_${LANGUAGE}.json -r ${DROOT} -t ${TEMPLATELANG} -d ${SLINE}/templates -o ${OUTPUT} -m ${GOALLANGUAGE} -e ${RRLINE}; then
+    if ! node /app/html-generator2.js -s ${TYPE} -i ${MERGEDJSONLD} -x ${RLINE}/html-nj_${LANGUAGE}.json -r ${DROOT} -t ${TEMPLATELANG} -d ${SLINE}/templates -o ${OUTPUT} -m ${LANGUAGE} -e ${RLINE}; then
         echo "RENDER-DETAILS(language html): rendering failed"
         exit -1
     else
@@ -107,8 +108,8 @@ render_html() { # SLINE TLINE JSON
     fi
 
     # make the report better readable
-    jq . ${RLINE}/html-nj.json >${RLINE}/html-nj.json2
-    mv ${RLINE}/html-nj.json2 ${RLINE}/html-nj.json
+    jq . ${RLINE}/html-nj_${LANGUAGE}.json >${RLINE}/html-nj_${LANGUAGE}.json2
+    mv ${RLINE}/html-nj_${LANGUAGE}.json2 ${RLINE}/html-nj_${LANGUAGE}.json
     popd
 }
 
