@@ -83,9 +83,13 @@ render_html() { # SLINE TLINE JSON
     local RRLINE=$6
     local LANGUAGE=$7
 
+    # precendence order: local files > Data.vlaanderen.be > SpecGenerator
+    # TODO: include a first copy from Data.vlaanderen.be 
     cp -n /app/views/* ${SLINE}/templates
     mkdir -p ${RLINE}
 
+    COMMAND=$(echo '.[]|select(.name | contains("'${BASENAME}'"))|.type')
+    TYPE=$(jq -r "${COMMAND}" ${SLINE}/.names.json)
     OUTPUT=${TLINE}/index_${LANGUAGE}.html
     COMMANDTEMPLATELANG=$(echo '.[].translation | .[] | select(.language | contains("'${LANGUAGE}'")) | .template')
     TEMPLATELANG=$(jq -r "${COMMANDTEMPLATELANG}" ${SLINE}/.names.json)
