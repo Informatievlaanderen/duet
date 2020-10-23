@@ -82,14 +82,10 @@ render_html() { # SLINE TLINE JSON
     local RLINE=$4
     local DROOT=$5
     local RRLINE=$6
+    local LANGUAGE=$7
     
     BASENAME=$(basename ${JSONI} .jsonld)
-#    OUTFILE=${BASENAME}.html
-    COMMAND=$(echo '.[]|select(.name | contains("'${BASENAME}'"))|.template')
-    TEMPLATE=$(jq -r "${COMMAND}" ${SLINE}/.names.json)
-    # determine the location of the template to be used.
-
-    echo "RENDER-DETAILS(html): ${TEMPLATE} ${PWD}"	    
+#    OUTFILE=${BASENAME}.html 
     # precendence order: local files > Data.vlaanderen.be > SpecGenerator
     # TODO: include a first copy from Data.vlaanderen.be 
     cp -n /app/views/* ${SLINE}/templates 
@@ -98,27 +94,19 @@ render_html() { # SLINE TLINE JSON
     COMMAND=$(echo '.[]|select(.name | contains("'${BASENAME}'"))|.type')
     TYPE=$(jq -r "${COMMAND}" ${SLINE}/.names.json)
 
-    
-    echo "RENDER-DETAILS(html): node /app/html-generator.js -s ${TYPE} -i ${JSONI} -x ${RLINE}/html-nj.json -r ${DROOT} -t ${TEMPLATE} -d ${SLINE}/templates -o ${TLINE}/index.html"
     pushd /app
         mkdir -p ${TLINE}/html
-        if ! node /app/html-generator.js -s ${TYPE} -i ${JSONI} -t ${TEMPLATE} -x ${RLINE}/html-nj.json -d ${SLINE}/templates -r /${DROOT} -o ${TLINE}/index.html
-        then
-            exit -1
-        else
-            echo "RENDER-DETAILS(html): File was created in ${TLINE}/index.html"
-        fi
 
-        OUTPUT=${TLINE}/index_${GOALLANGUAGE}.html
-        COMMANDTEMPLATELANG=$(echo '.[].translation | .[] | select(.language | contains("'${GOALLANGUAGE}'")) | .template')
+        OUTPUT=${TLINE}/index_${LANGUAGE}.html
+        COMMANDTEMPLATELANG=$(echo '.[].translation | .[] | select(.language | contains("'${LANGUAGE}'")) | .template')
         TEMPLATELANG=$(jq -r "${COMMANDTEMPLATELANG}" ${SLINE}/.names.json)
-        MERGEFILENAME=$(jq -r ".name" ${JSONI})_${GOALLANGUAGE}
-        COMMANDJSONLD=$(echo '.[].translation | .[] | select(.language | contains("'${GOALLANGUAGE}'")) | .mergefile')
+        MERGEFILENAME=$(jq -r ".name" ${JSONI})_${LANGUAGE}
+        COMMANDJSONLD=$(echo '.[].translation | .[] | select(.language | contains("'${LANGUAGE}'")) | .mergefile')
         MERGEDJSONLD=${RRLINE}/translation/$(jq -r "${COMMANDJSONLD}" ${SLINE}/.names.json)
 
-        echo "RENDER-DETAILS(language html): node /app/html-generator2.js -s ${TYPE} -i ${MERGEDJSONLD} -x ${RLINE}/html-nj.json -r ${DROOT} -t ${TEMPLATELANG} -d ${SLINE}/templates -o ${OUTPUT} -m ${GOALLANGUAGE} -e ${RLINE}"
+        echo "RENDER-DETAILS(language html): node /app/html-generator2.js -s ${TYPE} -i ${MERGEDJSONLD} -x ${RLINE}/html-nj.json -r ${DROOT} -t ${TEMPLATELANG} -d ${SLINE}/templates -o ${OUTPUT} -m ${LANGUAGE} -e ${RLINE}"
 
-	if ! node /app/html-generator2.js -s ${TYPE} -i ${MERGEDJSONLD} -x ${RLINE}/html-nj_${GOALLANGUAGE}.json -r ${DROOT} -t ${TEMPLATELANG} -d ${SLINE}/templates -o ${OUTPUT} -m ${GOALLANGUAGE} -e ${RRLINE} 
+	if ! node /app/html-generator2.js -s ${TYPE} -i ${MERGEDJSONLD} -x ${RLINE}/html-nj_${LANGUAGE}.json -r ${DROOT} -t ${TEMPLATELANG} -d ${SLINE}/templates -o ${OUTPUT} -m ${GOALLANGUAGE} -e ${RRLINE} 
         then   
             echo "RENDER-DETAILS(language html): rendering failed"
             exit -1
