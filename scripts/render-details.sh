@@ -75,44 +75,60 @@ render_translationfiles() {
 
 render_html() { # SLINE TLINE JSON
     echo "render_html: $1 $2 $3 $4 $5 $6 $7"
+    echo "render_html: $1 $2 $3 $4 $5"     
     local SLINE=$1
     local TLINE=$2
     local JSONI=$3
     local RLINE=$4
     local DROOT=$5
     local RRLINE=$6
-    local LANGUAGE=$7
+    
+    BASENAME=$(basename ${JSONI} .jsonld)
+#    OUTFILE=${BASENAME}.html
+    COMMAND=$(echo '.[]|select(.name | contains("'${BASENAME}'"))|.template')
+    TEMPLATE=$(jq -r "${COMMAND}" ${SLINE}/.names.json)
+    # determine the location of the template to be used.
 
+    echo "RENDER-DETAILS(html): ${TEMPLATE} ${PWD}"	    
     # precendence order: local files > Data.vlaanderen.be > SpecGenerator
     # TODO: include a first copy from Data.vlaanderen.be 
-    cp -n /app/views/* ${SLINE}/templates
+    cp -n /app/views/* ${SLINE}/templates 
     mkdir -p ${RLINE}
 
-    BASENAME=$(basename ${JSONI} .jsonld)
     COMMAND=$(echo '.[]|select(.name | contains("'${BASENAME}'"))|.type')
     TYPE=$(jq -r "${COMMAND}" ${SLINE}/.names.json)
-    OUTPUT=${TLINE}/index_${LANGUAGE}.html
-    COMMANDTEMPLATELANG=$(echo '.[].translation | .[] | select(.language | contains("'${LANGUAGE}'")) | .template')
-    TEMPLATELANG=$(jq -r "${COMMANDTEMPLATELANG}" ${SLINE}/.names.json)
-    MERGEFILENAME=$(jq -r ".name" ${JSONI})_${LANGUAGE}
-    COMMANDJSONLD=$(echo '.[].translation | .[] | select(.language | contains("'${LANGUAGE}'")) | .mergefile')
-    MERGEDJSONLD=${RRLINE}/translation/$(jq -r "${COMMANDJSONLD}" ${SLINE}/.names.json)
 
-    OUTPUTDIR=$(dirname ${OUTPUT})
-    mkdir -p ${OUTPUT}
+    
+    echo "RENDER-DETAILS(html): node /app/html-generator.js -s ${TYPE} -i ${JSONI} -x ${RLINE}/html-nj.json -r ${DROOT} -t ${TEMPLATE} -d ${SLINE}/templates -o ${TLINE}/index.html"
+    pushd /app
+        mkdir -p ${TLINE}/html
+        if ! node /app/html-generator.js -s ${TYPE} -i ${JSONI} -t ${TEMPLATE} -x ${RLINE}/html-nj.json -d ${SLINE}/templates -r /${DROOT} -o ${TLINE}/index.html
+        then
+            exit -1
+        else
+            echo "RENDER-DETAILS(html): File was created in ${TLINE}/index.html"
+        fi
 
-    echo "RENDER-DETAILS(language html): node /app/html-generator2.js -s ${TYPE} -i ${MERGEDJSONLD} -x ${RLINE}/html-nj_${LANGUAGE}.json -r ${DROOT} -t ${TEMPLATELANG} -d ${SLINE}/templates -o ${OUTPUT} -m ${LANGUAGE} -e ${RRLINE}"
+        OUTPUT=${TLINE}/index_${GOALLANGUAGE}.html
+        COMMANDTEMPLATELANG=$(echo '.[].translation | .[] | select(.language | contains("'${GOALLANGUAGE}'")) | .template')
+        TEMPLATELANG=$(jq -r "${COMMANDTEMPLATELANG}" ${SLINE}/.names.json)
+        MERGEFILENAME=$(jq -r ".name" ${JSONI})_${GOALLANGUAGE}
+        COMMANDJSONLD=$(echo '.[].translation | .[] | select(.language | contains("'${GOALLANGUAGE}'")) | .mergefile')
+        MERGEDJSONLD=${RRLINE}/translation/$(jq -r "${COMMANDJSONLD}" ${SLINE}/.names.json)
 
-    if ! node /app/html-generator2.js -s ${TYPE} -i ${MERGEDJSONLD} -x ${RLINE}/html-nj_${LANGUAGE}.json -r ${DROOT} -t ${TEMPLATELANG} -d ${SLINE}/templates -o ${OUTPUT} -m ${LANGUAGE} -e ${RRLINE}; then
-        echo "RENDER-DETAILS(language html): rendering failed"
-        exit -1
-    else
-        echo "RENDER-DETAILS(language html): File was rendered in ${OUTPUT}"
-    fi
+        echo "RENDER-DETAILS(language html): node /app/html-generator2.js -s ${TYPE} -i ${MERGEDJSONLD} -x ${RLINE}/html-nj.json -r ${DROOT} -t ${TEMPLATELANG} -d ${SLINE}/templates -o ${OUTPUT} -m ${GOALLANGUAGE} -e ${RLINE}"
 
-    # make the report better readable
-    jq . ${RLINE}/html-nj_${LANGUAGE}.json >${RLINE}/html-nj_${LANGUAGE}.json2
-    mv ${RLINE}/html-nj_${LANGUAGE}.json2 ${RLINE}/html-nj_${LANGUAGE}.json
+	if ! node /app/html-generator2.js -s ${TYPE} -i ${MERGEDJSONLD} -x ${RLINE}/html-nj_${GOALLANGUAGE}.json -r ${DROOT} -t ${TEMPLATELANG} -d ${SLINE}/templates -o ${OUTPUT} -m ${GOALLANGUAGE} -e ${RRLINE} 
+        then   
+            echo "RENDER-DETAILS(language html): rendering failed"
+            exit -1
+        else
+            echo "RENDER-DETAILS(language html): File was rendered in ${OUTPUT}"
+        fi
+        
+        # make the report better readable
+        jq . ${RLINE}/html-nj.json > ${RLINE}/html-nj.json2
+        mv ${RLINE}/html-nj.json2 ${RLINE}/html-nj.json
     popd
 }
 
