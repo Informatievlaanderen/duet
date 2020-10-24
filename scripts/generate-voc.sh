@@ -22,12 +22,12 @@ make_jsonld() {
     COMMANDJSONLD=$(echo '.[].translation | .[] | select(.language | contains("'${LANGUAGE}'")) | .mergefile')
     MERGEDJSONLD=${RLINE}/translation/$(jq -r "${COMMANDJSONLD}" ${SLINE}/.names.json)
 
-    if ! node /app/render-voc.js -i ${MERGEDJSONLD} -o ${OUTFILE} -l ${LANGUAGE} -c ${CONFIGDIR}/context
+    if ! node /app/render-voc.js -i ${MERGEDJSONLD} -o ${TARGET} -l ${LANGUAGE} -c ${CONFIGDIR}/context
     then
-        echo "RENDER-DETAILS(shacle-languageaware): See ${OUTREPORT} for the details"
+        echo "RENDER-DETAILS(voc-languageaware): See ${OUTREPORT} for the details"
         exit -1
     else
-        echo "RENDER-DETAILS(shacle-languageaware): saved to ${OUTFILE}"
+        echo "RENDER-DETAILS(voc-languageaware): saved to ${TARGET}"
     fi
 #/* TODO support subclass */
 #    jq 'walk( if type == "object" and (.range | type) == "array" and (.range | length) > 0 then .range |= map(.uri)  else . end)' ${INPUT} > /tmp/${FILE}0.jsonld
