@@ -4,6 +4,8 @@ TARGETDIR=$1
 SUBDIR=$2
 CONFIGDIR=$3
 CHECKOUTFILE=${TARGETDIR}/checkouts.txt
+PRIMELANGUAGE=${4-'nl'}
+GOALLANGUAGE=${5-'en'}
 
 echo "generate-voc: starting with $1 $2 $3"
 
@@ -13,21 +15,31 @@ make_jsonld() {
     local INPUT=$2
     local TARGET=$3
     local CONFIGDIR=$4
+    local LANGUAGE=$5
     mkdir -p /tmp/${FILE}
+
+    if ! node /app/render-voc.js -i ${INPUT} -o ${OUTFILE} -l ${LANGUAGE} -n /tmp/${FILE}/ontology -d ${CONFIGDIR}/ontology.defaults.json -c ${CONFIGDIR}/context
+    then
+        echo "RENDER-DETAILS(shacle-languageaware): See ${OUTREPORT} for the details"
+        exit -1
+    else
+        echo "RENDER-DETAILS(shacle-languageaware): saved to ${OUTFILE}"
+    fi
 #/* TODO support subclass */
-    jq 'walk( if type == "object" and (.range | type) == "array" and (.range | length) > 0 then .range |= map(.uri)  else . end)' ${INPUT} > /tmp/${FILE}0.jsonld
-    jq 'walk( if type == "object" and (.domain | type) == "array" and (.domain | length) > 0 then .domain |= map(.uri)  else . end)' /tmp/${FILE}0.jsonld > /tmp/${FILE}1.jsonld
-    jq 'walk( if type == "object" and (.nl | length) > 0 and (.nl | sub(" ";"";"g") | length) == 0 then .nl |= ""  else . end)' /tmp/${FILE}1.jsonld > /tmp/${FILE}2.jsonld
-    jq 'walk( if type == "object" and (.usage| type) == "object" and (.usage.nl | length) == 0 then .usage |= {}  else . end)' /tmp/${FILE}2.jsonld > /tmp/${FILE}3.jsonld
-    jq 'walk( if type == "object" and (."foaf:mbox" | length) > 0 then ."foaf:mbox" |= "mailto:"+.  else . end)' /tmp/${FILE}3.jsonld > /tmp/${FILE}4.jsonld
+#    jq 'walk( if type == "object" and (.range | type) == "array" and (.range | length) > 0 then .range |= map(.uri)  else . end)' ${INPUT} > /tmp/${FILE}0.jsonld
+#    jq 'walk( if type == "object" and (.domain | type) == "array" and (.domain | length) > 0 then .domain |= map(.uri)  else . end)' /tmp/${FILE}0.jsonld > /tmp/${FILE}1.jsonld
+#    jq 'walk( if type == "object" and (.nl | length) > 0 and (.nl | sub(" ";"";"g") | length) == 0 then .nl |= ""  else . end)' /tmp/${FILE}1.jsonld > /tmp/${FILE}2.jsonld
+#    jq 'walk( if type == "object" and (.usage| type) == "object" and (.usage.nl | length) == 0 then .usage |= {}  else . end)' /tmp/${FILE}2.jsonld > /tmp/${FILE}3.jsonld
+#    jq 'walk( if type == "object" and (."foaf:mbox" | length) > 0 then ."foaf:mbox" |= "mailto:"+.  else . end)' /tmp/${FILE}3.jsonld > /tmp/${FILE}4.jsonld
 
 
-    jq -S '.classes| map({"name" : .name, "description" : .description , "usage" : .usage, "@id" : ."@id", "@type" : ."@type", "parents" : .parents? }) |sort_by(."@id")' /tmp/${FILE}4.jsonld > /tmp/${FILE}/classes
-    jq -S '[ .externals[] | select(.extra.Scope != "NOTHING") ] | map({"name" : .name,  "@id" : ."@id", "@type" : "rdfs:Class" } ) |sort_by(."@id")' /tmp/${FILE}4.jsonld > /tmp/${FILE}/externalclasses
-    jq -S '.properties| map({"name" : .name, "description" : .description , "usage" : .usage, "@id" : ."@id", "@type" : ."@type", "domain" : .domain, "range" : .range, "generalization": .generalization? } )| sort_by(."@id")' /tmp/${FILE}3.jsonld > /tmp/${FILE}/properties
-    jq -S '[ .externalproperties[] | select(.extra.Scope != "NOTHING") ]  | map({"name" : .name,  "@id" : ."@id", "@type" : "rdf:Property" } ) | sort_by(."@id")' /tmp/${FILE}4.jsonld > /tmp/${FILE}/externalproperties
-    jq -S '{"@id" : ."@id", "@type" : ."@type", "label": .label, "title": .title?, "namespace": .namespace?, "authors" : .authors, "editors" : .editors, "contributors" : .contributors, "publication-state" : ."publication-state"?, "publication-date" : ."publication-date"?, "navigation" : .navigation?, "issued": .issued?, "license": .license?, "baseURI": .baseURI?, "baseURIabbrev": .baseURIabbrev?}' /tmp/${FILE}4.jsonld > /tmp/${FILE}/ontology
-    jq -s '.[0] + .[1] + { "classes": .[2], "properties": .[4], "externals": .[3], "externalproperties": .[5]} + .[6]' /tmp/${FILE}/ontology ${CONFIGDIR}/ontology.defaults.json /tmp/${FILE}/classes /tmp/${FILE}/externalclasses /tmp/${FILE}/properties /tmp/${FILE}/externalproperties ${CONFIGDIR}/context >  ${TARGET}
+#    jq -S '.classes| map({"name" : .name, "description" : .description , "usage" : .usage, "@id" : ."@id", "@type" : ."@type", "parents" : .parents? }) |sort_by(."@id")' /tmp/${FILE}4.jsonld > /tmp/${FILE}/classes
+#    jq -S '[ .externals[] | select(.extra.Scope != "NOTHING") ] | map({"name" : .name,  "@id" : ."@id", "@type" : "rdfs:Class" } ) |sort_by(."@id")' /tmp/${FILE}4.jsonld > /tmp/${FILE}/externalclasses
+#    jq -S '.properties| map({"name" : .name, "description" : .description , "usage" : .usage, "@id" : ."@id", "@type" : ."@type", "domain" : .domain, "range" : .range, "generalization": .generalization? } )| sort_by(."@id")' /tmp/${FILE}3.jsonld > /tmp/${FILE}/properties
+#    jq -S '[ .externalproperties[] | select(.extra.Scope != "NOTHING") ]  | map({"name" : .name,  "@id" : ."@id", "@type" : "rdf:Property" } ) | sort_by(."@id")' /tmp/${FILE}4.jsonld > /tmp/${FILE}/externalproperties
+#    jq -S '{"@id" : ."@id", "@type" : ."@type", "label": .label, "title": .title?, "namespace": .namespace?, "authors" : .authors, "editors" : .editors, "contributors" : .contributors, "publication-state" : ."publication-state"?, "publication-date" : ."publication-date"?, "navigation" : .navigation?, "issued": .issued?, "license": .license?, "baseURI": .baseURI?, "baseURIabbrev": .baseURIabbrev?}' /tmp/${FILE}4.jsonld > /tmp/${FILE}/ontology
+#    jq -s '.[0] + .[1] + { "classes": .[2], "properties": .[4], "externals": .[3], "externalproperties": .[5]} + .[6]' /tmp/${FILE}/ontology ${CONFIGDIR}/ontology.defaults.json /tmp/${FILE}/classes /tmp/${FILE}/externalclasses /tmp/${FILE}/properties /tmp/${FILE}/externalproperties ${CONFIGDIR}/context >  ${TARGET}
+
 }
 #############################################################################################
 
@@ -49,7 +61,8 @@ do
                 REPORT=${RLINE}/${BASENAME}.ttl-report
 
                 mkdir -p ${TLINE}/voc
-                make_jsonld $BASENAME $i ${SLINE}/selected.jsonld ${CONFIGDIR} || exit 1
+                make_jsonld $BASENAME $i ${SLINE}/selected.jsonld ${CONFIGDIR} ${PRIMELANGUAGE} 
+                make_jsonld $BASENAME $i ${SLINE}/selected.jsonld ${CONFIGDIR} ${GOALLANGUAGE} || exit 1
                 cp ${SLINE}/selected.jsonld ${TLINE}/voc/${BASENAME}.jsonld
 #                if ! rdf serialize --input-format jsonld --processingMode json-ld-1.1 ${SLINE}/selected.jsonld --output-format turtle -o ${TLINE}/voc/$BASENAME.ttl 2>&1 | tee ${REPORT}
 #                then
