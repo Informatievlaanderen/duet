@@ -369,7 +369,7 @@ workflows:
             - render-merged-jsonld
       - render-voc-rdf:
           requires:
-            - normalise-jsonld
+            - render-merged-jsonld
       - render-shacl-details:
           requires:
             - render-merged-jsonld

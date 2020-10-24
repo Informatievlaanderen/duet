@@ -100,7 +100,6 @@ render_html() { # SLINE TLINE JSON
         OUTPUT=${TLINE}/index_${LANGUAGE}.html
         COMMANDTEMPLATELANG=$(echo '.[].translation | .[] | select(.language | contains("'${LANGUAGE}'")) | .template')
         TEMPLATELANG=$(jq -r "${COMMANDTEMPLATELANG}" ${SLINE}/.names.json)
-        MERGEFILENAME=$(jq -r ".name" ${JSONI})_${LANGUAGE}
         COMMANDJSONLD=$(echo '.[].translation | .[] | select(.language | contains("'${LANGUAGE}'")) | .mergefile')
         MERGEDJSONLD=${RRLINE}/translation/$(jq -r "${COMMANDJSONLD}" ${SLINE}/.names.json)
 
