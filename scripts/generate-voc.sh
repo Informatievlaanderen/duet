@@ -65,8 +65,8 @@ do
                 REPORT=${RLINE}/${BASENAME}.ttl-report
 
                 mkdir -p ${TLINE}/voc
-                make_jsonld $BASENAME $i ${SLINE}/selected.jsonld ${CONFIGDIR} ${PRIMELANGUAGE} ${RLINE} ${SLINE}
-                make_jsonld $BASENAME $i ${SLINE}/selected.jsonld ${CONFIGDIR} ${GOALLANGUAGE} ${RLINE} ${SLINE} || exit 1
+                make_jsonld $BASENAME $i ${SLINE}/selected_${PRIMELANGUAGE}.jsonld ${CONFIGDIR} ${PRIMELANGUAGE} ${RLINE} ${SLINE}
+                make_jsonld $BASENAME $i ${SLINE}/selected_${GOALLANGUAGE}.jsonld ${CONFIGDIR} ${GOALLANGUAGE} ${RLINE} ${SLINE} || exit 1
                 cp ${SLINE}/selected.jsonld ${TLINE}/voc/${BASENAME}.jsonld
 #                if ! rdf serialize --input-format jsonld --processingMode json-ld-1.1 ${SLINE}/selected.jsonld --output-format turtle -o ${TLINE}/voc/$BASENAME.ttl 2>&1 | tee ${REPORT}
 #                then
