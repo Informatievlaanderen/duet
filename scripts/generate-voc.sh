@@ -22,8 +22,8 @@ make_jsonld() {
     COMMANDJSONLD=$(echo '.[].translation | .[] | select(.language | contains("'${LANGUAGE}'")) | .mergefile')
     MERGEDJSONLD=${RLINE}/translation/$(jq -r "${COMMANDJSONLD}" ${SLINE}/.names.json)
 
-    echo "RENDER-DETAILS(voc-languageaware): node /app/render-voc.js -i ${MERGEDJSONLD} -o ${TARGET} -l ${LANGUAGE} -c ${CONFIGDIR}/context"
-    if ! node /app/render-voc.js -i ${MERGEDJSONLD} -o ${TARGET} -l ${LANGUAGE} -c ${CONFIGDIR}/context
+    echo "RENDER-DETAILS(voc-languageaware): node /app/render-voc.js -i ${MERGEDJSONLD} -o ${TARGET} -l ${LANGUAGE} -c ${CONFIGDIR}/context -n /tmp/${FILE}/ontology -d  ${CONFIGDIR}/ontology.defaults.json"
+    if ! node /app/render-voc.js -i ${MERGEDJSONLD} -o ${TARGET} -l ${LANGUAGE} -c ${CONFIGDIR}/context -n /tmp/${FILE}/ontology -d  ${CONFIGDIR}/ontology.defaults.json
     then
         echo "RENDER-DETAILS(voc-languageaware): See ${OUTREPORT} for the details"
         exit -1
