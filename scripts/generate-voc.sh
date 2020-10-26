@@ -21,29 +21,31 @@ make_jsonld() {
     mkdir -p /tmp/${FILE}
     COMMANDJSONLD=$(echo '.[].translation | .[] | select(.language | contains("'${LANGUAGE}'")) | .mergefile')
     MERGEDJSONLD=${RLINE}/translation/$(jq -r "${COMMANDJSONLD}" ${SLINE}/.names.json)
+    OUTPUT=${RLINE}/translation/voc_${LANGUAGE}.jsonld
 
-    echo "RENDER-DETAILS(voc-languageaware): node /app/render-voc.js -i ${MERGEDJSONLD} -o ${TARGET} -l ${LANGUAGE} -c ${CONFIGDIR}/context -n /tmp/${FILE}/ontology -d  ${CONFIGDIR}/ontology.defaults.json"
-    if ! node /app/render-voc.js -i ${MERGEDJSONLD} -o ${TARGET} -l ${LANGUAGE} -c ${CONFIGDIR}/context -n /tmp/${FILE}/ontology -d  ${CONFIGDIR}/ontology.defaults.json
+    echo "RENDER-DETAILS(voc-languageaware): node /app/render-voc.js -i ${MERGEDJSONLD} -o ${OUTPUT} -l ${LANGUAGE} -c ${CONFIGDIR}/context"
+    if ! node /app/render-voc.js -i ${MERGEDJSONLD} -o ${OUTPUT} -l ${LANGUAGE} -c ${CONFIGDIR}/context
     then
         echo "RENDER-DETAILS(voc-languageaware): See ${OUTREPORT} for the details"
         exit -1
     else
-        echo "RENDER-DETAILS(voc-languageaware): saved to ${TARGET}"
+        echo "RENDER-DETAILS(voc-languageaware): saved to ${OUTPUT}"
+        echo "RENDER-DETAILS(voc-languageaware): It will now be concatted and saved to ${TARGET}"
         
          if [ -f ${CONFIGDIR}/ontology.defaults.json ]
         then
             if [ -f /tmp/${FILE}/ontology ]
             then
-                jq -s '.[0] + .[1] + .[2] + .[3]' /tmp/${FILE}/ontology ${CONFIGDIR}/ontology.defaults.json ${TARGET} ${CONFIGDIR}/context >  ${TARGET}
+                jq -s '.[0] + .[1] + .[2] + .[3]' /tmp/${FILE}/ontology ${CONFIGDIR}/ontology.defaults.json ${OUTPUT} ${CONFIGDIR}/context >  ${TARGET}
             else
-                jq -s '.[0] + .[1] + .[2]' ${CONFIGDIR}/ontology.defaults.json ${TARGET} ${CONFIGDIR}/context >  ${TARGET}
+                jq -s '.[0] + .[1] + .[2]' ${CONFIGDIR}/ontology.defaults.json ${OUTPUT} ${CONFIGDIR}/context >  ${TARGET}
             fi
         else
             if [ -f /tmp/${FILE}/ontology ]
             then
-                jq -s '.[0] + .[1] + .[2]' /tmp/${FILE}/ontology ${TARGET} ${CONFIGDIR}/context >  ${TARGET}
+                jq -s '.[0] + .[1] + .[2]' /tmp/${FILE}/ontology ${OUTPUT} ${CONFIGDIR}/context >  ${TARGET}
             else
-                jq -s '.[0] + .[1]' ${TARGET} ${CONFIGDIR}/context >  ${TARGET}
+                jq -s '.[0] + .[1]' ${OUTPUT} ${CONFIGDIR}/context >  ${TARGET}
             fi
         fi
     fi
