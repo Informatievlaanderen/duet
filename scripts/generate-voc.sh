@@ -29,7 +29,23 @@ make_jsonld() {
         exit -1
     else
         echo "RENDER-DETAILS(voc-languageaware): saved to ${TARGET}"
-        jq -s '.[0] + .[1] + .[2] + .[3]' /tmp/${FILE}/ontology ${CONFIGDIR}/ontology.defaults.json ${TARGET} ${CONFIGDIR}/context >  ${TARGET}
+        
+         if [ -f ${CONFIGDIR}/ontology.defaults.json ]
+        then
+            if [ -f /tmp/${FILE}/ontology ]
+            then
+                jq -s '.[0] + .[1] + .[2] + .[3]' /tmp/${FILE}/ontology ${CONFIGDIR}/ontology.defaults.json ${TARGET} ${CONFIGDIR}/context >  ${TARGET}
+            else
+                jq -s '.[0] + .[1] + .[2]' ${CONFIGDIR}/ontology.defaults.json ${TARGET} ${CONFIGDIR}/context >  ${TARGET}
+            fi
+        else
+            if [ -f /tmp/${FILE}/ontology ]
+            then
+                jq -s '.[0] + .[1] + .[2]' /tmp/${FILE}/ontology ${TARGET} ${CONFIGDIR}/context >  ${TARGET}
+            else
+                jq -s '.[0] + .[1]' ${TARGET} ${CONFIGDIR}/context >  ${TARGET}
+            fi
+        fi
     fi
 
 }
