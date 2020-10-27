@@ -23,7 +23,7 @@ make_jsonld() {
     MERGEDJSONLD=${RLINE}/translation/$(jq -r "${COMMANDJSONLD}" ${SLINE}/.names.json)
     OUTPUT=${RLINE}/translation/voc_${LANGUAGE}.jsonld
 
-    echo "RENDER-DETAILS(voc-languageaware): node /app/render-voc.js -i ${MERGEDJSONLD} -o ${OUTPUT} -l ${LANGUAGE}
+    echo "RENDER-DETAILS(voc-languageaware): node /app/render-voc.js -i ${MERGEDJSONLD} -o ${OUTPUT} -l ${LANGUAGE}"
     if ! node /app/render-voc.js -i ${MERGEDJSONLD} -o ${OUTPUT} -l ${LANGUAGE}
     then
         echo "RENDER-DETAILS(voc-languageaware): See ${OUTREPORT} for the details"
