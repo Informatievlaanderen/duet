@@ -103,7 +103,7 @@ jobs:
           root: /tmp/workspace
           paths:
             - translation/
-    validate-and-generate-translation-report:
+  validate-and-generate-translation-report:
     docker:
       - image: informatievlaanderen/oslo-specification-generator:multilingual
     steps:
