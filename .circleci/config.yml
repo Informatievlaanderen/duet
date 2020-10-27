@@ -103,6 +103,22 @@ jobs:
           root: /tmp/workspace
           paths:
             - translation/
+    validate-and-generate-translation-report:
+    docker:
+      - image: informatievlaanderen/oslo-specification-generator:multilingual
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+        name: generate the reports
+        command: |
+          $PWD/scripts/render-details.sh /tmp/workspace report
+      - run:
+          name: Check no warnings found in the reports
+          command:
+            egrep " WARNING " /tmp/workspace/report/translation/*.report || true ;
+            [ $( egrep " WARNING " /tmp/workspace/report/translation/*.report | wc -l ) == 0 ] || exit 1
   render-merged-jsonld:
       docker: 
       - image: informatievlaanderen/oslo-specification-generator:multilingual
@@ -382,6 +398,9 @@ workflows:
       - render-translation-json:
           requires:
             - normalise-jsonld
+      - validate-and-generate-translation-report:
+          requires:
+            - render-translation-json
       - copy-raw:
           requires:
             - checkout

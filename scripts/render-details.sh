@@ -75,7 +75,7 @@ render_translationfiles() {
 
 render_html() { # SLINE TLINE JSON
     echo "render_html: $1 $2 $3 $4 $5 $6 $7"
-    echo "render_html: $1 $2 $3 $4 $5"     
+    echo "render_html: $1 $2 $3 $4 $5"
     local SLINE=$1
     local TLINE=$2
     local JSONI=$3
@@ -83,39 +83,38 @@ render_html() { # SLINE TLINE JSON
     local DROOT=$5
     local RRLINE=$6
     local LANGUAGE=$7
-    
+
     BASENAME=$(basename ${JSONI} .jsonld)
-#    OUTFILE=${BASENAME}.html 
+    #    OUTFILE=${BASENAME}.html
     # precendence order: local files > Data.vlaanderen.be > SpecGenerator
-    # TODO: include a first copy from Data.vlaanderen.be 
-    cp -n /app/views/* ${SLINE}/templates 
+    # TODO: include a first copy from Data.vlaanderen.be
+    cp -n /app/views/* ${SLINE}/templates
     mkdir -p ${RLINE}
 
     COMMAND=$(echo '.[]|select(.name | contains("'${BASENAME}'"))|.type')
     TYPE=$(jq -r "${COMMAND}" ${SLINE}/.names.json)
 
     pushd /app
-        mkdir -p ${TLINE}/html
+    mkdir -p ${TLINE}/html
 
-        OUTPUT=${TLINE}/index_${LANGUAGE}.html
-        COMMANDTEMPLATELANG=$(echo '.[].translation | .[] | select(.language | contains("'${LANGUAGE}'")) | .template')
-        TEMPLATELANG=$(jq -r "${COMMANDTEMPLATELANG}" ${SLINE}/.names.json)
-        COMMANDJSONLD=$(echo '.[].translation | .[] | select(.language | contains("'${LANGUAGE}'")) | .mergefile')
-        MERGEDJSONLD=${RRLINE}/translation/$(jq -r "${COMMANDJSONLD}" ${SLINE}/.names.json)
+    OUTPUT=${TLINE}/index_${LANGUAGE}.html
+    COMMANDTEMPLATELANG=$(echo '.[].translation | .[] | select(.language | contains("'${LANGUAGE}'")) | .template')
+    TEMPLATELANG=$(jq -r "${COMMANDTEMPLATELANG}" ${SLINE}/.names.json)
+    COMMANDJSONLD=$(echo '.[].translation | .[] | select(.language | contains("'${LANGUAGE}'")) | .mergefile')
+    MERGEDJSONLD=${RRLINE}/translation/$(jq -r "${COMMANDJSONLD}" ${SLINE}/.names.json)
 
-        echo "RENDER-DETAILS(language html): node /app/html-generator2.js -s ${TYPE} -i ${MERGEDJSONLD} -x ${RLINE}/html-nj.json -r ${DROOT} -t ${TEMPLATELANG} -d ${SLINE}/templates -o ${OUTPUT} -m ${LANGUAGE} -e ${RLINE}"
+    echo "RENDER-DETAILS(language html): node /app/html-generator2.js -s ${TYPE} -i ${MERGEDJSONLD} -x ${RLINE}/html-nj.json -r ${DROOT} -t ${TEMPLATELANG} -d ${SLINE}/templates -o ${OUTPUT} -m ${LANGUAGE} -e ${RLINE}"
 
-	if ! node /app/html-generator2.js -s ${TYPE} -i ${MERGEDJSONLD} -x ${RLINE}/html-nj_${LANGUAGE}.json -r ${DROOT} -t ${TEMPLATELANG} -d ${SLINE}/templates -o ${OUTPUT} -m ${GOALLANGUAGE} -e ${RRLINE} 
-        then   
-            echo "RENDER-DETAILS(language html): rendering failed"
-            exit -1
-        else
-            echo "RENDER-DETAILS(language html): File was rendered in ${OUTPUT}"
-        fi
-        
-        # make the report better readable
-        jq . ${RLINE}/html-nj.json > ${RLINE}/html-nj.json2
-        mv ${RLINE}/html-nj.json2 ${RLINE}/html-nj.json
+    if ! node /app/html-generator2.js -s ${TYPE} -i ${MERGEDJSONLD} -x ${RLINE}/html-nj_${LANGUAGE}.json -r ${DROOT} -t ${TEMPLATELANG} -d ${SLINE}/templates -o ${OUTPUT} -m ${GOALLANGUAGE} -e ${RRLINE}; then
+        echo "RENDER-DETAILS(language html): rendering failed"
+        exit -1
+    else
+        echo "RENDER-DETAILS(language html): File was rendered in ${OUTPUT}"
+    fi
+
+    # make the report better readable
+    jq . ${RLINE}/html-nj.json >${RLINE}/html-nj.json2
+    mv ${RLINE}/html-nj.json2 ${RLINE}/html-nj.json
     popd
 }
 
@@ -242,6 +241,33 @@ render_shacl_languageaware() {
     fi
 }
 
+write_report() {
+    echo "Rendering the reportfiles of $1 with the json in $2 from $3 and to $4"
+    local JSONI=$1
+    local LANGUAGE=$2
+    local SLINE=$3
+    local TRLINE=$4
+    local RLINE=$5
+
+    FILENAME=$(jq -r ".name" ${JSONI})_${GOALLANGUAGE}
+    COMMANDLANGJSON=$(echo '.[].translation | .[] | select(.language | contains("'${LANGUAGE}'")) | .translationjson')
+    TRANSLATIONFILE=${TRLINE}/translation/$(jq -r "${COMMANDLANGJSON}" ${SLINE}/.names.json)
+    REPORTFILE=/tmp/workspace/report/translation/${FILENAME}.report
+
+    if [ -f "${TRANSLATIONFILE}" ]; then
+        echo "${TRANSLATIONFILE} exists, the file will now be reviewed."
+        echo "RENDER-DETAILS(mergefile): node /app/generate-translation-report.js -i ${TRANSLATIONFILE} -l ${LANGUAGE} -o ${REPORTFILE}"
+        if ! node /app/generate-translation-report.js -i ${TRANSLATIONFILE} -l ${LANGUAGE} -o ${REPORTFILE}; then
+            echo "RENDER-DETAILS: failed"
+            exit -1
+        else
+            echo "RENDER-DETAILS: Report succesfully created and saved to: ${REPORTFILE}"
+        fi
+    else
+        echo "${TRANSLATIONFILE} does not exist, nothing to validate."
+    fi
+}
+
 echo "render-details: starting with $1 $2 $3"
 
 cat ${CHECKOUTFILE} | while read line; do
@@ -274,6 +300,10 @@ cat ${CHECKOUTFILE} | while read line; do
             merge)
                 render_merged_files $i ${PRIMELANGUAGE} ${SLINE} ${TRLINE} ${RLINE}
                 render_merged_files $i ${GOALLANGUAGE} ${SLINE} ${TRLINE} ${RLINE}
+                ;;
+            report)
+                write_report $i ${PRIMELANGUAGE} ${SLINE} ${TRLINE} ${RLINE}
+                write_report $i ${GOALLANGUAGE} ${SLINE} ${TRLINE} ${RLINE}
                 ;;
             *) echo "RENDER-DETAILS: ${DETAILS} not handled yet" ;;
             esac
