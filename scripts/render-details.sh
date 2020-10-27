@@ -249,6 +249,7 @@ write_report() {
     local TRLINE=$4
     local RLINE=$5
 
+    mkdir -p /tmp/workspace/report/translation
     FILENAME=$(jq -r ".name" ${JSONI})_${GOALLANGUAGE}
     COMMANDLANGJSON=$(echo '.[].translation | .[] | select(.language | contains("'${LANGUAGE}'")) | .translationjson')
     TRANSLATIONFILE=${TRLINE}/translation/$(jq -r "${COMMANDLANGJSON}" ${SLINE}/.names.json)
