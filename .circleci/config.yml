@@ -111,9 +111,9 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - run:
-        name: generate the reports
-        command: |
-          $PWD/scripts/render-details.sh /tmp/workspace report
+          name: generate the reports
+          command: |
+            $PWD/scripts/render-details.sh /tmp/workspace report
       - run:
           name: Check no warnings found in the reports
           command:
