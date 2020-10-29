@@ -130,6 +130,10 @@ jobs:
           name: Render merged JSONLD from jsonld and translationjson
           command: |
             $PWD/scripts/render-details.sh /tmp/workspace merge
+      - run:
+          name: touch a file
+          command: |
+            touch /tmp/workspace/.ignore
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
