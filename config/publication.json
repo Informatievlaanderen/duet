@@ -7,6 +7,22 @@
     "name": "associaties",
     "navigation": {}
   },
+    {
+    "dummy": "associaties058",
+    "urlref": "/doc/applicationprofile/documentatie/associaties",
+    "repository": "https://github.com/bertvannuffelen/demo_oslodoc",
+    "branchtag": "master",
+    "name": "associaties",
+    "navigation": {}
+  },
+    {
+    "dummy": "associaties058",
+    "urlref": "/doc/anwendungsprofil/documentatie/associaties",
+    "repository": "https://github.com/bertvannuffelen/demo_oslodoc",
+    "branchtag": "master",
+    "name": "associaties",
+    "navigation": {}
+  },
   {
     "urlref": "/doc/vocabularium/example-voc",
     "repository": "https://github.com/AnnemarieWittig/duetworkspace",
