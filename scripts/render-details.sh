@@ -297,6 +297,7 @@ cat ${CHECKOUTFILE} | while read line; do
                 ;;
             multilingual)
                 render_translationfiles ${PRIMELANGUAGE} ${GOALLANGUAGE} $i ${SLINE} ${TRLINE}
+                render_translationfiles ${PRIMELANGUAGE} ${PRIMELANGUAGE} $i ${SLINE} ${TRLINE}
                 ;;
             merge)
                 render_merged_files $i ${PRIMELANGUAGE} ${SLINE} ${TRLINE} ${RLINE}
