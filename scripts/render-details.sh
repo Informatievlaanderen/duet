@@ -89,7 +89,7 @@ render_html() { # SLINE TLINE JSON
     # precendence order: local files > Data.vlaanderen.be > SpecGenerator
     # TODO: include a first copy from Data.vlaanderen.be
     cp -n /app/views/* ${SLINE}/templates
-    cp -n ${HOME}/project/duet-views/* ${SLINE}/templates
+    cp -n ${HOME}/project/templates/* ${SLINE}/templates
     mkdir -p ${RLINE}
 
     COMMAND=$(echo '.[]|select(.name | contains("'${BASENAME}'"))|.type')
