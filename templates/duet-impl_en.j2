@@ -1,13 +1,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-{% set language = "nl" %}
+{% set language = "en" %}
 {% set sortattr = "sort" %}
 
-<html xml:lang="nl" lang="nl" dir="ltr" typeof="bibo:Document " about="" property="dcterms:language" content="nl" prefix="dcterms: http://purl.org/dc/terms/ bibo: http://purl.org/ontology/bibo/ schema: http://schema.org/ w3p: http://www.w3.org/2001/02pd/rec54#" xmlns="http://www.w3.org/1999/xhtml">
+<html xml:lang="en" lang="en" dir="ltr" typeof="bibo:Document " about="" property="dcterms:language" content="en" prefix="dcterms: http://purl.org/dc/terms/ bibo: http://purl.org/ontology/bibo/ schema: http://schema.org/ w3p: http://www.w3.org/2001/02pd/rec54#" xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-  {% set name = metadata.title[language]|lower|replace(' ', '-') %} 
-  <title>{{ metadata.title[language] }}</title>
+  {% set name = metadata.title|lower|replace(' ', '-') %} 
+  <title>{{ metadata.title }}</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -34,7 +34,7 @@
         <div class="layout layout--wide">
           <div class="grid u-hr">
             <div class="col--9-12 col--1-1--s">
-              <h1 class="h1">{{ metadata.title[language] }}</h1>
+              <h1 class="h1">{{ metadata.title }}</h1>
 
               <div class="head" role="status" id="status">
               <dl>
@@ -150,11 +150,9 @@
             <div class="region" id="introduction">
               <div class="introduction typography">
               {% block introduction %}
-                <p>Dit document beschrijft een <strong>applicatieprofiel</strong>, in dit geval <strong>{{ metadata.title[language] }}</strong>.
-                <!--Een applicatieprofiel is een specificatie die bestaande termen hergebruikt van verschillende basis-standaarden en daar meer specificiteit aan toevoegt.-->
-                <!-- Daarbij wordt het gebruik van de termen toegelicht voor de interbestuurlijke uitwisseling van overheidsinformatie.-->
-                Dit applicatieprofiel beantwoordt de vraag over hoe het corresponderende domeinmodel in de praktijk kan toegepast worden.
-                Daarbij worden de beperkingen (kardinaliteit, codelijsten) toegelicht en de overeenkomstige (RDF) termen opgelijst.
+                <p>Dit document beschrijft een <strong>implementatiemodel</strong>, in dit geval <strong>{{ metadata.title }}</strong>.
+                Een implementatiemodel is een toepassing van vocabularia voor een concreet doel.
+                Het beschrijft in alle detail (zoals kardinaliteiten, codelijsten, datatypes, ...) de gewenste datastructuur.
                 </p>
               {% endblock %}
               </div>
@@ -174,7 +172,7 @@
                 <h2 class="h2" aria-level="1" role="heading" id="h2_sotd">Status van dit document</h2>
                 {% block status %}
                 <p>
-                  Dit applicatieprofiel heeft status <a href="{{metadata.status }}">{{ metadata.statuslabel }}</a> en werd uitgegeven op {{ metadata.issued }}.
+                  Dit implementatiemodel heeft status <a href="{{metadata.status }}">{{ metadata.statuslabel }}</a> en werd uitgegeven op {{ metadata.issued }}.
 	        </p><p>
                   Informatie over het gevolgde proces en de beslissingen om tot deze specificatie te komen zijn beschikbaar in het 
                   <a href="{{metadata.standaardregisterurl}}">standaardenregister</a>.
@@ -192,7 +190,7 @@
             <div class="region region--no-space-top typography" id="conformance">
               <h2 class="h2" id="conformance" aria-level="1" role="heading">Conformiteit</h2>
               {% block conformance %}
-              <p>De conformiteit voor applicatieprofielen is <a href="/doc/begeleidend/applicatieprofielen/conformiteit">hier</a> te vinden.</p>
+              <p>De conformiteit voor implementatiemodellen is <a href="/doc/begeleidend/implementatiemodellen/conformiteit">hier</a> te vinden.</p>
               {% endblock %}
             </div>
             <div class="region region--no-space-top" id="overview">
@@ -229,6 +227,8 @@
               <a href="{{ documentroot }}/html/overview.jpg" target="_blank">
                  <img src="{{ documentroot }}/html/overview.jpg" />
               </a>
+              {% block images %}
+              {% endblock %}
             </div>
             <div class="region region--no-space-top">
               <h2 class="h2">Entiteiten</h2>
@@ -384,18 +384,25 @@
             </div>
             {% endfor %}
             {% endif %}
+			<div class="region region--no-space-top" id="sqlite">
+                <h2 class="h2" aria-level="1" role="heading" id="h2_sotd">SQLite download</h2>
+                (niet normatief)
+                {% block sqlite %}
+                <p>Een herbruikbare SQLite database van alle implementatiemodellen is terug te vinden op: <a href="{{ documentroot }}/html/OTL.db" target="_blank">{{ documentroot }}/html/OTL.db</a></p>
+                {% endblock %}
+            </div>
             <div class="region region--no-space-top" id="jsonld">
                 <h2 class="h2" aria-level="1" role="heading" id="h2_sotd">JSON-LD context</h2>
                 (niet normatief)
                 {% block jsonld %}
-                <p>Een herbruikbare JSON-LD context definitie voor dit applicatieprofiel is terug te vinden op: <a href="{{ documentroot }}/context/{{ metadata.filename }}.jsonld" target="_blank">{{ documentroot }}/context/{{ metadata.filename }}.jsonld</a></p>
+                <p>Een herbruikbare JSON-LD context definitie voor dit implementatiemodel is terug te vinden op: <a href="{{ documentroot }}/context/{{ metadata.filename }}.jsonld" target="_blank">{{ documentroot }}/context/{{ metadata.filename }}.jsonld</a></p>
                 {% endblock %}
             </div>
             <div class="region region--no-space-top" id="shacl">
                 <h2 class="h2" aria-level="1" role="heading" id="h2_sotd">SHACL template</h2>
                 (niet normatief)
                 {% block shacl%}
-                <p>Een herbruikbare SHACL template definitie voor dit applicatieprofiel is terug te vinden op: <a href="{{ documentroot }}/shacl/{{ metadata.filename }}-SHACL.ttl" target="_blank">{{ documentroot }}/shacl/{{ metadata.filename }}-SHACL.ttl</a></p>
+                <p>Een herbruikbare SHACL template definitie voor dit implementatiemodel is terug te vinden op: <a href="{{ documentroot }}/shacl/{{ metadata.filename }}-SHACL.ttl" target="_blank">{{ documentroot }}/shacl/{{ metadata.filename }}-SHACL.ttl</a></p>
                 {% endblock %}
             </div>
           </div>
@@ -421,6 +428,9 @@
                               </li>
                               <li class="side-navigation__item">
                                   <a href="#overview">Overzicht</a>
+                              </li>
+			      <li class="side-navigation__item">
+                                  <a href="#sqlite">SQLite download</a>
                               </li>
                               <li class="side-navigation__item">
                                   <a href="#jsonld">JSON-LD Context</a>
