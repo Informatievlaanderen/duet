@@ -54,8 +54,8 @@ render_translationfiles() {
 
     if [ -f "${FILE}" ]; then
         echo "${FILE} exists."
-        echo "UPDATE-TRANSLATIONFILE: node /app/translation-json-update.js -f ${FILE} -i ${JSONI} -m ${PRIMELANGUAGE} -g ${GOALLANGUAGE} -o ${OUTPUTFILE}"
-        if ! node /app/translation-json-update.js -f ${FILE} -i ${JSONI} -m ${PRIMELANGUAGE} -g ${GOALLANGUAGE} -o ${OUTPUTFILE}; then
+        echo "UPDATE-TRANSLATIONFILE: node /app/translation-json-update.js -i ${FILE} -f ${JSONI} -m ${PRIMELANGUAGE} -g ${GOALLANGUAGE} -o ${OUTPUTFILE}"
+        if ! node /app/translation-json-update.js -i ${FILE} -f ${JSONI} -m ${PRIMELANGUAGE} -g ${GOALLANGUAGE} -o ${OUTPUTFILE}; then
             echo "RENDER-DETAILS: failed"
             exit -1
         else
