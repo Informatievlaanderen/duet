@@ -16,11 +16,19 @@
     "navigation": {}
   },
   {
-    "urlref": "/doc/implementationmodel/sdg-impl",
+    "urlref": "/doc/implementationmodel/sdg-impl-ap",
     "repository": "https://github.com/AnnemarieWittig/englishworkspace",
     "branchtag": "main",
-    "name": "sdgmodels2-impl",
-    "filename": "config/sdgmodels2-impl.json",
+    "name": "sdgmodels2-impl-ap",
+    "filename": "config/sdgmodels2-impl-ap.json",
+    "navigation": {}
+  },
+  {
+    "urlref": "/doc/implementationmodel/sdg-impl-voc",
+    "repository": "https://github.com/AnnemarieWittig/englishworkspace",
+    "branchtag": "main",
+    "name": "sdgmodels2-impl-voc",
+    "filename": "config/sdgmodels2-impl-voc.json",
     "navigation": {}
   },
   {
