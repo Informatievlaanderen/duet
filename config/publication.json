@@ -1,5 +1,6 @@
 [
   {
+    "disabled": true,
     "dummy": "associaties058",
     "urlref": "/doc/applicatieprofiel/documentatie/associaties",
     "repository": "https://github.com/bertvannuffelen/demo_oslodoc",
@@ -8,6 +9,7 @@
     "navigation": {}
   },
   {
+    "disabled": true,
     "urlref": "/doc/vocabularium/example-voc",
     "repository": "https://github.com/AnnemarieWittig/duetworkspace",
     "branchtag": "main",
@@ -16,6 +18,7 @@
     "navigation": {}
   },
   {
+    "disabled": true,
     "urlref": "/doc/applicatieprofiel/persoon-basis/",
     "repository": "https://github.com/AnnemarieWittig/duetworkspace",
     "branchtag": "main",
@@ -24,6 +27,7 @@
     "navigation": {}
   },
   {
+    "disabled": true,
     "urlref": "/doc/applicatieprofiel/example-ap",
     "repository": "https://github.com/AnnemarieWittig/duetworkspace",
     "branchtag": "main",

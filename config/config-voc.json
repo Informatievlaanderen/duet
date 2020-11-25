@@ -26,32 +26,32 @@
     {
       tag: "label",
       property: "http://www.w3.org/2000/01/rdf-schema#label",
-      lang: "nl",
-      fallbackTags: ["label-nl"]
+      lang: "en",
+      fallbackTags: ["label-en"]
     },
     {
       tag: "definition",
       property: "http://www.w3.org/2000/01/rdf-schema#comment",
-      lang: "nl",
-      fallbackTags: ["definition-nl"]
+      lang: "en",
+      fallbackTags: ["definition-en"]
     },
     {
       tag: "usage",
       property: "http://purl.org/vocab/vann/usageNote",
-      lang: "nl",
-      fallbackTags: ["usageNote-nl"]
+      lang: "en",
+      fallbackTags: ["usageNote-en"]
     },
     {
-      tag: "title-nl",
+      tag: "title-en",
       property: "http://purl.org/dc/terms/title",
       mandatory: true,
-      lang: "nl"
+      lang: "en"
     },
     {
-      tag: "title-nl",
+      tag: "title-en",
       property: "http://www.w3.org/2000/01/rdf-schema#label",
       mandatory: true,
-      lang: "nl"
+      lang: "en"
     },
     {
       tag: "title-en",
@@ -82,37 +82,37 @@
     {
       tag: "label",
       property: "http://www.w3.org/2000/01/rdf-schema#label",
-      lang: "nl",
-      fallbackTags: ["label-nl"]
+      lang: "en",
+      fallbackTags: ["label-en"]
     },
     {
       tag: "definition",
       property: "http://www.w3.org/2000/01/rdf-schema#comment",
-      lang: "nl",
-      fallbackTags: ["definition-nl"]
+      lang: "en",
+      fallbackTags: ["definition-en"]
     },
     {
       tag: "usage",
       property: "http://purl.org/vocab/vann/usageNote",
-      lang: "nl",
-      fallbackTags: ["usageNote-nl"]
+      lang: "en",
+      fallbackTags: ["usageNote-en"]
     },
     {
-      tag: "label-nl",
+      tag: "label-en",
       property: "http://www.w3.org/2000/01/rdf-schema#label",
       mandatory: true,
-      lang: "nl"
+      lang: "en"
     },
     {
-      tag: "definition-nl",
+      tag: "definition-en",
       property: "http://www.w3.org/2000/01/rdf-schema#comment",
       mandatory: true,
-      lang: "nl"
+      lang: "en"
     },
     {
-      tag: "usageNote-nl",
+      tag: "usageNote-en",
       property: "http://purl.org/vocab/vann/usageNote",
-      lang: "nl"
+      lang: "en"
     },
     {
       tag: "label-en",
@@ -154,26 +154,26 @@
     {
       tag: "label",
       property: "http://www.w3.org/2000/01/rdf-schema#label",
-      lang: "nl",
-      fallbackTags: ["label-nl"]
+      lang: "en",
+      fallbackTags: ["label-en"]
     },
     {
       tag: "definition",
       property: "http://www.w3.org/2000/01/rdf-schema#comment",
-      lang: "nl",
-      fallbackTags: ["definition-nl"]
+      lang: "en",
+      fallbackTags: ["definition-en"]
     },
     {
       tag: "usage",
       property: "http://purl.org/vocab/vann/usageNote",
-      lang: "nl",
-      fallbackTags: ["usageNote-nl"]
+      lang: "en",
+      fallbackTags: ["usageNote-en"]
     },
     {
-      tag: "label-nl",
+      tag: "label-en",
       property: "http://www.w3.org/2000/01/rdf-schema#label",
       mandatory: false,
-      lang: "nl"
+      lang: "en"
     }
   ]
 }
