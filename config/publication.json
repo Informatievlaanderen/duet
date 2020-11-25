@@ -1,5 +1,31 @@
 [
   {
+    "urlref": "/doc/vocabulary/sdg-voc",
+    "repository": "https://github.com/AnnemarieWittig/englishworkspace",
+    "branchtag": "main",
+    "name": "sdgmodels2-voc",
+    "filename": "config/sdgmodels2-voc.json",
+    "navigation": {}
+  },
+  {
+    "disabled": true,
+    "urlref": "/doc/applicationprofile/sdg-ap",
+    "repository": "https://github.com/AnnemarieWittig/englishworkspace",
+    "branchtag": "main",
+    "name": "sdgmodels2-ap",
+    "filename": "config/sdgmodels2-ap.json",
+    "navigation": {}
+  },
+  {
+    "disabled": true,
+    "urlref": "/doc/implementationmodel/sdg-impl",
+    "repository": "https://github.com/AnnemarieWittig/englishworkspace",
+    "branchtag": "main",
+    "name": "sdgmodels2-impl",
+    "filename": "config/sdgmodels2-impl.json",
+    "navigation": {}
+  },
+  {
     "disabled": true,
     "dummy": "associaties058",
     "urlref": "/doc/applicatieprofiel/documentatie/associaties",

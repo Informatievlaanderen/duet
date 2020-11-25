@@ -4,8 +4,8 @@ TARGETDIR=$1
 SUBDIR=$2
 CONFIGDIR=$3
 CHECKOUTFILE=${TARGETDIR}/checkouts.txt
-PRIMELANGUAGE=${4-'nl'}
-GOALLANGUAGE=${5-'en'}
+PRIMELANGUAGE=${4-'en'}
+GOALLANGUAGE=${5-'de'}
 
 echo "generate-voc: starting with $1 $2 $3"
 
