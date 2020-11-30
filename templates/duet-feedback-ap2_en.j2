@@ -252,12 +252,14 @@
                     <dd>No properties have been defined for this entity.</dd>
                     {% endif %}
                   </dl>
+                  <dd>Add an issue for this entity <a href="https://github.com/Informatievlaanderen/duet/issues/new?title=Issue%20for%20{{ entity.name[language] }}&body=Explain%20your%20issue">here</a>.</dd>
                 </div>
 		{% if ((entity.properties | length) > 0 ) %} 
                 <div class="u-table-overflow">
                   <table class="data-table">
                     <thead>
                       <tr class="data-table__header">
+                        <th class="data-table__header-title--sortable"></th>
                         <th class="data-table__header-title--sortable data-table__header-title--sortable-active">Property</th>
                         <th class="data-table__header-title--sortable">Expected Range</th>
                         <th class="data-table__header-title--sortable">Cardinality</th>
@@ -270,6 +272,7 @@
                     <tbody class="supertype">
                     {% for prop in entity['properties'] | sort(attribute=sortattr) %}
                       <tr id="{{ (entity.name[language] ~ ':' ~ prop.name[language]) | urlencode }}" typeof="rdfs:Property" resource="{{ prop.uri }}">
+                        <td><a href="https://github.com/Informatievlaanderen/duet/issues/new?title=Issue%20for%20{{ prop.name[language] }}&body=Explain%20your%20issue"><i class="icon"></i></a></td>
                         <td>
                           <code property="rdfs:label">
                             <a href="{{ prop.uri }}" data-toggle="tooltip" data-content="{{ prop.uri }}" data-placement="right">
@@ -332,12 +335,14 @@
                     <dd>Voor dit datatype zijn geen eigenschappen gedefinieerd.</dd>
                     {% endif %}
                   </dl>
+                  <dd>Add an issue for this property <a href="https://github.com/Informatievlaanderen/duet/issues/new?title=Issue%20for%20{{ entity.name[language] }}&body=Explain%20your%20issue">here</a>.</dd>
                 </div>
 		{% if ((entity.properties | length) > 0 ) %} 
                 <div class="u-table-overflow">
                   <table class="data-table">
                     <thead>
                       <tr class="data-table__header">
+                        <th class="data-table__header-title--sortable"></th>
                         <th class="data-table__header-title--sortable data-table__header-title--sortable-active">Eigenschap</th>
                         <th class="data-table__header-title--sortable">Verwacht Type</th>
                         <th class="data-table__header-title--sortable">Kardinaliteit</th>
@@ -350,6 +355,7 @@
                     <tbody class="supertype">
                       {% for prop in entity['properties'] | sort(attribute=sortattr) %}
                       <tr id="{{ (entity.name[language] ~ ':' ~ prop.name[language] ) | urlencode }}" typeof="rdfs:Property" resource="{{ prop.uri }}">
+                        <td><a href="https://github.com/Informatievlaanderen/duet/issues/new?title=Issue%20for%20{{ prop.name[language] }}&body=Explain%20your%20issue"><i class="icon"></i></a></td>
                         <td>
                           <code property="rdfs:label">
                             <a href="{{ prop.uri }}" data-toggle="tooltip" data-content="{{ prop.uri }}" data-placement="right">{{ prop.name[language] }}</a>
@@ -473,6 +479,12 @@
       color: #000;
       background-clip: padding-box;
     }
+
+    .icon {
+      content: url("templates/icons/comment.svg");
+      display: block;
+    }
+
   </style>
 </body>
 </html>
