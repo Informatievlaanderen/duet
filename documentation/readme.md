@@ -1,13 +1,24 @@
-# Documentation of the data
+# Documentation of a publication environment for semantic specifications.
+
+Semantic specifications are documents that formalize data models according to semantic web principles. 
+This repository is the root repository for a publication environment for semantic specifications. 
+The semantic specifications are created using the corresponding toolchain.
+
+This publication environment has been designed to support the data interoperability program OSLO of the region of Flanders. It can be consulted at https://data.vlaanderen.be.
+
+## Creating semantic specifications
+
+The toolchain is elaborated in this repository https://github.com/Informatievlaanderen/OSLO-toolchain.
+
 
 ## Deployment process
 
-Data.vlaanderen.be has been setup to minimize the rollout and maintenance effort of any change to the system in a predicatable way. 
+The publication environment has been setup to minimize the rollout and maintenance effort of any change to the system in a predicatable way. 
 The figure below shows the four layers of the environment. 
 
 ![The process](update-process.jpg)
 
-The bottom layer is the cloud infrastructure. For Data.vlaanderen.be this is [Azure](https://azure.microsoft.com/). 
+The bottom layer is the cloud infrastructure. For the setup at the Flemish Government Data.vlaanderen.be this is [Azure](https://azure.microsoft.com/). 
 
 On top of that, the infrastructure is deployed. The infrastructure is setup using [Terraform](https://www.terraform.io/). 
 The terraform configuration describes a [docker swarm](https://github.com/docker/swarm) setup.
