@@ -153,8 +153,8 @@
                 <p>Dieses Dokument beschreibt ein <strong>Anwendungsprofil</strong>, in diesem Fall <strong>{{ metadata.title }}</strong>.
                 <!--Een applicatieprofiel is een specificatie die bestaande termen hergebruikt van verschillende basis-standaarden en daar meer specificiteit aan toevoegt.-->
                 <!-- Daarbij wordt het gebruik van de termen toegelicht voor de interbestuurlijke uitwisseling van overheidsinformatie.-->
-                Dieses Anwendungsprofil beantwortet die Frage, wie das entsprechende Domänenmodell in der Praxis angewendet werden kann..
-                Die Einschränkungen (Kardinalität, Codelisten) werden erläutert und die entsprechenden (RDF) Begriffe aufgeführt.
+                Das Anwendungsprofil spezifiziert ein semantisches Datenmodell, welches eine Reihe von Anwendungsfällen abdeckt. 
+                Die Spezifikation besteht aus Begriffen mit ihren Einschränkungen (Kardinalitäten, Codelisten, Nutzungsrichtlinien).
                 </p>
               {% endblock %}
               </div>
@@ -176,8 +176,8 @@
                 <p>
                   Dieses Anwendungsprofil hat den Status <a href="{{metadata.status }}">{{ metadata.statuslabel }}</a> und wurde am {{ metadata.issued }} veröffentlicht.
 	        </p><p>
-                  Informationen über den Prozess und die Entscheidungen, die getroffen wurden, um zu dieser Spezifikation zu gelangen, sind im 
-                  <a href="{{metadata.standaardregisterurl}}">Standardregister</a> verfügbar.
+                  Informationen über den Prozess und die Entscheidungen, die mit der Erstellung dieser Spezifikation verbunden sind, sind im  
+                  <a href="{{metadata.standaardregisterurl}}">Register der Normen</a> einzusehen.
                 </p>
                 {% endblock %}
               </section>
@@ -186,13 +186,13 @@
             <div class="region region--no-space-top typography" id="license">
               <h2 class="h2">Lizenz</h2>
               {% block license %}
-              <!-- <p><span rel="dct:type" property="dct:title" href="http://purl.org/dc/dcmitype/Text" xmlns:dct="http://purl.org/dc/terms/">Diese Spezifikation</span> von <a rel="cc:attributionURL" property="cc:attributionName" href="http://vlaanderen.be/informatievlaanderen" xmlns:cc="http://creativecommons.org/ns#">Informatie Vlaanderen</a> wurde unter der folgenden Lizenz veröffentlicht: <a href="{{ metadata.license }}" rel="license">"Modellicentie Gratis Hergebruik - v1.0"</a>.</p>-->
+              <p><span rel="dct:type" property="dct:title" href="http://purl.org/dc/dcmitype/Text" xmlns:dct="http://purl.org/dc/terms/">Diese Spezifikation</span> von <a rel="cc:attributionURL" property="cc:attributionName" href="ORGANISATION" xmlns:cc="http://creativecommons.org/ns#">ORGANISATION</a> ist unter der folgenden Lizenz veröffentlicht: <a href="{{ metadata.license }}" rel="license">"CC0"</a>.</p>
               {% endblock %}
             </div>
             <div class="region region--no-space-top typography" id="conformance">
               <h2 class="h2" id="conformance" aria-level="1" role="heading">Konformität</h2>
               {% block conformance %}
-              <p>Die Konformität für Anwendungsprofile ist <a href="/doc/begeleidend/applicatieprofielen/conformiteit">hier</a> zu finden.</p>
+              <p>Eine Implementierung ist mit diesem Anwendungsprofil konform, wenn sie diese <a href="/doc/begeleidend/applicatieprofielen/conformiteit">Regeln</a> erfüllt.</p>
               {% endblock %}
             </div>
             <div class="region region--no-space-top" id="overview">
@@ -388,14 +388,14 @@
                 <h2 class="h2" aria-level="1" role="heading" id="h2_sotd">JSON-LD Kontext</h2>
                 (nicht normativ)
                 {% block jsonld %}
-                <p>Eine wiederverwendbare JSON-LD-Kontextdefinition für dieses Anwendungsprofil finden Sie unter: <a href="{{ documentroot }}/context/{{ metadata.filename }}.jsonld" target="_blank">{{ documentroot }}/context/{{ metadata.filename }}.jsonld</a></p>
+                <p>Eine wiederverwendbare JSON-LD-Kontextdefinition für dieses Anwendungsprofil ist abrufbar unter: <a href="{{ documentroot }}/context/{{ metadata.filename }}.jsonld" target="_blank">{{ documentroot }}/context/{{ metadata.filename }}.jsonld</a></p>
                 {% endblock %}
             </div>
             <div class="region region--no-space-top" id="shacl">
                 <h2 class="h2" aria-level="1" role="heading" id="h2_sotd">SHACL template</h2>
                 (nicht normativ)
                 {% block shacl%}
-                <p>Eine wiederverwendbare SHACL-Vorlagendefinition für dieses Anwendungsprofil finden Sie unter: <a href="{{ documentroot }}/shacl/{{ metadata.filename }}-SHACL.ttl" target="_blank">{{ documentroot }}/shacl/{{ metadata.filename }}-SHACL.ttl</a></p>
+                <p>Eine wiederverwendbare SHACL-Vorlagendefinition für dieses Anwendungsprofil ist abrufbar unter: <a href="{{ documentroot }}/shacl/{{ metadata.filename }}-SHACL.ttl" target="_blank">{{ documentroot }}/shacl/{{ metadata.filename }}-SHACL.ttl</a></p>
                 {% endblock %}
             </div>
           </div>
