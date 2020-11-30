@@ -90,6 +90,7 @@ render_html() { # SLINE TLINE JSON
     # TODO: include a first copy from Data.vlaanderen.be
     cp -n /app/views/* ${SLINE}/templates
     cp -n ${HOME}/project/templates/* ${SLINE}/templates
+    cp -n ${HOME}/project/templates/icons/* ${SLINE}/templates/icons
     mkdir -p ${RLINE}
 
     COMMAND=$(echo '.[]|select(.name | contains("'${BASENAME}'"))|.type')
