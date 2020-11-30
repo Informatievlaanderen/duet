@@ -1,5 +1,21 @@
 [
   {
+    "urlref": "/doc/vocabulary/sdg-feedback-voc",
+    "repository": "https://github.com/AnnemarieWittig/englishworkspace",
+    "branchtag": "main",
+    "name": "sdgmodels2-voc",
+    "filename": "config/sdgmodels2-feedback-voc.json",
+    "navigation": {}
+  },
+  {
+    "urlref": "/doc/applicationprofile/sdg-feedback-ap",
+    "repository": "https://github.com/AnnemarieWittig/englishworkspace",
+    "branchtag": "main",
+    "name": "sdgmodels2-ap",
+    "filename": "config/sdgmodels2-feedback-ap.json",
+    "navigation": {}
+  },
+  {
     "urlref": "/doc/vocabulary/sdg-voc",
     "repository": "https://github.com/AnnemarieWittig/englishworkspace",
     "branchtag": "main",
