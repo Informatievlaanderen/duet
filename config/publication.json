@@ -3,7 +3,7 @@
     "urlref": "/doc/vocabulary/sdg-feedback-voc",
     "repository": "https://github.com/AnnemarieWittig/englishworkspace",
     "branchtag": "main",
-    "name": "sdgmodels2-voc",
+    "name": "sdgmodels2-feedback-voc",
     "filename": "config/sdgmodels2-feedback-voc.json",
     "navigation": {}
   },
@@ -11,7 +11,7 @@
     "urlref": "/doc/applicationprofile/sdg-feedback-ap",
     "repository": "https://github.com/AnnemarieWittig/englishworkspace",
     "branchtag": "main",
-    "name": "sdgmodels2-ap",
+    "name": "sdgmodels2-feedback-ap",
     "filename": "config/sdgmodels2-feedback-ap.json",
     "navigation": {}
   },
