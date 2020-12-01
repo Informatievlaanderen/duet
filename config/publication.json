@@ -8,6 +8,14 @@
     "navigation": {}
   },
   {
+    "urlref": "/doc/applicationprofile/sdg-mailto-ap",
+    "repository": "https://github.com/AnnemarieWittig/englishworkspace",
+    "branchtag": "main",
+    "name": "sdgmodels2-mailto-ap",
+    "filename": "config/sdgmodels2-mailto-ap.json",
+    "navigation": {}
+  },
+  {
     "urlref": "/doc/applicationprofile/sdg-feedback-ap",
     "repository": "https://github.com/AnnemarieWittig/englishworkspace",
     "branchtag": "main",

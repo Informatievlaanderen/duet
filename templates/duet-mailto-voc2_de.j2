@@ -264,7 +264,7 @@
                                 {% for class in classes | sort(attribute=sortattr) %}
                                 <div class="region region--no-space-top">
                                     <h3 class="h3"  id="{{ class.uri | replace(metadata.uri + '#', '') }}">Klasse <em>{{ class.name[language] }}</em></h3>
-                                    <p>Schreibe <a href="mailto:abc@example.com?subject={{ entity.name[language] }} &body=Ihre Anmerkung">hier</a> eine Mail mit Feedback für diese Klasse.</p>
+                                    <p>Schreibe <a href="mailto:{{ mailtostring }}?subject={{ entity.name[language] }} &body=Ihre Anmerkung">hier</a> eine Mail mit Feedback für diese Klasse.</p>
                                     <table class="definition">
                                         <tbody>
                                           <tr>
@@ -331,7 +331,7 @@
                                 {% for property in properties | sort(attribute=sortattr) %}
                                 <div class="region region--no-space-top">
                                     <h3 class="h3"  id="{{ property.uri | replace(metadata.uri + '#', '') }}">Eigenschaft <em>{{  property.name[language] }}</em></h3>
-                                    <p>Schreibe <a href="mailto:abc@example.com?subject={{ entity.name[language] }} &body=Ihre Anmerkung">hier</a> eine Mail mit Feedback für diese Eigenschaft.</p>
+                                    <p>Schreibe <a href="mailto:{{ mailtostring }}?subject={{ entity.name[language] }} &body=Ihre Anmerkung">hier</a> eine Mail mit Feedback für diese Eigenschaft.</p>
                                     <table class="definition">
                                         <tbody>
                                           <tr>
