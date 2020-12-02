@@ -252,7 +252,7 @@
                     <dd>No properties have been defined for this entity.</dd>
                     {% endif %}
                   </dl>
-                  <dd>Write an email with feedback for this entity <a href="mailto:{{ mailtostring }}?subject={{ entity.name[language] }} &body=Your Feedback">here</a>.</dd>
+                  <dd>Write an email with feedback for this entity <a href="mailto:specifyAnEmailAdress@toSendFeedback.to?subject={{ entity.name[language] }} &body=Your Feedback">here</a>.</dd>
                 </div>
 		{% if ((entity.properties | length) > 0 ) %} 
                 <div class="u-table-overflow">
@@ -272,7 +272,7 @@
                     <tbody class="supertype">
                     {% for prop in entity['properties'] | sort(attribute=sortattr) %}
                       <tr id="{{ (entity.name[language] ~ ':' ~ prop.name[language]) | urlencode }}" typeof="rdfs:Property" resource="{{ prop.uri }}">
-                        <td><a href="mailto:{{ mailtostring }}?subject={{ prop.name[language] }} &body=Your Feedback"><i class="icon"></i></a></td>
+                        <td><a href="mailto:specifyAnEmailAdress@toSendFeedback.to?subject={{ prop.name[language] }} &body=Your Feedback"><i class="icon"></i></a></td>
                         <td>
                           <code property="rdfs:label">
                             <a href="{{ prop.uri }}" data-toggle="tooltip" data-content="{{ prop.uri }}" data-placement="right">
@@ -335,7 +335,7 @@
                     <dd>Voor dit datatype zijn geen eigenschappen gedefinieerd.</dd>
                     {% endif %}
                   </dl>
-                  <dd>Write an email with feedback for this entity <a href="mailto:{{ mailtostring }}?subject={{ entity.name[language] }} &body=Your Feedback">here</a>.</dd>
+                  <dd>Write an email with feedback for this entity <a href="mailto:specifyAnEmailAdress@toSendFeedback.to?subject={{ entity.name[language] }} &body=Your Feedback">here</a>.</dd>
                 </div>
 		{% if ((entity.properties | length) > 0 ) %} 
                 <div class="u-table-overflow">
@@ -355,7 +355,7 @@
                     <tbody class="supertype">
                       {% for prop in entity['properties'] | sort(attribute=sortattr) %}
                       <tr id="{{ (entity.name[language] ~ ':' ~ prop.name[language] ) | urlencode }}" typeof="rdfs:Property" resource="{{ prop.uri }}">
-                        <td><a href="mailto:{{ mailtostring }}?subject={{ prop.name[language] }} &body=Your Feedback"><i class="icon"></i></a></td>
+                        <td><a href="mailto:specifyAnEmailAdress@toSendFeedback.to?subject={{ prop.name[language] }} &body=Your Feedback"><i class="icon"></i></a></td>
                         <td>
                           <code property="rdfs:label">
                             <a href="{{ prop.uri }}" data-toggle="tooltip" data-content="{{ prop.uri }}" data-placement="right">{{ prop.name[language] }}</a>
@@ -481,7 +481,7 @@
     }
 
     .icon {
-      content: url("templates/icons/comment.svg");
+      content: url("/cms/icons/mail.svg");
       display: block;
     }
 

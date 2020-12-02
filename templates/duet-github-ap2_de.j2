@@ -150,16 +150,18 @@
             <div class="region" id="introduction">
               <div class="introduction typography">
               {% block introduction %}
-                <p>Dieses Dokument beschreibt ein <strong>Implementierungsmodell</strong>, in diesem Fall <strong>{{ metadata.title }}</strong>.
-                Ein Implementierungsmodell ist eine Anwendung von Vokabeln für einen konkreten Zweck.
-                Es beschreibt die gewünschte Datenstruktur (z. B. Kardinalitäten, Codelisten, Datentypen, ...) detailliert.
+                <p>Dieses Dokument beschreibt ein <strong>Anwendungsprofil</strong>, in diesem Fall <strong>{{ metadata.title }}</strong>.
+                <!--Een applicatieprofiel is een specificatie die bestaande termen hergebruikt van verschillende basis-standaarden en daar meer specificiteit aan toevoegt.-->
+                <!-- Daarbij wordt het gebruik van de termen toegelicht voor de interbestuurlijke uitwisseling van overheidsinformatie.-->
+                Das Anwendungsprofil spezifiziert ein semantisches Datenmodell, welches eine Reihe von Anwendungsfällen abdeckt. 
+                Die Spezifikation besteht aus Begriffen mit ihren Einschränkungen (Kardinalitäten, Codelisten, Nutzungsrichtlinien).
                 </p>
               {% endblock %}
               </div>
             </div>
 
             <div class="region region--no-space-top typography" id="summary">
-                <h2 class="h2" aria-level="1" role="heading" id="h2_sotd">Samenvatting</h2>
+                <h2 class="h2" aria-level="1" role="heading" id="h2_sotd">Zusammenfassung</h2>
                 {% block summary %} 
                   {% if metadata.description %} 
                     {{ metadata.description[language] }}
@@ -169,13 +171,13 @@
 
             <div class="region region--no-space-top typography" id="status">
               <section class="introductory" id="sotd" typeof="bibo:Chapter" resource="#ref" rel="bibo:Chapter">
-                <h2 class="h2" aria-level="1" role="heading" id="h2_sotd">Status van dit document</h2>
+                <h2 class="h2" aria-level="1" role="heading" id="h2_sotd">Status dieses Dokuments</h2>
                 {% block status %}
                 <p>
-                  Dieses Implementierungsmodell hat den Status <a href="{{metadata.status }}">{{ metadata.statuslabel }}</a> en werd uitgegeven op {{ metadata.issued }}.
+                  Dieses Anwendungsprofil hat den Status <a href="{{metadata.status }}">{{ metadata.statuslabel }}</a> und wurde am {{ metadata.issued }} veröffentlicht.
 	        </p><p>
-                  Informationen über den Prozess und die Entscheidungen, die getroffen wurden, um zu dieser Spezifikation zu gelangen, sind im 
-                  <a href="{{metadata.standaardregisterurl}}">Standardregister</a> verfügbar.
+                  Informationen über den Prozess und die Entscheidungen, die mit der Erstellung dieser Spezifikation verbunden sind, sind im  
+                  <a href="{{metadata.standaardregisterurl}}">Register der Normen</a> einzusehen.
                 </p>
                 {% endblock %}
               </section>
@@ -184,13 +186,13 @@
             <div class="region region--no-space-top typography" id="license">
               <h2 class="h2">Lizenz</h2>
               {% block license %}
-              <!-- <p><span rel="dct:type" property="dct:title" href="http://purl.org/dc/dcmitype/Text" xmlns:dct="http://purl.org/dc/terms/">Diese Spezifikation</span> von <a rel="cc:attributionURL" property="cc:attributionName" href="http://vlaanderen.be/informatievlaanderen" xmlns:cc="http://creativecommons.org/ns#">Informatie Vlaanderen</a> wurde unter der folgenden Lizenz veröffentlicht: <a href="{{ metadata.license }}" rel="license">"Modellicentie Gratis Hergebruik - v1.0"</a>.</p>-->
+              <p><span rel="dct:type" property="dct:title" href="http://purl.org/dc/dcmitype/Text" xmlns:dct="http://purl.org/dc/terms/">Diese Spezifikation</span> von <a rel="cc:attributionURL" property="cc:attributionName" href="ORGANISATION" xmlns:cc="http://creativecommons.org/ns#">ORGANISATION</a> ist unter der folgenden Lizenz veröffentlicht: <a href="{{ metadata.license }}" rel="license">"CC0"</a>.</p>
               {% endblock %}
             </div>
             <div class="region region--no-space-top typography" id="conformance">
               <h2 class="h2" id="conformance" aria-level="1" role="heading">Konformität</h2>
               {% block conformance %}
-              <p>Die Konformität für Implementierungsmodelle ist <a href="/doc/begeleidend/implementatiemodellen/conformiteit">hier</a> zu finden.</p>
+              <p>Eine Implementierung ist mit diesem Anwendungsprofil konform, wenn sie diese <a href="/doc/begeleidend/applicatieprofielen/conformiteit">Regeln</a> erfüllt.</p>
               {% endblock %}
             </div>
             <div class="region region--no-space-top" id="overview">
@@ -199,7 +201,7 @@
                 <div class="col--9-12 col--1-1--s typography">
                   {% if ( ( classes | length > 0)   ) %}
                   <div class="region region--no-space-top">
-                    <p>In diesem Dokument wird die korrekte Verwendung der folgenden Entitäten erläutert.:
+                    <p>In diesem Dokument wird die Verwendung der folgenden Entitäten für eine korrekte Verwendung des Anwendungsprofils beschrieben: 
                       <br />
                       |
                       {%- for class in classes |sort(attribute=sortattr) %}
@@ -210,7 +212,7 @@
                   {% endif %}
                   {% if ( ( datatypes | length ) > 0 ) %}
                   <div class="region region--no-space-top">
-                    <p> In diesem Dokument werden die folgenden Datentypen erläutert:
+                    <p> In diesem Dokument wird die Verwendung der folgenden Datentypen für eine korrekte Verwendung des Anwendungsprofils beschrieben:
                       <br />
                       |
                       {%- for datatype in datatypes |sort(attribute=sortattr) %}
@@ -227,8 +229,6 @@
               <a href="{{ documentroot }}/html/overview.jpg" target="_blank">
                  <img src="{{ documentroot }}/html/overview.jpg" />
               </a>
-              {% block images %}
-              {% endblock %}
             </div>
             <div class="region region--no-space-top">
               <h2 class="h2">Entitäten</h2>
@@ -240,10 +240,10 @@
                   <dl>
                     <dt>Beschreibung</dt><dd>{{ entity.description[language] }}</dd>
                     {% if entity.usage[language] %}
-                    <dt>Verwendung</dt><dd>{{ entity.usage[language] }}</dd>
+                    <dt>Nutzung</dt><dd>{{ entity.usage[language] }}</dd>
                     {% endif %}
 		    {% if ((entity.parents | length) > 0 ) %} 
-		    <dt>Unterklasse von <dt><dd>
+		    <dt>Unterklasse von<dt><dd>
                         {%- for parent in entity['parents'] %}
                         <a href="{{ parent.scoped_uri}}">{{ parent.label }}</a>{% if not loop.last %}, {% endif %}
                     	{%- endfor %}
@@ -251,15 +251,15 @@
                     {% endif %}
                     <dt>Eigenschaften</dt>
 		    {% if ((entity.properties | length) > 0 ) %} 
-                    <dd>Für diese Entität werden die folgenden Eigenschaften definiert::
+                    <dd>Für diese Entität wurden die folgenden Eigenschaften definiert:
                     {%- for prop in entity['properties'] | sort(attribute=sortattr) %}
                       <a href="#{{ (entity.name[language] ~ ':' ~ prop.name[language]) | urlencode }}">{{ prop.name[language] }}</a>{% if not loop.last %}, {% endif %}
                     {%- endfor %}.</dd>
                     {% else %}
-                    <dd>Für diese Entität sind keine Eigenschaften definiert..</dd>
+                    <dd>Für diese Entität wurden keine Eigenschaften definiert.</dd>
                     {% endif %}
                   </dl>
-                  <dd>Hinterlasse <a href="https://github.com/Informatievlaanderen/duet/issues/new?title=Issue%20for%20{{ entity.name[language] }}&body=Explain%20your%20issue">hier</a> Feedback für diesen Datentyp.</dd>
+                  <dd>Hinterlasse <a href="https://github.com/Informatievlaanderen/duet/issues/new?title=Issue%20for%20{{ entity.name[language] }}&body=Explain%20your%20issue">hier</a> Feedback für diese Entität.</dd>
                 </div>
 		{% if ((entity.properties | length) > 0 ) %} 
                 <div class="u-table-overflow">
@@ -267,7 +267,7 @@
                     <thead>
                       <tr class="data-table__header">
                         <th class="data-table__header-title--sortable"></th>
-                        <th class="data-table__header-title--sortable data-table__header-title--sortable-active">Eigenschap</th>
+                        <th class="data-table__header-title--sortable data-table__header-title--sortable-active">Eigenschaft</th>
                         <th class="data-table__header-title--sortable">Erwarteter Datentyp</th>
                         <th class="data-table__header-title--sortable">Kardinalität</th>
                         <th class="data-table__header-title--sortable">Beschreibung</th>
@@ -310,7 +310,7 @@
 
             {% if datatypes %}
             <div class="region region--no-space-top">
-              <h2 class="h2">Datebtypen</h2>
+              <h2 class="h2">Datentypen</h2>
             </div>
             {% for entity in datatypes | sort(attribute=sortattr)%}
             <div class="region region--no-space-top">
@@ -326,7 +326,7 @@
                     <dt>Verwendung</dt><dd>{{ entity.usage[language] }}</dd>
                     {% endif %}
 		    {% if ((entity.parents | length) > 0 ) %} 
-		    <dt>Unterklasse von <dt><dd>
+		    <dt>Unterklasse von<dt><dd>
                         {%- for parent in entity['parents'] %}
                         <a href="{{ parent.scoped_uri}}">{{ parent.label }}</a>{% if not loop.last %}, {% endif %}
                     	{%- endfor %}
@@ -339,7 +339,7 @@
                       <a href="#{{ (entity.name[language] ~ ':' ~ prop.name[language]) | urlencode }}">{{ prop.name[language] }}</a>{% if not loop.last %}, {% endif %}
                     {%- endfor %}.</dd>
                     {% else %}
-                    <dd>Für diesen Datentyp sind keine Eigenschaften definiert..</dd>
+                    <dd>Für diesen Datentyp sind keine Eigenschaften definiert.</dd>
                     {% endif %}
                   </dl>
                   <dd>Hinterlasse <a href="https://github.com/Informatievlaanderen/duet/issues/new?title=Issue%20for%20{{ entity.name[language] }}&body=Explain%20your%20issue">hier</a> Feedback für diesen Datentyp.</dd>
@@ -390,25 +390,18 @@
             </div>
             {% endfor %}
             {% endif %}
-			<div class="region region--no-space-top" id="sqlite">
-                <h2 class="h2" aria-level="1" role="heading" id="h2_sotd">SQLite Download</h2>
-                (nicht normativ)
-                {% block sqlite %}
-                <p>Eine wiederverwendbare SQLite-Datenbank aller Implementierungsmodelle finden Sie unter: <a href="{{ documentroot }}/html/OTL.db" target="_blank">{{ documentroot }}/html/OTL.db</a></p>
-                {% endblock %}
-            </div>
             <div class="region region--no-space-top" id="jsonld">
                 <h2 class="h2" aria-level="1" role="heading" id="h2_sotd">JSON-LD Kontext</h2>
                 (nicht normativ)
                 {% block jsonld %}
-                <p>Eine wiederverwendbare JSON-LD-Kontextdefinition für dieses Implementierungsmodell finden Sie unter: <a href="{{ documentroot }}/context/{{ metadata.filename }}.jsonld" target="_blank">{{ documentroot }}/context/{{ metadata.filename }}.jsonld</a></p>
+                <p>Eine wiederverwendbare JSON-LD-Kontextdefinition für dieses Anwendungsprofil ist abrufbar unter: <a href="{{ documentroot }}/context/{{ metadata.filename }}.jsonld" target="_blank">{{ documentroot }}/context/{{ metadata.filename }}.jsonld</a></p>
                 {% endblock %}
             </div>
             <div class="region region--no-space-top" id="shacl">
                 <h2 class="h2" aria-level="1" role="heading" id="h2_sotd">SHACL template</h2>
                 (nicht normativ)
                 {% block shacl%}
-                <p>Eine wiederverwendbare SHACL-Vorlagendefinition für dieses Implementierungsmodell finden Sie unter: <a href="{{ documentroot }}/shacl/{{ metadata.filename }}-SHACL.ttl" target="_blank">{{ documentroot }}/shacl/{{ metadata.filename }}-SHACL.ttl</a></p>
+                <p>Eine wiederverwendbare SHACL-Vorlagendefinition für dieses Anwendungsprofil ist abrufbar unter: <a href="{{ documentroot }}/shacl/{{ metadata.filename }}-SHACL.ttl" target="_blank">{{ documentroot }}/shacl/{{ metadata.filename }}-SHACL.ttl</a></p>
                 {% endblock %}
             </div>
           </div>
@@ -424,7 +417,7 @@
                                   <a href="#summary">Zusammenfassung</a>
                               </li>
                               <li class="side-navigation__item">
-                                  <a href="#status">Status des Dokuments</a>
+                                  <a href="#status">Status dieses Dokuments</a>
                               </li>
                               <li class="side-navigation__item">
                                   <a href="#license">Lizenz</a>
@@ -434,9 +427,6 @@
                               </li>
                               <li class="side-navigation__item">
                                   <a href="#overview">Übersicht</a>
-                              </li>
-			      <li class="side-navigation__item">
-                                  <a href="#sqlite">SQLite Download</a>
                               </li>
                               <li class="side-navigation__item">
                                   <a href="#jsonld">JSON-LD Kontext</a>
@@ -453,11 +443,6 @@
       </div>
     </div>
   </div>
-  </div>
-  <div id="vlaanderen-footer">
-    <!-- insert your Vlaanderen-footer-code here -->
-    <script type="text/javascript" src="https://widgets.vlaanderen.be/widget/live/d6d44414e7c242f396ab6da8f8da5198"></script>
-    <!-- End global footer-->
   </div>
 
   <script src="https://dij151upo6vad.cloudfront.net/2.latest/js/vlaanderen-ui.js"></script>
@@ -501,9 +486,9 @@
       color: #000;
       background-clip: padding-box;
     }
-    
+
     .icon {
-      content: url("templates/icons/comment.svg");
+      content: url("/cms/icons/comment.svg");
       display: block;
     }
 

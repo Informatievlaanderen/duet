@@ -262,7 +262,7 @@
                                 {% for class in classes | sort(attribute=sortattr) %}
                                 <div class="region region--no-space-top">
                                     <h3 class="h3"  id="{{ class.uri | replace(metadata.uri + '#', '') }}">Klasse <em>{{ class.name[language] }}</em></h3>
-                                    <p>Schrijf <a href="mailto:{{ mailtostring }}?subject={{ entity.name[language] }} &body=Uw Feedback">hier</a> een mail met feedback over deze klasse.</p>
+                                    <p>Schrijf <a href="mailto:specifyAnEmailAdress@toSendFeedback.to?subject={{ entity.name[language] }} &body=Uw Feedback">hier</a> een mail met feedback over deze klasse.</p>
                                     <table class="definition">
                                         <tbody>
                                           <tr>
@@ -329,7 +329,7 @@
                                 {% for property in properties | sort(attribute=sortattr) %}
                                 <div class="region region--no-space-top">
                                     <h3 class="h3"  id="{{ property.uri | replace(metadata.uri + '#', '') }}">Eigenschap <em>{{  property.name[language] }}</em></h3>
-                                    <p>Schrijf <a href="mailto:{{ mailtostring }}?subject={{ entity.name[language] }} &body=Uw Feedback">hier</a> een mail met feedback over deze eigenshap.</p>
+                                    <p>Schrijf <a href="mailto:specifyAnEmailAdress@toSendFeedback.to?subject={{ entity.name[language] }} &body=Uw Feedback">hier</a> een mail met feedback over deze eigenshap.</p>
                                     <table class="definition">
                                         <tbody>
                                           <tr>
@@ -539,12 +539,6 @@
       img.cc {
          width: 88px;
       }
-      
-    .icon {
-      content: url("templates/icons/comment.svg");
-      display: block;
-    }
-
     </style>
   </body>
 </html>
