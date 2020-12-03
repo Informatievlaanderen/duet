@@ -8,6 +8,14 @@
     "navigation": {}
   },
   {
+    "urlref": "/doc/vocabulary/sdg-namespaces-voc",
+    "repository": "https://github.com/AnnemarieWittig/englishworkspace",
+    "branchtag": "main",
+    "name": "sdgmodels2-namespaces-voc",
+    "filename": "config/sdgmodels2-namespaces-voc.json",
+    "navigation": {}
+  },
+  {
     "urlref": "/doc/applicationprofile/sdg-mailto-ap",
     "repository": "https://github.com/AnnemarieWittig/englishworkspace",
     "branchtag": "main",
