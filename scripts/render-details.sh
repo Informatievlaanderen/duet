@@ -131,12 +131,6 @@ render_example_template() { # SLINE TLINE JSON
     local LANGUAGE=$7
 
     BASENAME=$(basename ${JSONI} .jsonld)
-    #    OUTFILE=${BASENAME}.html
-    # precendence order: local files > Data.vlaanderen.be > SpecGenerator
-    # TODO: include a first copy from Data.vlaanderen.be
-    cp -n /app/views/* ${SLINE}/templates
-    cp -n ${HOME}/project/templates/* ${SLINE}/templates
-    cp -n ${HOME}/project/templates/icons/* ${SLINE}/templates/icons
     mkdir -p ${RLINE}
 
     COMMAND=$(echo '.[]|select(.name | contains("'${BASENAME}'"))|.examples')
