@@ -5,7 +5,6 @@
     "branchtag": "main",
     "name": "sdgmodels2-feedback-voc",
     "filename": "config/sdgmodels2-feedback-voc.json",
-    "examples": true,
     "navigation": {}
   },
   {
@@ -22,6 +21,7 @@
     "branchtag": "main",
     "name": "sdgmodels2-mailto-ap",
     "filename": "config/sdgmodels2-mailto-ap.json",
+    "examples": true,
     "navigation": {}
   },
   {
