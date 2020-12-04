@@ -5,6 +5,7 @@
     "branchtag": "main",
     "name": "sdgmodels2-feedback-voc",
     "filename": "config/sdgmodels2-feedback-voc.json",
+    "examples": true,
     "navigation": {}
   },
   {

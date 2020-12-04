@@ -162,6 +162,21 @@ jobs:
           paths:
             - target/
             - reporthtml/
+  render-example-templates:
+    docker:
+      - image: informatievlaanderen/oslo-specification-generator:multilingual
+    steps:
+      - checkout
+      - attach_workspace:
+          at: /tmp/workspace
+      - run:
+          name: Render example templates
+          command: |
+            $PWD/scripts/render-details.sh /tmp/workspace example
+      - persist_to_workspace:
+          root: /tmp/workspace
+          paths:
+            - target/
   render-context-details:
     docker:
       - image: informatievlaanderen/oslo-specification-generator:multilingual
@@ -384,6 +399,9 @@ workflows:
       - render-merged-jsonld:
           requires:
             - render-translation-json
+      - render-example-templates:
+          requires:
+            - render-merged-jsonld
       - render-html-details:
           requires:
             - render-merged-jsonld

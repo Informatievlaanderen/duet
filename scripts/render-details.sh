@@ -120,6 +120,46 @@ render_html() { # SLINE TLINE JSON
     popd
 }
 
+render_example_template() { # SLINE TLINE JSON
+    echo "render_example_template: $1 $2 $3 $4 $5 $6 $7"
+    local SLINE=$1
+    local TLINE=$2
+    local JSONI=$3
+    local RLINE=$4
+    local DROOT=$5
+    local RRLINE=$6
+    local LANGUAGE=$7
+
+    BASENAME=$(basename ${JSONI} .jsonld)
+    #    OUTFILE=${BASENAME}.html
+    # precendence order: local files > Data.vlaanderen.be > SpecGenerator
+    # TODO: include a first copy from Data.vlaanderen.be
+    cp -n /app/views/* ${SLINE}/templates
+    cp -n ${HOME}/project/templates/* ${SLINE}/templates
+    cp -n ${HOME}/project/templates/icons/* ${SLINE}/templates/icons
+    mkdir -p ${RLINE}
+
+    COMMAND=$(echo '.[]|select(.name | contains("'${BASENAME}'"))|.examples')
+    EXAMPLE=$(jq -r "${COMMAND}" ${SLINE}/.names.json)
+
+    if [ ${EXAMPLE} == true ]; then
+        OUTPUT=${TLINE}/example
+        mkdir -p ${OUTPUT}
+        mkdir -p ${OUTPUT}/context
+        COMMANDJSONLD=$(echo '.[].translation | .[] | select(.language | contains("'${LANGUAGE}'")) | .mergefile')
+        MERGEDJSONLD=${RRLINE}/translation/$(jq -r "${COMMANDJSONLD}" ${SLINE}/.names.json)
+
+        echo "RENDER-DETAILS(example generator): node /app/exampletemplate-generator2.js -i ${MERGEDJSONLD} -o ${OUTPUT} -l ${LANGUAGE}"
+
+        if ! node /app/exampletemplate-generator2.js -i ${MERGEDJSONLD} -o ${OUTPUT} -l ${LANGUAGE}; then
+            echo "RENDER-DETAILS(example generator): rendering failed"
+            exit -1
+        else
+            echo "RENDER-DETAILS(example generator): Files were rendered in ${OUTPUT}"
+        fi
+    fi
+}
+
 touch2() { mkdir -p "$(dirname "$1")" && touch "$1"; }
 
 prettyprint_jsonld() {
@@ -308,6 +348,10 @@ cat ${CHECKOUTFILE} | while read line; do
             report)
                 write_report $i ${PRIMELANGUAGE} ${SLINE} ${TRLINE} ${RLINE}
                 write_report $i ${GOALLANGUAGE} ${SLINE} ${TRLINE} ${RLINE}
+                ;;
+            example)
+                render_example_template $SLINE $TLINE $i $RLINE ${line} ${TARGETDIR}/report/${line} ${PRIMELANGUAGE}
+                render_example_template $SLINE $TLINE $i $RLINE ${line} ${TARGETDIR}/report/${line} ${GOALLANGUAGE}
                 ;;
             *) echo "RENDER-DETAILS: ${DETAILS} not handled yet" ;;
             esac
