@@ -129,23 +129,23 @@ render_example_template() { # SLINE TLINE JSON
     local DROOT=$5
     local RRLINE=$6
     local LANGUAGE=$7
-
     BASENAME=$(basename ${JSONI} .jsonld)
     mkdir -p ${RLINE}
-
-    COMMAND=$(echo '.[]|select(.name | contains("'${BASENAME}'"))|.examples')
+    COMMAND=$(echo '.[]| select(.examples)')
     EXAMPLE=$(jq -r "${COMMAND}" ${SLINE}/.names.json)
-
-    if [ ${EXAMPLE} == true ]; then
-        OUTPUT=/tmp/workspace/examples/${BASENAME}
-        mkdir -p /tmp/workspace/examples
-        mkdir -p ${OUTPUT}
-        mkdir -p ${OUTPUT}/context
-        COMMANDJSONLD=$(echo '.[].translation | .[] | select(.language | contains("'${LANGUAGE}'")) | .mergefile')
-        MERGEDJSONLD=${RRLINE}/translation/$(jq -r "${COMMANDJSONLD}" ${SLINE}/.names.json)
-
+    echo "example " ${EXAMPLE}
+    #    cat ${SLINE}/.names.json
+    OUTPUT=/tmp/workspace/examples/${BASENAME}
+    mkdir -p ${OUTPUT}
+    mkdir -p ${OUTPUT}/context
+    COMMANDJSONLD=$(echo '.[].translation | .[] | select(.language | contains("'${LANGUAGE}'")) | .mergefile')
+    MERGEDJSONLD=${RRLINE}/translation/$(jq -r "${COMMANDJSONLD}" ${SLINE}/.names.json)
+    #       cat ${MERGEDJSONLD}
+    COMMAND=$(echo '.examples')
+    EXAMPLE=$(jq -r "${COMMAND}" ${MERGEDJSONLD})
+    echo "example " ${EXAMPLE}
+    if [ "${EXAMPLE}" == true ]; then
         echo "RENDER-DETAILS(example generator): node /app/exampletemplate-generator2.js -i ${MERGEDJSONLD} -o ${OUTPUT} -l ${LANGUAGE}"
-
         if ! node /app/exampletemplate-generator2.js -i ${MERGEDJSONLD} -o ${OUTPUT} -l ${LANGUAGE}; then
             echo "RENDER-DETAILS(example generator): rendering failed"
             exit -1
