@@ -133,7 +133,7 @@ render_example_template() { # SLINE TLINE JSON
     BASENAME=$(basename ${JSONI} .jsonld)
     mkdir -p ${RLINE}
 
-    COMMAND=$(echo '.[]|select(.examples')
+    COMMAND=$(echo '.[]| select(.examples)')
     EXAMPLE=$(jq -r "${COMMAND}" ${SLINE}/.names.json)
 
     if [ ${EXAMPLE} == true ]; then
