@@ -133,11 +133,12 @@ render_example_template() { # SLINE TLINE JSON
     BASENAME=$(basename ${JSONI} .jsonld)
     mkdir -p ${RLINE}
 
-    COMMAND=$(echo '.[]| select(.examples)')
+    COMMAND=$(echo '.[]|select(.name | contains("'${BASENAME}'"))|.examples')
     EXAMPLE=$(jq -r "${COMMAND}" ${SLINE}/.names.json)
 
     if [ ${EXAMPLE} == true ]; then
         OUTPUT=/tmp/workspace/examples/${BASENAME}
+        mkdir -p /tmp/workspace/examples
         mkdir -p ${OUTPUT}
         mkdir -p ${OUTPUT}/context
         COMMANDJSONLD=$(echo '.[].translation | .[] | select(.language | contains("'${LANGUAGE}'")) | .mergefile')
