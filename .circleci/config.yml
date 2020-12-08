@@ -429,6 +429,7 @@ workflows:
             - checkout
       - expand-links:
           requires:
+            - render-example-templates
             - convert-json-to-ttl
             - render-html-details
             - copy-raw
