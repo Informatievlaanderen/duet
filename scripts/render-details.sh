@@ -131,13 +131,17 @@ render_example_template() { # SLINE TLINE JSON
     local LANGUAGE=$7
     BASENAME=$(basename ${JSONI} .jsonld)
     mkdir -p ${RLINE}
-    COMMAND=$(echo '.[]| select(.examples)')
-    EXAMPLE=$(jq -r "${COMMAND}" ${SLINE}/.names.json)
-    echo "example " ${EXAMPLE}
+    touch ${RLINE}/
+
+#    COMMAND=$(echo '.[]| select(.examples)')
+#   EXAMPLE=$(jq -r "${COMMAND}" ${SLINE}/.names.json)
+#    echo "example " ${EXAMPLE}
     #    cat ${SLINE}/.names.json
     OUTPUT=/tmp/workspace/examples/${BASENAME}
     mkdir -p ${OUTPUT}
     mkdir -p ${OUTPUT}/context
+    touch ${OUTPUT}/.gitignore
+
     COMMANDJSONLD=$(echo '.[].translation | .[] | select(.language | contains("'${LANGUAGE}'")) | .mergefile')
     MERGEDJSONLD=${RRLINE}/translation/$(jq -r "${COMMANDJSONLD}" ${SLINE}/.names.json)
     #       cat ${MERGEDJSONLD}

@@ -353,6 +353,7 @@ jobs:
           workdir: /tmp/workspace
           command: |
             mkdir -p /tmp/duet-generated/report
+            mkdir -p /tmp/duet-generated/examples
             if [ -d target ] ; then if [ ! "$(ls -A target)" ] ; then echo "directory target is empty" ; else cp -R target/* /tmp/duet-generated ; fi fi
             if [ -d report ] ; then if [ ! "$(ls -A report)" ] ; then echo "directory report is empty" ; else cp -R report/* /tmp/duet-generated/report ; fi fi
             if [ -d reporthtml ] ; then if [ ! "$(ls -A reporthtml)" ] ; then echo "directory reporthtml is empty" ; else cp -R reporthtml/* /tmp/duet-generated/report ; fi fi
