@@ -1,5 +1,21 @@
 [
   {
+    "urlref": "/doc/vocabulary/sdgtest-voc",
+    "repository": "https://github.com/AnnemarieWittig/englishworkspace",
+    "branchtag": "main",
+    "name": "sdgtest2-voc",
+    "filename": "config/sdgtest2-voc.json",
+    "navigation": {}
+  },
+  {
+    "urlref": "/doc/applicationprofile/sdgtest-ap",
+    "repository": "https://github.com/AnnemarieWittig/englishworkspace",
+    "branchtag": "main",
+    "name": "sdgtest2-ap",
+    "filename": "config/sdgtest2-ap.json",
+    "navigation": {}
+  },
+  {
     "urlref": "/doc/vocabulary/sdg-feedback-voc",
     "repository": "https://github.com/AnnemarieWittig/englishworkspace",
     "branchtag": "main",
