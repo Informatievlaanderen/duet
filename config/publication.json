@@ -1,5 +1,13 @@
 [
   {
+    "urlref": "/doc/applicationprofile/cccev-ap",
+    "repository": "https://github.com/AnnemarieWittig/englishworkspace",
+    "branchtag": "main",
+    "name": "cccev-ap",
+    "filename": "config/cccev-ap.json",
+    "navigation": {}
+  },
+  {
     "urlref": "/doc/vocabulary/sdgtest-voc",
     "repository": "https://github.com/AnnemarieWittig/englishworkspace",
     "branchtag": "main",
