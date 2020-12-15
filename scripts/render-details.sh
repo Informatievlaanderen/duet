@@ -47,6 +47,13 @@ render_translationfiles() {
 
     COMMANDLANGJSON=$(echo '.[].translation | .[] | select(.language | contains("'${GOALLANGUAGE}'")) | .translationjson')
     JSON=$(jq -r "${COMMANDLANGJSON}" ${SLINE}/.names.json)
+    # secure the case that the translation file is not mentioned
+    if [ "${JSON}" == ""  ] || [ "${JSON}" == "null" ] ; then
+         COMMANDNAME=$(echo '.[].name')
+          JSON=$(jq -r "${COMMANDNAME}" ${SLINE}/.names.json)
+         JSON="${JSON}_${GOALLANGUAGE}.json"
+    fi
+
     FILE=${SLINE}/translation/${JSON}
 
     mkdir -p ${TLINE}/translation
