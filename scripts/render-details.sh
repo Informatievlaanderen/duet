@@ -33,7 +33,8 @@ render_merged_files() {
             echo "RENDER-DETAILS: Files succesfully merged and saved to: ${MERGEDJSONLD}"
         fi
     else
-        echo "${TRANSLATIONFILE} does not exist, nothing to merge."
+        echo "${TRANSLATIONFILE} does not exist, nothing to merge. Just copy it"
+	cp ${JSONI} ${MERGEDJSONLD}
     fi
 }
 
