@@ -122,7 +122,7 @@ render_html() { # SLINE TLINE JSON
         echo "RENDER-DETAILS(language html): File was rendered in ${OUTPUT}"
     fi
 
-    pretty_print_json ${RRLINE}/html-nj_${LANGUAGE}.json
+    pretty_print_json ${RLINE}/html-nj_${LANGUAGE}.json
     popd
 }
 
@@ -130,7 +130,7 @@ function pretty_print_json() {
 	# echo "pretty_print_json: $1" 
 	if [ -f "$1" ] ; then 
 	   jq . $1 > /tmp/pp.json
-	   mv pp.json $1
+	   mv /tmp/pp.json $1
 	fi 
 }
 
