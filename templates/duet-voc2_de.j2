@@ -256,7 +256,7 @@
                                         <p>
                                             |
                                             {% for prop in properties | sort(attribute=sortattr) %}
-                                            <a href="{{ prop.uri  | replace(metadata.uri, '')}}" rel="property">{{ prop.name[language] }}</a> |
+                                            <a href="{{ prop.uri  | replace(metadata.uri, '')}}" rel="property">{{ prop.label[language] }}</a> |
                                             {% endfor %}
                                         </p>
                                     </div>
@@ -275,7 +275,7 @@
                                 </div>
                                 {% for class in classes | sort(attribute=sortattr) %}
                                 <div class="region region--no-space-top">
-                                    <h3 class="h3"  id="{{ class.uri | replace(metadata.uri + '#', '') }}">Klasse <em>{{ class.name[language] }}</em></h3>
+                                    <h3 class="h3"  id="{{ class.uri | replace(metadata.uri + '#', '') }}">Klasse <em>{{ class.label[language] }}</em></h3>
                                     <table class="definition">
                                         <tbody>
                                           <tr>
@@ -341,7 +341,7 @@
 
                                 {% for property in properties | sort(attribute=sortattr) %}
                                 <div class="region region--no-space-top">
-                                    <h3 class="h3"  id="{{ property.uri | replace(metadata.uri + '#', '') }}">Eigenschaft <em>{{  property.name[language] }}</em></h3>
+                                    <h3 class="h3"  id="{{ property.uri | replace(metadata.uri + '#', '') }}">Eigenschaft <em>{{  property.label[language] }}</em></h3>
                                     <table class="definition">
                                         <tbody>
                                           <tr>
@@ -416,7 +416,7 @@
                                 {% if external_terms %}
                                 {% for external in external_terms | sort(attribute=sortattr) %}
                                 <div class="region region--no-space-top">
-                                    <h3 class="h4" id="{{ external.name[language] }}"><em>{{ external.name[language] }}</em></h3>
+                                    <h3 class="h4" id="{{ external.name[language] }}"><em>{{ external.label[language] }}</em></h3>
                                     <table class="definition">
                                         <tbody>
                                           
