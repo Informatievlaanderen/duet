@@ -216,7 +216,7 @@
                       <br />
                       |
                       {%- for class in classes |sort(attribute=sortattr) %}
-                      <a href="#{{ class.name[language] }}">{{ class.label[language] }}</a> |
+                      <a href="#{{ class.name }}">{{ class.label[language] }}</a> |
                       {%- endfor %}
                     </p>
                   </div>
@@ -227,7 +227,7 @@
                       <br />
                       |
                       {%- for datatype in datatypes |sort(attribute=sortattr) %}
-                      <a href="#{{ datatype.name[language] }}">{{ datatype.label[language] }}</a> |
+                      <a href="#{{ datatype.name }}">{{ datatype.label[language] }}</a> |
                       {%- endfor %}
                     </p>
                   </div>
@@ -246,7 +246,7 @@
             </div>
             {% for entity in classes | sort(attribute=sortattr) %}
               <div class="region region--no-space-top">
-              <h3 class="h3" id="{{ entity.name[language] }}"><a href="{{ entity.uri }}" data-toggle="tooltip" data-content="{{ entity.uri }}" data-placement="right">{{ entity.label[language] }}</a></h3>
+              <h3 class="h3" id="{{ entity.name }}"><a href="{{ entity.uri }}" data-toggle="tooltip" data-content="{{ entity.uri }}" data-placement="right">{{ entity.label[language] }}</a></h3>
                 <div class="region region--no-space-top">
                   <dl>
                     <dt>Description</dt><dd>{{ entity.description[language] }}</dd>
@@ -264,13 +264,13 @@
 		    {% if ((entity.properties | length) > 0 ) %} 
                     <dd>For this entity the following properties are defined:
                     {%- for prop in entity['properties'] | sort(attribute=sortattr) %}
-                      <a href="#{{ (entity.name[language] ~ ':' ~ prop.name[language]) | urlencode }}">{{ prop.label[language] }}</a>{% if not loop.last %}, {% endif %}
+                      <a href="#{{ (entity.name ~ ':' ~ prop.name) | urlencode }}">{{ prop.label[language] }}</a>{% if not loop.last %}, {% endif %}
                     {%- endfor %}.</dd>
                     {% else %}
                     <dd>No properties have been defined for this entity.</dd>
                     {% endif %}
                   </dl>
-                  <dd>Add an issue for this entity <a href="https://github.com/Informatievlaanderen/duet/issues/new?title=Issue%20for%20{{ entity.name[language] }}&body=Explain%20your%20issue">here</a>.</dd>
+                  <dd>Add an issue for this entity <a href="https://github.com/Informatievlaanderen/duet/issues/new?title=Issue%20for%20{{ entity.name }}&body=Explain%20your%20issue">here</a>.</dd>
                 </div>
 		{% if ((entity.properties | length) > 0 ) %} 
                 <div class="u-table-overflow">
@@ -289,8 +289,8 @@
 
                     <tbody class="supertype">
                     {% for prop in entity['properties'] | sort(attribute=sortattr) %}
-                      <tr id="{{ (entity.name[language] ~ ':' ~ prop.name[language]) | urlencode }}" typeof="rdfs:Property" resource="{{ prop.uri }}">
-                        <td><a href="https://github.com/Informatievlaanderen/duet/issues/new?title=Issue%20for%20{{ prop.name[language] }}&body=Explain%20your%20issue"><i class="icon"></i></a></td>
+                      <tr id="{{ (entity.name ~ ':' ~ prop.name) | urlencode }}" typeof="rdfs:Property" resource="{{ prop.uri }}">
+                        <td><a href="https://github.com/Informatievlaanderen/duet/issues/new?title=Issue%20for%20{{ prop.name }}&body=Explain%20your%20issue"><i class="icon"></i></a></td>
                         <td>
                           <code property="rdfs:label">
                             <a href="{{ prop.uri }}" data-toggle="tooltip" data-content="{{ prop.uri }}" data-placement="right">
@@ -326,9 +326,9 @@
             {% for entity in datatypes | sort(attribute=sortattr)%}
             <div class="region region--no-space-top">
               {% if entity.scopeduri %}
-              <h3 class="h3" id="{{ entity.name[language] }}"><a href="{{ entity.scopeduri }}" data-toggle="tooltip" data-content="{{ entity.uri }}" data-placement="right">{{ entity.label[language] }}</a></h3>
+              <h3 class="h3" id="{{ entity.name }}"><a href="{{ entity.scopeduri }}" data-toggle="tooltip" data-content="{{ entity.uri }}" data-placement="right">{{ entity.label[language] }}</a></h3>
 	      {% else %}
-              <h3 class="h3" id="{{ entity.name[language] }}"><a href="{{ entity.uri }}" data-toggle="tooltip" data-content="{{ entity.uri }}" data-placement="right">{{ entity.label[language] }}</a></h3>
+              <h3 class="h3" id="{{ entity.name }}"><a href="{{ entity.uri }}" data-toggle="tooltip" data-content="{{ entity.uri }}" data-placement="right">{{ entity.label[language] }}</a></h3>
 	      {% endif %}
                 <div class="region region--no-space-top">
                   <dl>
@@ -347,13 +347,13 @@
 		    {% if ((entity.properties | length) > 0 ) %} 
                     <dd>Voor dit datatype zijn de volgende eigenschappen gedefinieerd:
                     {%- for prop in entity['properties'] | sort(attribute=sortattr) %}
-                      <a href="#{{ (entity.name[language] ~ ':' ~ prop.name[language]) | urlencode }}">{{ prop.label[language] }}</a>{% if not loop.last %}, {% endif %}
+                      <a href="#{{ (entity.name ~ ':' ~ prop.name) | urlencode }}">{{ prop.label[language] }}</a>{% if not loop.last %}, {% endif %}
                     {%- endfor %}.</dd>
                     {% else %}
                     <dd>Voor dit datatype zijn geen eigenschappen gedefinieerd.</dd>
                     {% endif %}
                   </dl>
-                  <dd>Add an issue for this property <a href="https://github.com/Informatievlaanderen/duet/issues/new?title=Issue%20for%20{{ entity.name[language] }}&body=Explain%20your%20issue">here</a>.</dd>
+                  <dd>Add an issue for this property <a href="https://github.com/Informatievlaanderen/duet/issues/new?title=Issue%20for%20{{ entity.name }}&body=Explain%20your%20issue">here</a>.</dd>
                 </div>
 		{% if ((entity.properties | length) > 0 ) %} 
                 <div class="u-table-overflow">
@@ -372,8 +372,8 @@
 
                     <tbody class="supertype">
                       {% for prop in entity['properties'] | sort(attribute=sortattr) %}
-                      <tr id="{{ (entity.name[language] ~ ':' ~ prop.name[language] ) | urlencode }}" typeof="rdfs:Property" resource="{{ prop.uri }}">
-                        <td><a href="https://github.com/Informatievlaanderen/duet/issues/new?title=Issue%20for%20{{ prop.name[language] }}&body=Explain%20your%20issue"><i class="icon"></i></a></td>
+                      <tr id="{{ (entity.name ~ ':' ~ prop.name ) | urlencode }}" typeof="rdfs:Property" resource="{{ prop.uri }}">
+                        <td><a href="https://github.com/Informatievlaanderen/duet/issues/new?title=Issue%20for%20{{ prop.name }}&body=Explain%20your%20issue"><i class="icon"></i></a></td>
                         <td>
                           <code property="rdfs:label">
                             <a href="{{ prop.uri }}" data-toggle="tooltip" data-content="{{ prop.uri }}" data-placement="right">{{ prop.label[language] }}</a>

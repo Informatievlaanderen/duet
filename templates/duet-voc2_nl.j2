@@ -240,7 +240,7 @@
                                         <p>
                                             |
                                             {% for class in classes | sort(attribute=sortattr) %}
-                                            <a href="{{ class.uri  | replace(metadata.uri, '') }}" rel="class">{{ class.name[language]}}</a> |
+                                            <a href="{{ class.uri  | replace(metadata.uri, '') }}" rel="class">{{ class.name}}</a> |
                                             {% endfor %}
                                         </p>
                                     </div>
@@ -281,10 +281,10 @@
                                             <td>Klasse</td>
                                           </tr>
 <!-- The Naam of the property/class is not relevant as it is already in the title of the table
-                                          {% if class.name[language] %}
+                                          {% if class.name %}
                                           <tr>
                                             <th>Naam</th>
-                                            <td><code>{{ class.name[language] }}</code></td>
+                                            <td><code>{{ class.name }}</code></td>
                                           </tr>
                                           {% endif %}
 -->
@@ -414,7 +414,7 @@
                                 {% if external_terms %}
                                 {% for external in external_terms | sort(attribute=sortattr) %}
                                 <div class="region region--no-space-top">
-                                    <h3 class="h4" id="{{ external.name[language] }}"><em>{{ external.label[language] }}</em></h3>
+                                    <h3 class="h4" id="{{ external.name }}"><em>{{ external.label[language] }}</em></h3>
                                     <table class="definition">
                                         <tbody>
                                           
