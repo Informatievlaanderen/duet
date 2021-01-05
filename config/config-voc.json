@@ -37,7 +37,7 @@
     },
     {
       tag: "usage",
-      property: "http://purl.org/vocab/vann/usageNote",
+      property: "http://www.w3.org/2004/02/skos/core#scopeNote",
       lang: "en",
       fallbackTags: ["usageNote-en"]
     },
@@ -93,7 +93,7 @@
     },
     {
       tag: "usage",
-      property: "http://purl.org/vocab/vann/usageNote",
+      property: "http://www.w3.org/2004/02/skos/core#scopeNote",
       lang: "en",
       fallbackTags: ["usageNote-en"]
     },
@@ -111,7 +111,7 @@
     },
     {
       tag: "usageNote-en",
-      property: "http://purl.org/vocab/vann/usageNote",
+      property: "http://www.w3.org/2004/02/skos/core#scopeNote",
       lang: "en"
     },
     {
@@ -126,7 +126,7 @@
     },
     {
       tag: "usageNote-en",
-      property: "http://purl.org/vocab/vann/usageNote",
+      property: "http://www.w3.org/2004/02/skos/core#scopeNote",
       lang: "en"
     },
     {
@@ -165,7 +165,7 @@
     },
     {
       tag: "usage",
-      property: "http://purl.org/vocab/vann/usageNote",
+      property: "http://www.w3.org/2004/02/skos/core#scopeNote",
       lang: "en",
       fallbackTags: ["usageNote-en"]
     },
