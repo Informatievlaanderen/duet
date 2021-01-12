@@ -1,5 +1,13 @@
 [
   {
+    "urlref": "/doc/applicationprofile/demo-ap",
+    "repository": "https://github.com/AnnemarieWittig/englishworkspace",
+    "branchtag": "main",
+    "name": "city-demo",
+    "filename": "config/city.json",
+    "navigation": {}
+  },
+  {
     "dummy": "7",
     "urlref": "/doc/applicationprofile/cccev-ap",
     "repository": "https://github.com/AnnemarieWittig/englishworkspace",
