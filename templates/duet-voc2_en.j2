@@ -275,12 +275,12 @@
                                 </div>
                                 {% for class in classes | sort(attribute=sortattr) %}
                                 <div class="region region--no-space-top">
-                                    <h3 class="h3"  id="{{ class.uri | replace(metadata.uri + '#', '') }}">Klasse <em>{{ class.label[language] }}</em></h3>
+                                    <h3 class="h3"  id="{{ class.uri | replace(metadata.uri + '#', '') }}">Class <em>{{ class.label[language] }}</em></h3>
                                     <table class="definition">
                                         <tbody>
                                           <tr>
                                             <th>Type</th>
-                                            <td>Klasse</td>
+                                            <td>Class</td>
                                           </tr>
 <!-- The Naam of the property/class is not relevant as it is already in the title of the table
                                           {% if class.name %}
@@ -305,7 +305,7 @@
 										  </tr>
                                           {% endif %}
                                           <tr>
-                                            <th>Definitie</th>
+                                            <th>Definition</th>
                                             <td>{{ class.description[language]}}</td>
                                           </tr>
                                           {% if class.usage[language] %}
@@ -341,12 +341,12 @@
 
                                 {% for property in properties | sort(attribute=sortattr) %}
                                 <div class="region region--no-space-top">
-                                    <h3 class="h3"  id="{{ property.uri | replace(metadata.uri + '#', '') }}">Eigenschap <em>{{  property.label[language] }}</em></h3>
+                                    <h3 class="h3"  id="{{ property.uri | replace(metadata.uri + '#', '') }}">Property <em>{{  property.label[language] }}</em></h3>
                                     <table class="definition">
                                         <tbody>
                                           <tr>
                                             <th>Type</th>
-                                            <td>Eigenschap</td>
+                                            <td>Property</td>
                                           </tr>
                                           <tr>
                                             <th>URI</th>
@@ -354,7 +354,7 @@
                                           </tr>
                                           {% if ( ( property.domain  | length ) > 0 )%} 
                                           <tr>
-                                            <th>Domein</th>
+                                            <th>Domain</th>
                                             <td><code>
                                                 {% for entity in property.domain %}
                                                   {{ entity }} 
@@ -364,7 +364,7 @@
                                           {% endif %} 
                                           {% if (( property.range  | length ) > 0)%}
                                           <tr>
-                                            <th>Bereik</th>
+                                            <th>Range</th>
                                             <td><code>
                                                 {% for entity in property.range %}
                                                   {{ entity }} 
@@ -374,7 +374,7 @@
                                           {% endif %}
                                           {% if ( ( property.parents | length ) > 0 )  %}
 										                      <tr>
-                                            <th>Specialisatie van</th>
+                                            <th>Specialization of</th>
 											                      <td><ul>
 											                        {% for parent in property.parents|sort %}
                                               <li><code>{{ parent }}</code></li>
@@ -383,7 +383,7 @@
 										                      </tr>
                                           {% endif %}
                                           <tr>
-                                            <th>Definitie</th>
+                                            <th>Definition</th>
                                             <td>{{ property.description[language]}}</td>
                                           </tr>
                                           {% if property.usage[language] %}

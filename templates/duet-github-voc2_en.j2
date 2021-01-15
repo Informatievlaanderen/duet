@@ -342,13 +342,13 @@
 
                                 {% for property in properties | sort(attribute=sortattr) %}
                                 <div class="region region--no-space-top">
-                                    <h3 class="h3"  id="{{ property.uri | replace(metadata.uri + '#', '') }}">Eigenschap <em>{{  property.label[language] }}</em></h3>
+                                    <h3 class="h3"  id="{{ property.uri | replace(metadata.uri + '#', '') }}">Property <em>{{  property.label[language] }}</em></h3>
                                     <p>Leave feedback for this property <a href="https://github.com/Informatievlaanderen/duet/issues/new?title=Issue%20for%20{{ entity.name }}&body=Explain%20your%20issue">here</a>.</p>
                                     <table class="definition">
                                         <tbody>
                                           <tr>
                                             <th>Type</th>
-                                            <td>Eigenschap</td>
+                                            <td>Property</td>
                                           </tr>
                                           <tr>
                                             <th>URI</th>
@@ -356,7 +356,7 @@
                                           </tr>
                                           {% if ( ( property.domain  | length ) > 0 )%} 
                                           <tr>
-                                            <th>Domein</th>
+                                            <th>Domain</th>
                                             <td><code>
                                                 {% for entity in property.domain %}
                                                   {{ entity }} 
@@ -366,7 +366,7 @@
                                           {% endif %} 
                                           {% if (( property.range  | length ) > 0)%}
                                           <tr>
-                                            <th>Bereik</th>
+                                            <th>Range</th>
                                             <td><code>
                                                 {% for entity in property.range %}
                                                   {{ entity }} 
@@ -376,7 +376,7 @@
                                           {% endif %}
                                           {% if ( ( property.parents | length ) > 0 )  %}
 										                      <tr>
-                                            <th>Specialisatie van</th>
+                                            <th>Specialization of</th>
 											                      <td><ul>
 											                        {% for parent in property.parents|sort %}
                                               <li><code>{{ parent }}</code></li>
@@ -385,12 +385,12 @@
 										                      </tr>
                                           {% endif %}
                                           <tr>
-                                            <th>Definitie</th>
+                                            <th>Definition</th>
                                             <td>{{ property.description[language]}}</td>
                                           </tr>
                                           {% if property.usage[language] %}
                                           <tr>
-                                            <th>Gebruik</th>
+                                            <th>Usage</th>
                                             <td>{{ property.usage[language] }}</td>
                                           </tr>
                                           {% endif %}

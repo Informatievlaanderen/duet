@@ -5,6 +5,7 @@
     "branchtag": "main",
     "name": "city-demo",
     "filename": "config/city.json",
+    "examples": true,
     "navigation": {}
   },
   {
