@@ -122,7 +122,6 @@ render_html() { # SLINE TLINE JSON
         exit -1
     else
         echo "RENDER-DETAILS(language html): File was rendered in ${OUTPUT}"
-        pretty_print_json ${OUTPUT}
     fi
 
     pretty_print_json ${RLINE}/html-nj_${LANGUAGE}.json
