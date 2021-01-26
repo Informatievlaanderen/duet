@@ -149,10 +149,9 @@ render_example_template() { # SLINE TLINE JSON
     mkdir -p ${RLINE}
     touch ${RLINE}/
 
-#    COMMAND=$(echo '.[]| select(.examples)')
-#   EXAMPLE=$(jq -r "${COMMAND}" ${SLINE}/.names.json)
-#    echo "example " ${EXAMPLE}
-    #    cat ${SLINE}/.names.json
+    COMMANDTYPE=$(echo '.[]|select(.name | contains("'${BASENAME}'"))|.type')
+    TYPE=$(jq -r "${COMMANDTYPE}" ${SLINE}/.names.json)
+
     OUTPUT=/tmp/workspace/examples/${BASENAME}
     mkdir -p ${OUTPUT}
     mkdir -p ${OUTPUT}/context
@@ -165,7 +164,7 @@ render_example_template() { # SLINE TLINE JSON
     EXAMPLE=$(jq -r "${COMMAND}" ${MERGEDJSONLD})
     echo "example " ${EXAMPLE}
     if [ "${EXAMPLE}" == true ]; then
-        echo "RENDER-DETAILS(example generator): node /app/exampletemplate-generator2.js -i ${MERGEDJSONLD} -o ${OUTPUT} -l ${LANGUAGE}"
+        echo "RENDER-DETAILS(example generator): node /app/exampletemplate-generator2.js -i ${MERGEDJSONLD} -o ${OUTPUT} -l ${LANGUAGE} -h /doc/${TYPE}/${BASENAME}"
         if ! node /app/exampletemplate-generator2.js -i ${MERGEDJSONLD} -o ${OUTPUT} -l ${LANGUAGE}; then
             echo "RENDER-DETAILS(example generator): rendering failed"
             exit -1
