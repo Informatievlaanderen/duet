@@ -69,6 +69,7 @@ render_translationfiles() {
             exit -1
         else
             echo "RENDER-DETAILS: File succesfully updated"
+            pretty_print_json ${OUTPUTFILE}
         fi
     else
         echo "${FILE} does not exist"
