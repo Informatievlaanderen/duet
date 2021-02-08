@@ -76,6 +76,7 @@
     "navigation": {}
   },
   {
+	  "dummy" : 1,
     "urlref": "/doc/applicationprofile/sdg-ap",
     "repository": "https://github.com/AnnemarieWittig/englishworkspace",
     "branchtag": "main",
