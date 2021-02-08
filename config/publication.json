@@ -26,6 +26,15 @@
     "navigation": {}
   },
   {
+    "urlref": "/doc/applicationprofile/sdgtest-raw",
+    "repository": "https://github.com/AnnemarieWittig/englishworkspace",
+    "branchtag": "main",
+    "name": "sdgtest2-raw",
+    "filename": "config/sdgtest2-raw.json",
+    "navigation": {}
+  },
+  {
+    "dummy": 1,
     "urlref": "/doc/applicationprofile/sdgtest-ap",
     "repository": "https://github.com/AnnemarieWittig/englishworkspace",
     "branchtag": "main",
