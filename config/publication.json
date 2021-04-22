@@ -1,6 +1,6 @@
 [
   {
-	  "trigger": 1,
+	  "trigger": 2,
     "urlref": "/doc/applicationprofile/addressregistry",
     "repository": "https://github.com/bertvannuffelen/OSLOthema-gebouwEnAdres",
     "branchtag": "multilingual",
