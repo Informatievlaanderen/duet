@@ -11,6 +11,7 @@
   },
   {
     "urlref": "/doc/applicationprofile/demo-ap",
+    "disabled": true,
     "repository": "https://github.com/AnnemarieWittig/englishworkspace",
     "branchtag": "main",
     "name": "city-demo",
@@ -20,6 +21,7 @@
   },
   {
     "dummy": "11",
+    "disabled": true,
     "urlref": "/doc/applicationprofile/cccev-ap",
     "repository": "https://github.com/AnnemarieWittig/englishworkspace",
     "branchtag": "main",
@@ -28,6 +30,7 @@
     "navigation": {}
   },
   {
+    "disabled": true,
     "urlref": "/doc/vocabulary/sdgtest-voc",
     "repository": "https://github.com/AnnemarieWittig/englishworkspace",
     "branchtag": "main",
@@ -37,6 +40,7 @@
   },
   {
     "dummy": 1,
+    "disabled": true,
     "urlref": "/doc/applicationprofile/sdgtest-ap",
     "repository": "https://github.com/AnnemarieWittig/englishworkspace",
     "branchtag": "main",
@@ -45,6 +49,7 @@
     "navigation": {}
   },
   {
+    "disabled": true,
     "urlref": "/doc/vocabulary/sdg-feedback-voc",
     "repository": "https://github.com/AnnemarieWittig/englishworkspace",
     "branchtag": "main",
@@ -53,6 +58,7 @@
     "navigation": {}
   },
   {
+    "disabled": true,
     "urlref": "/doc/vocabulary/sdg-namespaces-voc",
     "repository": "https://github.com/AnnemarieWittig/englishworkspace",
     "branchtag": "main",
@@ -61,6 +67,7 @@
     "navigation": {}
   },
   {
+    "disabled": true,
     "urlref": "/doc/applicationprofile/sdg-mailto-ap",
     "repository": "https://github.com/AnnemarieWittig/englishworkspace",
     "branchtag": "main",
@@ -70,6 +77,7 @@
     "navigation": {}
   },
   {
+    "disabled": true,
     "urlref": "/doc/applicationprofile/sdg-feedback-ap",
     "repository": "https://github.com/AnnemarieWittig/englishworkspace",
     "branchtag": "main",
@@ -78,6 +86,7 @@
     "navigation": {}
   },
   {
+    "disabled": true,
     "urlref": "/doc/vocabulary/sdg-voc",
     "repository": "https://github.com/AnnemarieWittig/englishworkspace",
     "branchtag": "main",
@@ -86,6 +95,7 @@
     "navigation": {}
   },
   {
+    "disabled": true,
 	  "dummy" : 2,
     "urlref": "/doc/applicationprofile/sdg-ap",
     "repository": "https://github.com/AnnemarieWittig/englishworkspace",
@@ -95,6 +105,7 @@
     "navigation": {}
   },
   {
+    "disabled": true,
     "urlref": "/doc/applicationprofile/sdg-raw",
     "repository": "https://github.com/AnnemarieWittig/englishworkspace",
     "branchtag": "main",
@@ -103,6 +114,7 @@
     "navigation": {}
   },
   {
+    "disabled": true,
     "urlref": "/doc/implementationmodel/sdg-impl-ap",
     "repository": "https://github.com/AnnemarieWittig/englishworkspace",
     "branchtag": "main",
@@ -111,6 +123,7 @@
     "navigation": {}
   },
   {
+    "disabled": true,
     "urlref": "/doc/implementationmodel/sdg-impl-voc",
     "repository": "https://github.com/AnnemarieWittig/englishworkspace",
     "branchtag": "main",

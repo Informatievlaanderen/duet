@@ -3,7 +3,7 @@
 TARGETDIR=$1
 DETAILS=$2
 PRIMELANGUAGE=${3-'en'}
-GOALLANGUAGE=${4-'de'}
+GOALLANGUAGE=${4-'nl'}
 CHECKOUTFILE=${TARGETDIR}/checkouts.txt
 export NODE_PATH=/app/node_modules
 
