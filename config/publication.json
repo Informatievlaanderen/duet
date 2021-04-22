@@ -1,5 +1,14 @@
 [
   {
+    "urlref": "/doc/applicationprofile/addressregistry",
+    "repository": "https://github.com/bertvannuffelen/OSLOthema-gebouwEnAdres",
+    "branchtag": "multilingual",
+    "name": "adressenregister",
+    "filename": "config/adressenregister.json",
+    "examples": true,
+    "navigation": {}
+  },
+  {
     "urlref": "/doc/applicationprofile/demo-ap",
     "repository": "https://github.com/AnnemarieWittig/englishworkspace",
     "branchtag": "main",
