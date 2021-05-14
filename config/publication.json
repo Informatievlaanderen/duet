@@ -11,13 +11,19 @@
   },
   {
 "trigger": 2,
-    "urlref": "/doc/vocabulary/air-quality-czech",
+    "urlref": "/doc/vocabulary/air-cz",
     "repository": "https://github.com/Informatievlaanderen/duet-vocabularies",
     "branchtag": "master",
     "name": "air-cz-voc",
     "filename": "config/air-cz-voc.json",
     "examples": false,
     "navigation": {}
+  },
+  {
+"trigger": 2,
+    "urlref": "/ns/air-cz",
+    "seealso": "/doc/vocabulary/air-cz",
+    "type": "voc"
   },
   {
 	  "trigger": 2,
