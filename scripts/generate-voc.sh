@@ -84,7 +84,10 @@ do
                 make_jsonld $BASENAME $i ${SLINE}/selected_${PRIMELANGUAGE}.jsonld ${CONFIGDIR} ${PRIMELANGUAGE} ${RLINE} ${SLINE}
                 make_jsonld $BASENAME $i ${SLINE}/selected_${GOALLANGUAGE}.jsonld ${CONFIGDIR} ${GOALLANGUAGE} ${RLINE} ${SLINE} || exit 1
                 cp ${SLINE}/selected_${PRIMELANGUAGE}.jsonld ${TLINE}/voc/${BASENAME}_${PRIMELANGUAGE}.jsonld
-                cp ${SLINE}/selected_${GOALLANGUAGE}.jsonld ${TLINE}/voc/${BASENAME}_${GOALLANGUAGE}.jsonld
+		if [ -e  ${SLINE}/selected_${GOALLANGUAGE}.jsonld ] ; then 
+                    cp ${SLINE}/selected_${GOALLANGUAGE}.jsonld ${TLINE}/voc/${BASENAME}_${GOALLANGUAGE}.jsonld
+		fi
+
 #                if ! rdf serialize --input-format jsonld --processingMode json-ld-1.1 ${SLINE}/selected.jsonld --output-format turtle -o ${TLINE}/voc/$BASENAME.ttl 2>&1 | tee ${REPORT}
 #                then
 #                    exit 1
