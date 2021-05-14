@@ -139,6 +139,23 @@ render_html() { # SLINE TLINE JSON
     popd
 }
 
+html_point_to_main_language() { # SLINE TLINE JSON
+    echo "html_point_to_main_language : $1 $2 $3 $4 $5 $6 $7"
+    local SLINE=$1
+    local TLINE=$2
+    local JSONI=$3
+    local RLINE=$4
+    local DROOT=$5
+    local RRLINE=$6
+    local LANGUAGE=$7
+
+    OUTPUT=${TLINE}/index_${LANGUAGE}.html
+    if [ -e ${TLINE}/index_${LANGUAGE}.html ] ; then
+	    cp ${TLINE}/index_${LANGUAGE}.html ${TLINE}/index.html
+    fi
+
+}
+
 function pretty_print_json() {
 	# echo "pretty_print_json: $1" 
 	if [ -f "$1" ] ; then 
@@ -363,6 +380,7 @@ cat ${CHECKOUTFILE} | while read line; do
                 mkdir -p ${RLINE}
                 render_html $SLINE $TLINE $i $RLINE ${line} ${TARGETDIR}/report/${line} ${PRIMELANGUAGE}
                 render_html $SLINE $TLINE $i $RLINE ${line} ${TARGETDIR}/report/${line} ${GOALLANGUAGE}
+                html_point_to_main_language $SLINE $TLINE $i $RLINE ${line} ${TARGETDIR}/report/${line} ${PRIMELANGUAGE}
                 ;;
             shacl) # render_shacl $SLINE $TLINE $i $RLINE
                 render_shacl_languageaware $SLINE $TLINE $i $RLINE ${PRIMELANGUAGE}
