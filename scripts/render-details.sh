@@ -116,6 +116,14 @@ render_html() { # SLINE TLINE JSON
     COMMANDJSONLD=$(echo '.[].translation | .[] | select(.language | contains("'${LANGUAGE}'")) | .mergefile')
     MERGEDJSONLD=${RRLINE}/translation/$(jq -r "${COMMANDJSONLD}" ${SLINE}/.names.json)
 
+	M=$(jq -r "${COMMANDJSONLD}" ${SLINE}/.names.json)
+        if [ "$M" == "" ] ; then
+               echo "WARNING: no translation has been defined for ${GOALLANGUAGE}"
+               echo "WARNING: no attempt to create html files"
+
+        else
+
+
     echo "RENDER-DETAILS(language html): node /app/html-generator2.js -s ${TYPE} -i ${MERGEDJSONLD} -x ${RLINE}/html-nj_${LANGUAGE}.json -r /${DROOT} -t ${TEMPLATELANG} -d ${SLINE}/templates -o ${OUTPUT} -m ${LANGUAGE} -e ${RRLINE}"
 
     if ! node /app/html-generator2.js -s ${TYPE} -i ${MERGEDJSONLD} -x ${RLINE}/html-nj_${LANGUAGE}.json -r /${DROOT} -t ${TEMPLATELANG} -d ${SLINE}/templates -o ${OUTPUT} -m ${LANGUAGE} -e ${RRLINE}; then
@@ -123,6 +131,8 @@ render_html() { # SLINE TLINE JSON
         exit -1
     else
         echo "RENDER-DETAILS(language html): File was rendered in ${OUTPUT}"
+    fi
+
     fi
 
     pretty_print_json ${RLINE}/html-nj_${LANGUAGE}.json
@@ -212,6 +222,15 @@ render_context() { # SLINE TLINE JSON
         COMMANDJSONLD=$(echo '.[].translation | .[] | select(.language | contains("'${GOALLANGUAGE}'")) | .mergefile')
         MERGEDJSONLD=${RLINE}/translation/$(jq -r "${COMMANDJSONLD}" ${SLINE}/.names.json)
 
+	M=$(jq -r "${COMMANDJSONLD}" ${SLINE}/.names.json)
+        if [ "$M" == "" ] ; then
+               echo "WARNING: no translation has been defined for ${GOALLANGUAGE}"
+               echo "WARNING: no attempt to create context files"
+
+        else
+
+
+
         echo "RENDER-DETAILS(context-language-aware): node /app/json-ld-generator2.js -d -l label -i ${MERGEDJSONLD} -o ${TLINE}/context/${OUTFILELANGUAGE} -m ${GOALLANGUAGE}"
         if ! node /app/json-ld-generator2.js -d -l label -i ${MERGEDJSONLD} -o ${TLINE}/context/${OUTFILELANGUAGE} -m ${GOALLANGUAGE}; then
             echo "RENDER-DETAILS(context-language-aware): See XXX for more details, Rendering failed"
@@ -219,6 +238,7 @@ render_context() { # SLINE TLINE JSON
         else
             echo "RENDER-DETAILS(context-language-aware): Rendering successfull, File saved to  ${TLINE}/context/${OUTFILELANGUAGE}"
         fi
+	fi
 
         prettyprint_jsonld ${TLINE}/context/${OUTFILE}
         prettyprint_jsonld ${TLINE}/context/${OUTFILELANGUAGE}

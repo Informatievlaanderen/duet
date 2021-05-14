@@ -23,6 +23,14 @@ make_jsonld() {
     MERGEDJSONLD=${RLINE}/translation/$(jq -r "${COMMANDJSONLD}" ${SLINE}/.names.json)
     OUTPUT=${RLINE}/translation/voc_${LANGUAGE}.jsonld
 
+    	M=$(jq -r "${COMMANDJSONLD}" ${SLINE}/.names.json)
+        if [ "$M" == "" ] ; then
+               echo "WARNING: no translation has been defined for ${GOALLANGUAGE}"
+               echo "WARNING: no attempt to create RDF voc files"
+
+        else
+
+
     echo "RENDER-DETAILS(voc-languageaware): node /app/render-voc.js -i ${MERGEDJSONLD} -o ${OUTPUT} -l ${LANGUAGE}"
     if ! node /app/render-voc.js -i ${MERGEDJSONLD} -o ${OUTPUT} -l ${LANGUAGE}
     then
@@ -49,6 +57,8 @@ make_jsonld() {
             fi
         fi
     fi
+
+	fi
 
 }
 #############################################################################################
