@@ -1,6 +1,6 @@
 [
   {
-"trigger": 2,
+"trigger": 3,
     "urlref": "/doc/applicationprofile/air-quality-czech",
     "repository": "https://github.com/Informatievlaanderen/duet-vocabularies",
     "branchtag": "master",
@@ -10,7 +10,7 @@
     "navigation": {}
   },
   {
-"trigger": 2,
+"trigger": 3,
     "urlref": "/doc/vocabulary/air-cz",
     "repository": "https://github.com/Informatievlaanderen/duet-vocabularies",
     "branchtag": "master",
@@ -20,7 +20,7 @@
     "navigation": {}
   },
   {
-"trigger": 2,
+"trigger": 3,
     "urlref": "/ns/air-cz",
     "seealso": "/doc/vocabulary/air-cz",
     "type": "voc"
